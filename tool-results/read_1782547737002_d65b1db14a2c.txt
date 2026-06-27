@@ -1,0 +1,867 @@
+     1→     1→import {
+     2→     2→  Home,
+     3→     3→  Building2,
+     4→     4→  HardHat,
+     5→     5→  Hammer,
+     6→     6→  Wrench,
+     7→     7→  Ruler,
+     8→     8→  Construction,
+     9→     9→  Building,
+    10→    10→  Factory,
+    11→    11→  PaintRoller,
+    12→    12→  Trees,
+    13→    13→  ShieldCheck,
+    14→    14→  type LucideIcon,
+    15→    15→} from "lucide-react";
+    16→    16→
+    17→    17→export const company = {
+    18→    18→  name: "BUILDCORE",
+    19→    19→  tagline: "Construction & Engineering Excellence",
+    20→    20→  founded: 2009,
+    21→    21→  phone: "+1 (415) 555-0192",
+    22→    22→  email: "hello@buildcore.co",
+    23→    23→  address: "1840 Industrial Parkway, Suite 200, Oakland, CA 94621",
+    24→    24→  hours: "Mon - Fri: 7:00 AM - 6:00 PM",
+    25→    25→  license: "CSLB #847291 • Class A General Engineering",
+    26→    26→};
+    27→    27→
+    28→    28→export const stats = [
+    29→    29→  { value: 15, suffix: "+", label: "Years of Experience" },
+    30→    30→  { value: 1500, suffix: "+", label: "Projects Completed" },
+    31→    31→  { value: 750, suffix: "+", label: "Skilled Workers" },
+    32→    32→  { value: 98, suffix: "%", label: "Client Satisfaction" },
+    33→    33→];
+    34→    34→
+    35→    35→export const navItems = [
+    36→    36→  { title: "Home", href: "/" },
+    37→    37→  { title: "About", href: "/about" },
+    38→    38→  { title: "Services", href: "/services" },
+    39→    39→  { title: "Projects", href: "/projects" },
+    40→    40→  { title: "Pricing", href: "/pricing" },
+    41→    41→  { title: "Team", href: "/team" },
+    42→    42→  { title: "Testimonials", href: "/testimonials" },
+    43→    43→  { title: "Blog", href: "/blog" },
+    44→    44→  { title: "FAQ", href: "/faq" },
+    45→    45→  { title: "Contact", href: "/contact" },
+    46→    46→];
+    47→    47→
+    48→    48→export type Service = {
+    49→    49→  slug: string;
+    50→    50→  title: string;
+    51→    51→  short: string;
+    52→    52→  description: string;
+    53→    53→  icon: LucideIcon;
+    54→    54→  image: string;
+    55→    55→  features: string[];
+    56→    56→  process: { step: string; title: string; detail: string }[];
+    57→    57→};
+    58→    58→
+    59→    59→export const services: Service[] = [
+    60→    60→  {
+    61→    61→    slug: "residential-construction",
+    62→    62→    title: "Residential Construction",
+    63→    63→    short: "Custom homes & multi-family builds crafted to last.",
+    64→    64→    description:
+    65→    65→      "From custom luxury homes to multi-family developments, we build residential spaces that blend architectural beauty with structural integrity. Our end-to-end service covers design coordination, foundations, framing, finishes, and handover.",
+    66→    66→    icon: Home,
+    67→    67→    image: "/images/projects/project-2.png",
+    68→    68→    features: [
+    69→    69→      "Custom & spec home construction",
+    70→    70→      "Multi-family & townhome developments",
+    71→    71→      "Foundation to finish carpentry",
+    72→    72→      "Smart home & energy-efficient systems",
+    73→    73→      "ADUs and garage conversions",
+    74→    74→    ],
+    75→    75→    process: [
+    76→    76→      { step: "01", title: "Consultation", detail: "We discuss your vision, budget, and site constraints, then provide a feasibility roadmap." },
+    77→    77→      { step: "02", title: "Design & Permit", detail: "Architects and engineers finalize plans; we handle all permitting and approvals." },
+    78→    78→      { step: "03", title: "Construction", detail: "Site prep, foundation, framing, MEP, finishes — managed with weekly milestones." },
+    79→    79→      { step: "04", title: "Handover", detail: "Final inspection, punch-list, walkthrough, and warranty documentation delivered." },
+    80→    80→    ],
+    81→    81→  },
+    82→    82→  {
+    83→    83→    slug: "commercial-construction",
+    84→    84→    title: "Commercial Construction",
+    85→    85→    short: "Offices, retail, and hospitality built on schedule.",
+    86→    86→    description:
+    87→    87→      "We deliver commercial buildings that meet the demands of modern business — on time, on budget, and built to code. Our teams specialize in mid-rise offices, retail centers, and hospitality venues with fast-tracked delivery options.",
+    88→    88→    icon: Building2,
+    89→    89→    image: "/images/projects/project-4.png",
+    90→    90→    features: [
+    91→    91→      "Mid-rise office buildings",
+    92→    92→      "Retail centers & shopping plazas",
+    93→    93→      "Hotels & hospitality venues",
+    94→    94→      "Tenant improvements & fit-outs",
+    95→    95→      "LEED-certified green building",
+    96→    96→    ],
+    97→    97→    process: [
+    98→    98→      { step: "01", title: "Programming", detail: "Stakeholder workshops define space needs, budget envelope, and schedule targets." },
+    99→    99→      { step: "02", title: "Pre-construction", detail: "Value engineering, GMP pricing, subcontractor bidding, and permit submission." },
+   100→   100→      { step: "03", title: "Build", detail: "Site mobilization through TCO with lean scheduling and weekly OAC meetings." },
+   101→   101→      { step: "04", title: "Commissioning", detail: "Systems commissioning, training, and 12-month post-occupancy support." },
+   102→   102→    ],
+   103→   103→  },
+   104→   104→  {
+   105→   105→    slug: "industrial-construction",
+   106→   106→    title: "Industrial Construction",
+   107→   107→    short: "Warehouses, plants & heavy industrial facilities.",
+   108→   108→    description:
+   109→   109→      "Heavy industrial construction demands precision engineering and rigorous safety protocols. We build warehouses, manufacturing plants, and distribution centers with heavy equipment capabilities and industrial-grade materials.",
+   110→   110→    icon: Factory,
+   111→   111→    image: "/images/projects/project-5.png",
+   112→   112→    features: [
+   113→   113→      "Warehouses & distribution centers",
+   114→   114→      "Manufacturing plants",
+   115→   115→      "Cold storage facilities",
+   116→   116→      "Heavy equipment foundations",
+   117→   117→      "Industrial MEP & process piping",
+   118→   118→    ],
+   119→   119→    process: [
+   120→   120→      { step: "01", title: "Site Analysis", detail: "Geotechnical, environmental, and utility studies inform the master plan." },
+   121→   121→      { step: "02", title: "Engineering", detail: "Structural, civil, and process engineering tailored to your operations." },
+   122→   122→      { step: "03", title: "Construction", detail: "Tilt-up or pre-engineered metal building erection with parallel MEP rough-in." },
+   123→   123→      { step: "04", title: "Start-up", detail: "Equipment installation, calibration, and operational readiness verification." },
+   124→   124→    ],
+   125→   125→  },
+   126→   126→  {
+   127→   127→    slug: "civil-infrastructure",
+   128→   128→    title: "Civil & Infrastructure",
+   129→   129→    short: "Roads, bridges, and public works engineering.",
+   130→   130→    description:
+   131→   131→      "From highways and bridges to utilities and site development, our civil engineering teams deliver public and private infrastructure that connects communities and withstands the test of time.",
+   132→   132→    icon: Construction,
+   133→   133→    image: "/images/projects/project-3.png",
+   134→   134→    features: [
+   135→   135→      "Highway & roadway construction",
+   136→   136→      "Bridge construction & rehabilitation",
+   137→   137→      "Underground utilities & piping",
+   138→   138→      "Site development & grading",
+   139→   139→      "Stormwater management systems",
+   140→   140→    ],
+   141→   141→    process: [
+   142→   142→      { step: "01", title: "Survey", detail: "Topographic survey, right-of-way, and environmental clearance." },
+   143→   143→      { step: "02", title: "Design-Build", detail: "Integrated design-build delivery accelerates schedule and reduces risk." },
+   144→   144→      { step: "03", title: "Construction", detail: "Earthwork, paving, structures, and utilities sequenced for minimal disruption." },
+   145→   145→      { step: "04", title: "Acceptance", detail: "Load testing, final inspection, and agency acceptance documentation." },
+   146→   146→    ],
+   147→   147→  },
+   148→   148→  {
+   149→   149→    slug: "renovation-remodeling",
+   150→   150→    title: "Renovation & Remodeling",
+   151→   151→    short: "Transform existing spaces with modern upgrades.",
+   152→   152→    description:
+   153→   153→      "Breathe new life into existing structures. Our renovation specialists handle everything from kitchen and bath remodels to full structural retrofits and historic preservation with meticulous attention to detail.",
+   154→   154→    icon: Hammer,
+   155→   155→    image: "/images/projects/project-6.png",
+   156→   156→    features: [
+   157→   157→      "Kitchen & bathroom remodels",
+   158→   158→      "Whole-home renovations",
+   159→   159→      "Commercial tenant improvements",
+   160→   160→      "Historic restoration & preservation",
+   161→   161→      "Structural retrofitting & seismic upgrades",
+   162→   162→    ],
+   163→   163→    process: [
+   164→   164→      { step: "01", title: "Assessment", detail: "Existing conditions survey, structural assessment, and scope definition." },
+   165→   165→      { step: "02", title: "Design", detail: "Renderings, material selection, and fixed-price proposal." },
+   166→   166→      { step: "03", title: "Renovation", detail: "Controlled demolition, build-back, and finishes with daily clean-up." },
+   167→   167→      { step: "04", title: "Reveal", detail: "Final walkthrough, touch-ups, and one-year craftsmanship warranty." },
+   168→   168→    ],
+   169→   169→  },
+   170→   170→  {
+   171→   171→    slug: "design-build",
+   172→   172→    title: "Design-Build Services",
+   173→   173→    short: "One team, one contract, streamlined delivery.",
+   174→   174→    description:
+   175→   175→      "Our integrated design-build approach unifies architecture, engineering, and construction under one contract — delivering projects 33% faster with single-point accountability and cost certainty from day one.",
+   176→   176→    icon: Ruler,
+   177→   177→    image: "/images/about-site.png",
+   178→   178→    features: [
+   179→   179→      "Single-source accountability",
+   180→   180→      "Architect & engineer in-house",
+   181→   181→      "Guaranteed maximum price (GMP)",
+   182→   182→      "Accelerated schedule delivery",
+   183→   183→      "Value engineering from concept",
+   184→   184→    ],
+   185→   185→    process: [
+   186→   186→      { step: "01", title: "Discovery", detail: "Charrette sessions define goals, budget, and aesthetic direction." },
+   187→   187→      { step: "02", title: "Design", detail: "Schematic, design development, and construction documents in-house." },
+   188→   188→      { step: "03", title: "GMP", detail: "Transparent guaranteed maximum price locked before construction begins." },
+   189→   189→      { step: "04", title: "Delivery", detail: "Seamless handoff from design team to build team under one roof." },
+   190→   190→    ],
+   191→   191→  },
+   192→   192→  {
+   193→   193→    slug: "project-management",
+   194→   194→    title: "Construction Management",
+   195→   195→    short: "Expert oversight for owner-led projects.",
+   196→   196→    description:
+   197→   197→      "For owners with their own contractors, we provide professional construction management — managing schedule, budget, quality, and safety so your project stays on track from groundbreaking to ribbon-cutting.",
+   198→   198→    icon: HardHat,
+   199→   199→    image: "/images/cta-bg.png",
+   200→   200→    features: [
+   201→   201→      "Schedule & budget control",
+   202→   202→      "Subcontractor management",
+   203→   203→      "Quality assurance inspections",
+   204→   204→      "Safety program administration",
+   205→   205→      "Change order & risk management",
+   206→   206→    ],
+   207→   207→    process: [
+   208→   208→      { step: "01", title: "Onboarding", detail: "Project takeover review, document audit, and stakeholder alignment." },
+   209→   209→      { step: "02", title: "Controls", detail: "Establish schedule of values, cost reports, and KPI dashboards." },
+   210→   210→      { step: "03", title: "Oversight", detail: "Daily field reports, weekly OAC meetings, monthly owner reporting." },
+   211→   211→      { step: "04", title: "Closeout", detail: "Punch-list, commissioning, warranties, and final reconciliation." },
+   212→   212→    ],
+   213→   213→  },
+   214→   214→  {
+   215→   215→    slug: "interior-fitout",
+   216→   216→    title: "Interior Fit-Out",
+   217→   217→    short: "Turnkey interior build-outs for workspaces.",
+   218→   218→    description:
+   219→   219→      "From open-plan offices to specialized medical and retail interiors, our fit-out teams deliver turnkey interiors with millwork, lighting, acoustic treatments, and branded finishes — ready for occupancy.",
+   220→   220→    icon: PaintRoller,
+   221→   221→    image: "/images/projects/project-6.png",
+   222→   222→    features: [
+   223→   223→      "Office & workspace fit-outs",
+   224→   224→      "Retail & showroom interiors",
+   225→   225→      "Medical & dental build-outs",
+   226→   226→      "Custom millwork & casework",
+   227→   227→      "AV, lighting & acoustic systems",
+   228→   228→    ],
+   229→   229→    process: [
+   230→   230→      { step: "01", title: "Programming", detail: "Space planning, adjacency studies, and FF&E strategy." },
+   231→   231→      { step: "02", title: "Design", detail: "Mood boards, finish schedules, and 3D visualizations." },
+   232→   232→      { step: "03", title: "Fit-Out", detail: "After-hours and phased construction to minimize business disruption." },
+   233→   233→      { step: "04", title: "Move-In", detail: "Furniture install, IT cutover, and post-occupancy tuning." },
+   234→   234→    ],
+   235→   235→  },
+   236→   236→  {
+   237→   237→    slug: "landscape-hardscape",
+   238→   238→    title: "Landscape & Hardscape",
+   239→   239→    short: "Outdoor spaces that elevate the built environment.",
+   240→   240→    description:
+   241→   241→      "We extend our craftsmanship outdoors — designing and building landscapes, hardscapes, retaining walls, and outdoor living spaces that complement architecture and stand up to the elements.",
+   242→   242→    icon: Trees,
+   243→   243→    image: "/images/projects/project-2.png",
+   244→   244→    features: [
+   245→   245→      "Site landscaping & planting",
+   246→   246→      "Hardscape: patios, decks, walkways",
+   247→   247→      "Retaining walls & site walls",
+   248→   248→      "Irrigation & drainage systems",
+   249→   249→      "Outdoor kitchens & living areas",
+   250→   250→    ],
+   251→   251→    process: [
+   252→   252→      { step: "01", title: "Site Plan", detail: "Topography, soil analysis, and conceptual landscape design." },
+   253→   253→      { step: "02", title: "Selection", detail: "Plant palette, hardscape materials, and lighting plan confirmed." },
+   254→   254→      { step: "03", title: "Install", detail: "Grading, hardscape, irrigation, planting, and lighting installation." },
+   255→   255→      { step: "04", title: "Establish", detail: "90-day grow-in period with maintenance handoff and care guide." },
+   256→   256→    ],
+   257→   257→  },
+   258→   258→  {
+   259→   259→    slug: "pre-construction",
+   260→   260→    title: "Pre-Construction",
+   261→   261→    short: "Planning, estimating & value engineering.",
+   262→   262→    description:
+   263→   263→      "The smartest money on any project is spent before a shovel hits dirt. Our pre-construction services — estimating, value engineering, constructability review, and scheduling — set your project up for success.",
+   264→   264→    icon: Wrench,
+   265→   265→    image: "/images/blog/blog-3.png",
+   266→   266→    features: [
+   267→   267→      "Conceptual & detailed estimating",
+   268→   268→      "Value engineering workshops",
+   269→   269→      "Constructability analysis",
+   270→   270→      "Master schedule development",
+   271→   271→      "Permitting strategy & expediting",
+   272→   272→    ],
+   273→   273→    process: [
+   274→   274→      { step: "01", title: "Feasibility", detail: "Budget validation against scope, site, and market conditions." },
+   275→   275→      { step: "02", title: "VE", detail: "Alternative materials and methods evaluated for cost and schedule impact." },
+   276→   276→      { step: "03", title: "Schedule", detail: "Critical path method schedule with milestones and long-lead items." },
+   277→   277→      { step: "04", title: "GMP", detail: "Guaranteed maximum price proposal with transparent backup." },
+   278→   278→    ],
+   279→   279→  },
+   280→   280→  {
+   281→   281→    slug: "safety-compliance",
+   282→   282→    title: "Safety & Compliance",
+   283→   283→    short: "Zero-incident culture, fully certified.",
+   284→   284→    description:
+   285→   285→      "Safety isn't a department — it's a culture. Our EMR of 0.71 reflects a zero-incident mindset backed by OSHA-trained crews, daily safety briefings, and a full-time HSE team on every active site.",
+   286→   286→    icon: ShieldCheck,
+   287→   287→    image: "/images/blog/blog-4.png",
+   288→   288→    features: [
+   289→   289→      "Full-time HSE managers on site",
+   290→   290→      "OSHA 30-trained supervisors",
+   291→   291→      "Daily Job Hazard Analysis (JHA)",
+   292→   292→      "EMR 0.71 — top 5% in industry",
+   293→   293→      "Third-party safety audits",
+   294→   294→    ],
+   295→   295→    process: [
+   296→   296→      { step: "01", title: "Plan", detail: "Site-specific safety plan and hazard register developed pre-mobilization." },
+   297→   297→      { step: "02", title: "Train", detail: "Orientation, JHA reviews, and tool-box talks every shift." },
+   298→   298→      { step: "03", title: "Monitor", detail: "Daily inspections, near-miss reporting, and leading-indicator tracking." },
+   299→   299→      { step: "04", title: "Improve", detail: "Monthly safety committee reviews drive continuous improvement." },
+   300→   300→    ],
+   301→   301→  },
+   302→   302→  {
+   303→   303→    slug: "demolition-site-prep",
+   304→   304→    title: "Demolition & Site Prep",
+   305→   305→    short: "Safe demolition and full site readiness.",
+   306→   306→    description:
+   307→   307→      "Before we build, we prepare. Our demolition and site-prep crews handle selective and full demolition, hazardous material abatement, grading, and utility installation to make every site build-ready.",
+   308→   308→    icon: Building,
+   309→   309→    image: "/images/projects/project-5.png",
+   310→   310→    features: [
+   311→   311→      "Selective & total demolition",
+   312→   312→      "Asbestos & lead abatement",
+   313→   313→      "Site clearing & grubbing",
+   314→   314→      "Mass grading & excavation",
+   315→   315→      "Utility installation & capping",
+   316→   316→    ],
+   317→   317→    process: [
+   318→   318→      { step: "01", title: "Survey", detail: "Structural survey, hazardous material audit, and utility locates." },
+   319→   319→      { step: "02", title: "Abatement", detail: "Licensed abatement of asbestos, lead, and mold with air monitoring." },
+   320→   320→      { step: "03", title: "Demolition", detail: "Mechanical or hand demolition with dust, noise, and vibration control." },
+   321→   321→      { step: "04", title: "Site Prep", detail: "Grading, compaction, and rough utilities ready for foundation." },
+   322→   322→    ],
+   323→   323→  },
+   324→   324→];
+   325→   325→
+   326→   326→export type Project = {
+   327→   327→  slug: string;
+   328→   328→  title: string;
+   329→   329→  category: string;
+   330→   330→  location: string;
+   331→   331→  year: string;
+   332→   332→  client: string;
+   333→   333→  value: string;
+   334→   334→  duration: string;
+   335→   335→  image: string;
+   336→   336→  summary: string;
+   337→   337→  description: string;
+   338→   338→  scope: string[];
+   339→   339→  gallery: string[];
+   340→   340→};
+   341→   341→
+   342→   342→export const projects: Project[] = [
+   343→   343→  {
+   344→   344→    slug: "meridian-tower",
+   345→   345→    title: "Meridian Tower",
+   346→   346→    category: "Commercial",
+   347→   347→    location: "San Francisco, CA",
+   348→   348→    year: "2024",
+   349→   349→    client: "Meridian Properties",
+   350→   350→    value: "$48M",
+   351→   351→    duration: "26 months",
+   352→   352→    image: "/images/projects/project-1.png",
+   353→   353→    summary: "A 24-story Class-A office tower with LEED Platinum certification in the heart of the financial district.",
+   354→   354→    description:
+   355→   355→      "Meridian Tower rises 24 stories above the San Francisco financial district, delivering 480,000 sq ft of Class-A office space with a LEED Platinum envelope, double-skin facade, and a sky-garden amenity floor. The project was delivered two months ahead of schedule using an integrated design-build delivery and topped out with a 0.71 EMR safety record.",
+   356→   356→    scope: [
+   357→   357→      "Design-build delivery",
+   358→   358→      "24-story structural steel frame",
+   359→   359→      "Double-skin high-performance facade",
+   360→   360→      "LEED Platinum certification",
+   361→   361→      "Sky-garden amenity floor",
+   362→   362→      "Three levels of below-grade parking",
+   363→   363→    ],
+   364→   364→    gallery: [
+   365→   365→      "/images/projects/project-1.png",
+   366→   366→      "/images/projects/project-4.png",
+   367→   367→      "/images/about-site.png",
+   368→   368→    ],
+   369→   369→  },
+   370→   370→  {
+   371→   371→    slug: "harbor-view-residence",
+   372→   372→    title: "Harbor View Residence",
+   373→   373→    category: "Residential",
+   374→   374→    location: "Sausalito, CA",
+   375→   375→    year: "2023",
+   376→   376→    client: "Private",
+   377→   377→    value: "$4.2M",
+   378→   378→    duration: "14 months",
+   379→   379→    image: "/images/projects/project-2.png",
+   380→   380→    summary: "A 6,800 sq ft custom luxury home with panoramic bay views and a fully integrated smart-home system.",
+   381→   381→    description:
+   382→   382→      "Perched on the Sausalito hillside, Harbor View Residence is a 6,800 sq ft custom home engineered for seismic resilience and net-zero energy. Floor-to-ceiling glass, a cantilevered infinity pool, and a hidden subterranean wine cellar make this a showcase of residential craftsmanship.",
+   383→   383→    scope: [
+   384→   384→      "Custom architectural build",
+   385→   385→      "Net-zero energy design",
+   386→   386→      "Seismic base-isolation system",
+   387→   387→      "Cantilevered infinity pool",
+   388→   388→      "Subterranean wine cellar",
+   389→   389→      "Fully integrated smart-home automation",
+   390→   390→    ],
+   391→   391→    gallery: [
+   392→   392→      "/images/projects/project-2.png",
+   393→   393→      "/images/projects/project-6.png",
+   394→   394→      "/images/projects/project-2.png",
+   395→   395→    ],
+   396→   396→  },
+   397→   397→  {
+   398→   398→    slug: "bay-bridge-connector",
+   399→   399→    title: "Bay Bridge Connector",
+   400→   400→    category: "Infrastructure",
+   401→   401→    location: "Oakland, CA",
+   402→   402→    year: "2022",
+   403→   403→    client: "Caltrans",
+   404→   404→    value: "$112M",
+   405→   405→    duration: "38 months",
+   406→   406→    image: "/images/projects/project-3.png",
+   407→   407→    summary: "A 1.4-mile elevated connector with seismic isolators serving 90,000 daily commuters.",
+   408→   408→    description:
+   409→   409→      "The Bay Bridge Connector is a 1.4-mile elevated roadway linking I-880 to the MacArthur Maze, engineered with base isolators to withstand a 1-in-2,475-year seismic event. Delivered under a design-build-finance-operate contract, the project improved commute times by 22%.",
+   410→   410→    scope: [
+   411→   411→      "Design-build-finance-operate delivery",
+   412→   412→      "1.4-mile elevated viaduct",
+   413→   413→      "Seismic base isolation",
+   414→   414→      "22 precast segmental spans",
+   415→   415→      "ITS and dynamic message signage",
+   416→   416→      "Landside and marine foundations",
+   417→   417→    ],
+   418→   418→    gallery: [
+   419→   419→      "/images/projects/project-3.png",
+   420→   420→      "/images/projects/project-5.png",
+   421→   421→      "/images/about-site.png",
+   422→   422→    ],
+   423→   423→  },
+   424→   424→  {
+   425→   425→    slug: "fountain-plaza",
+   426→   426→    title: "Fountain Plaza Offices",
+   427→   427→    category: "Commercial",
+   428→   428→    location: "San Jose, CA",
+   429→   429→    year: "2023",
+   430→   430→    client: "Fountain Realty",
+   431→   431→    value: "$31M",
+   432→   432→    duration: "20 months",
+   433→   433→    image: "/images/projects/project-4.png",
+   434→   434→    summary: "A 180,000 sq ft mid-rise office with ground-floor retail and a rooftop event terrace.",
+   435→   435→    description:
+   436→   436→      "Fountain Plaza Offices brings 180,000 sq ft of collaborative workspace to downtown San Jose, wrapped around a public plaza with ground-floor retail and a 9,000 sq ft rooftop event terrace. The building achieved LEED Gold and WELL Silver certifications.",
+   437→   437→    scope: [
+   438→   438→      "Mid-rise concrete structure",
+   439→   439→      "Ground-floor retail shell",
+   440→   440→      "Rooftop event terrace",
+   441→   441→      "LEED Gold + WELL Silver",
+   442→   442→      "Structured parking for 420 vehicles",
+   443→   443→      "Public plaza and streetscape",
+   444→   444→    ],
+   445→   445→    gallery: [
+   446→   446→      "/images/projects/project-4.png",
+   447→   447→      "/images/projects/project-1.png",
+   448→   448→      "/images/cta-bg.png",
+   449→   449→    ],
+   450→   450→  },
+   451→   451→  {
+   452→   452→    slug: "port-logistics-center",
+   453→   453→    title: "Port Logistics Center",
+   454→   454→    category: "Industrial",
+   455→   455→    location: "Richmond, CA",
+   456→   456→    year: "2024",
+   457→   457→    client: "Pacific Logistics Group",
+   458→   458→    value: "$67M",
+   459→   459→    duration: "16 months",
+   460→   460→    image: "/images/projects/project-5.png",
+   461→   461→    summary: "A 612,000 sq ft cross-dock distribution facility with 56 dock doors and solar-ready roof.",
+   462→   462→    description:
+   463→   463→      "Port Logistics Center is a 612,000 sq ft cross-dock distribution facility built for Pacific Logistics Group, featuring 56 high-dock doors, 40-foot clear heights, ESFR fire protection, and a 2.4 MW solar-ready roof. Fast-tracked in 16 months using tilt-up concrete panels.",
+   464→   464→    scope: [
+   465→   465→      "612,000 sq ft tilt-up warehouse",
+   466→   466→      "56 cross-dock high doors",
+   467→   467→      "40-foot clear height",
+   468→   468→      "ESFR fire protection system",
+   469→   469→      "2.4 MW solar-ready roof",
+   470→   470→      "Heavy-duty truck court",
+   471→   471→    ],
+   472→   472→    gallery: [
+   473→   473→      "/images/projects/project-5.png",
+   474→   474→      "/images/projects/project-3.png",
+   475→   475→      "/images/about-site.png",
+   476→   476→    ],
+   477→   477→  },
+   478→   478→  {
+   479→   479→    slug: "loft-44-renovation",
+   480→   480→    title: "Loft 44 Renovation",
+   481→   481→    category: "Renovation",
+   482→   482→    location: "Oakland, CA",
+   483→   483→    year: "2023",
+   484→   484→    client: "Private",
+   485→   485→    value: "$680K",
+   486→   486→    duration: "5 months",
+   487→   487→    image: "/images/projects/project-6.png",
+   488→   488→    summary: "A 1920s warehouse converted into a 2,400 sq ft industrial-chic live/work loft.",
+   489→   489→    description:
+   490→   490→      "Loft 44 transformed a derelict 1920s warehouse into a 2,400 sq ft industrial-chic live/work loft, preserving original brick and timber while inserting a mezzanine, chef's kitchen, and fully integrated smart lighting. The renovation earned a local historic preservation commendation.",
+   491→   491→    scope: [
+   492→   492→      "Historic adaptive reuse",
+   493→   493→      "Structural seismic retrofit",
+   494→   494→      "New mezzanine level",
+   495→   495→      "Chef's kitchen and custom millwork",
+   496→   496→      "Smart lighting and AV systems",
+   497→   497→      "Roof deck with city views",
+   498→   498→    ],
+   499→   499→    gallery: [
+   500→   500→      "/images/projects/project-6.png",
+   501→   501→      "/images/projects/project-2.png",
+   502→   502→      "/images/cta-bg.png",
+   503→   503→    ],
+   504→   504→  },
+   505→   505→];
+   506→   506→
+   507→   507→export type TeamMember = {
+   508→   508→  name: string;
+   509→   509→  role: string;
+   510→   510→  bio: string;
+   511→   511→  image: string;
+   512→   512→  linkedin: string;
+   513→   513→  expertise: string[];
+   514→   514→};
+   515→   515→
+   516→   516→export const team: TeamMember[] = [
+   517→   517→  {
+   518→   518→    name: "Marcus Holloway",
+   519→   519→    role: "Founder & CEO",
+   520→   520→    bio: "35 years in commercial construction. Marcus founded BUILDCORE in 2009 with a pickup truck and a zero-incident pledge. Today he leads strategy and client relationships across the firm's portfolio.",
+   521→   521→    image: "/images/team/team-1.png",
+   522→   522→    linkedin: "#",
+   523→   523→    expertise: ["Strategy", "Commercial", "Client Relations"],
+   524→   524→  },
+   525→   525→  {
+   526→   526→    name: "Elena Vasquez",
+   527→   527→    role: "Principal Architect",
+   528→   528→    bio: "Elena brings 18 years of award-winning design experience across residential and commercial sectors. She leads the in-house design studio and oversees design-build integration.",
+   529→   529→    image: "/images/team/team-2.png",
+   530→   530→    linkedin: "#",
+   531→   531→    expertise: ["Architecture", "Design-Build", "Sustainability"],
+   532→   532→  },
+   533→   533→  {
+   534→   534→    name: "Raymond Castillo",
+   535→   535→    role: "Director of Field Operations",
+   536→   536→    bio: "A second-generation builder, Raymond runs the field organization — 750+ craftspeople across a dozen active sites — with a relentless focus on schedule, quality, and safety.",
+   537→   537→    image: "/images/team/team-3.png",
+   538→   538→    linkedin: "#",
+   539→   539→    expertise: ["Field Ops", "Safety", "Scheduling"],
+   540→   540→  },
+   541→   541→  {
+   542→   542→    name: "Dr. Aisha Bello",
+   543→   543→    role: "VP, Civil Engineering",
+   544→   544→    bio: "PhD in structural engineering from UC Berkeley. Aisha leads the civil and infrastructure division, specializing in seismic design and design-build delivery of public works.",
+   545→   545→    image: "/images/team/team-4.png",
+   546→   546→    linkedin: "#",
+   547→   547→    expertise: ["Civil", "Seismic", "Public Works"],
+   548→   548→  },
+   549→   549→  {
+   550→   550→    name: "Tommy Rourke",
+   551→   551→    role: "Senior Superintendent",
+   552→   552→    bio: "28 years on the tools and 12 in the trailer. Tommy is the firm's go-to superintendent for complex urban builds, known for on-time delivery and a calm, methodical field presence.",
+   553→   553→    image: "/images/team/team-5.png",
+   554→   554→    linkedin: "#",
+   555→   555→    expertise: ["Superintending", "Urban Build", "Logistics"],
+   556→   556→  },
+   557→   557→  {
+   558→   558→    name: "David Chen",
+   559→   559→    role: "Director of Pre-Construction",
+   560→   560→    bio: "David leads estimating, value engineering, and pre-construction services. His GMP proposals are legendary for their transparency — and for rarely needing a change order.",
+   561→   561→    image: "/images/team/team-6.png",
+   562→   562→    linkedin: "#",
+   563→   563→    expertise: ["Estimating", "VE", "GMP"],
+   564→   564→  },
+   565→   565→];
+   566→   566→
+   567→   567→export type Testimonial = {
+   568→   568→  name: string;
+   569→   569→  title: string;
+   570→   570→  company: string;
+   571→   571→  quote: string;
+   572→   572→  rating: number;
+   573→   573→  avatar: string;
+   574→   574→  project: string;
+   575→   575→};
+   576→   576→
+   577→   577→export const testimonials: Testimonial[] = [
+   578→   578→  {
+   579→   579→    name: "Jonathan Pierce",
+   580→   580→    title: "Director of Real Estate",
+   581→   581→    company: "Meridian Properties",
+   582→   582→    quote:
+   583→   583→      "BUILDCORE delivered Meridian Tower two months ahead of schedule and under GMP. Their design-build integration saved us roughly $3.2M in value engineering without compromising the architecture. They are the only GC we use in the Bay Area now.",
+   584→   584→    rating: 5,
+   585→   585→    avatar: "/images/team/team-6.png",
+   586→   586→    project: "Meridian Tower",
+   587→   587→  },
+   588→   588→  {
+   589→   589→    name: "Maria Gonzalez",
+   590→   590→    title: "Homeowner",
+   591→   591→    company: "Harbor View Residence",
+   592→   592→    quote:
+   593→   593→      "We dreamed of a net-zero home on the Sausalito hillside and BUILDCORE made it real. Every trade was thoughtful, the schedule was honored, and the seismic engineering gives us total peace of mind. A once-in-a-lifetime build done right.",
+   594→   594→    rating: 5,
+   595→   595→    avatar: "/images/team/team-2.png",
+   596→   596→    project: "Harbor View Residence",
+   597→   597→  },
+   598→   598→  {
+   599→   599→    name: "Robert Kim",
+   600→   600→    title: "District Engineer",
+   601→   601→    company: "Caltrans District 4",
+   602→   602→    quote:
+   603→   603→      "On the Bay Bridge Connector, BUILDCORE hit every milestone on a 38-month DBFO contract with zero lost-time incidents. Their seismic isolation expertise and public-agency coordination were best-in-class.",
+   604→   604→    rating: 5,
+   605→   605→    avatar: "/images/team/team-3.png",
+   606→   606→    project: "Bay Bridge Connector",
+   607→   607→  },
+   608→   608→  {
+   609→   609→    name: "Sarah Whitfield",
+   610→   610→    title: "COO",
+   611→   611→    company: "Pacific Logistics Group",
+   612→   612→    quote:
+   613→   613→      "Our 612,000 sq ft distribution center was turned over a full month early with every dock door operational. BUILDCORE's tilt-up crew was relentless and their safety culture is genuine, not theater.",
+   614→   614→    rating: 5,
+   615→   615→    avatar: "/images/team/team-4.png",
+   616→   616→    project: "Port Logistics Center",
+   617→   617→  },
+   618→   618→  {
+   619→   619→    name: "James Okafor",
+   620→   620→    title: "Asset Manager",
+   621→   621→    company: "Fountain Realty",
+   622→   622→    quote:
+   623→   623→      "From pre-construction through commissioning, BUILDCORE's communication was exceptional. Weekly OAC meetings started and ended on time with clear action items. That discipline shows up in the results.",
+   624→   624→    rating: 5,
+   625→   625→    avatar: "/images/team/team-1.png",
+   626→   626→    project: "Fountain Plaza Offices",
+   627→   627→  },
+   628→   628→  {
+   629→   629→    name: "Lena Petrova",
+   630→   630→    title: "Homeowner & Artist",
+   631→   631→    company: "Loft 44",
+   632→   632→    quote:
+   633→   633→      "Converting a 1920s warehouse into my live/work loft was daunting. BUILDCORE preserved every brick I cared about and delivered a space that feels both historic and brand new. Their craftsmanship is on another level.",
+   634→   634→    rating: 5,
+   635→   635→    avatar: "/images/team/team-5.png",
+   636→   636→    project: "Loft 44 Renovation",
+   637→   637→  },
+   638→   638→];
+   639→   639→
+   640→   640→export type PricingPlan = {
+   641→   641→  name: string;
+   642→   642→  price: string;
+   643→   643→  period: string;
+   644→   644→  description: string;
+   645→   645→  features: string[];
+   646→   646→  popular?: boolean;
+   647→   647→  cta: string;
+   648→   648→};
+   649→   649→
+   650→   650→export const pricingPlans: PricingPlan[] = [
+   651→   651→  {
+   652→   652→    name: "Starter",
+   653→   653→    price: "$250",
+   654→   654→    period: "/sq ft",
+   655→   655→    description: "Ideal for smaller residential builds and renovations under 3,000 sq ft.",
+   656→   656→    features: [
+   657→   657→      "Single-family home construction",
+   658→   658→      "Standard material specifications",
+   659→   659→      "Fixed-price proposal",
+   660→   660→      "Weekly progress reports",
+   661→   661→      "1-year craftsmanship warranty",
+   662→   662→      "Standard finish package",
+   663→   663→    ],
+   664→   664→    cta: "Get a Quote",
+   665→   665→  },
+   666→   666→  {
+   667→   667→    name: "Professional",
+   668→   668→    price: "$450",
+   669→   669→    period: "/sq ft",
+   670→   670→    description: "Our most popular package for custom homes and light commercial projects.",
+   671→   671→    features: [
+   672→   672→      "Custom residential & small commercial",
+   673→   673→      "Premium material specifications",
+   674→   674→      "Design-build integration",
+   675→   675→      "Bi-weekly client walkthroughs",
+   676→   676→      "5-year craftsmanship warranty",
+   677→   677→      "Premium finish package",
+   678→   678→      "Smart-home rough-in included",
+   679→   679→    ],
+   680→   680→    popular: true,
+   681→   681→    cta: "Get a Quote",
+   682→   682→  },
+   683→   683→  {
+   684→   684→    name: "Enterprise",
+   685→   685→    price: "Custom",
+   686→   686→    period: "",
+   687→   687→    description: "Tailored pricing for large commercial, industrial, and infrastructure projects.",
+   688→   688→    features: [
+   689→   689→      "Commercial, industrial & infrastructure",
+   690→   690→      "Guaranteed Maximum Price (GMP)",
+   691→   691→      "Full design-build delivery",
+   692→   692→      "Dedicated project dashboard",
+   693→   693→      "10-year structural warranty",
+   694→   694→      "Bespoke finish & systems package",
+   695→   695→      "24/7 priority support",
+   696→   696→      "LEED certification management",
+   697→   697→    ],
+   698→   698→    cta: "Contact Sales",
+   699→   699→  },
+   700→   700→];
+   701→   701→
+   702→   702→export type BlogPost = {
+   703→   703→  slug: string;
+   704→   704→  title: string;
+   705→   705→  excerpt: string;
+   706→   706→  content: string;
+   707→   707→  category: string;
+   708→   708→  author: string;
+   709→   709→  date: string;
+   710→   710→  readTime: string;
+   711→   711→  image: string;
+   712→   712→};
+   713→   713→
+   714→   714→export const blogPosts: BlogPost[] = [
+   715→   715→  {
+   716→   716→    slug: "design-build-vs-hard-bid",
+   717→   717→    title: "Design-Build vs. Hard-Bid: Choosing the Right Delivery Method",
+   718→   718→    excerpt:
+   719→   719→      "Delivery method is the single biggest predictor of project success. We break down when design-build wins, when hard-bid makes sense, and how to choose.",
+   720→   720→    category: "Project Delivery",
+   721→   721→    author: "David Chen",
+   722→   722→    date: "2024-09-12",
+   723→   723→    readTime: "8 min",
+   724→   724→    image: "/images/blog/blog-1.png",
+   725→   725→    content:
+   726→   726→      "The delivery method you choose shapes everything that follows — schedule, cost, quality, and even the working relationships on your project. Yet too many owners default to the method they have always used rather than the one that fits.\n\n## Why Delivery Method Matters\n\nIndustry research from the Construction Industry Institute shows design-build projects are delivered 33% faster than design-bid-build, with 6% lower cost growth. The reason is simple: when the designer and builder share a contract, they collaborate instead of litigate.\n\n## When Design-Build Wins\n\nDesign-build shines on projects with aggressive schedules, evolving scope, or where cost certainty must be locked early. The single-point accountability eliminates the finger-pointing that plagues hard-bid projects.\n\n## When Hard-Bid Still Makes Sense\n\nHard-bid remains the right choice for highly prescribed, low-complexity projects where the design is fully complete and the owner's priority is the lowest possible first cost rather than lifecycle value.\n\n## Our Recommendation\n\nFor most private owners in 2024, design-build is the default. The schedule savings alone typically outweigh any premium in unit pricing, and the collaboration produces a better building.",
+   727→   727→  },
+   728→   728→  {
+   729→   729→    slug: "construction-technology-2024",
+   730→   730→    title: "5 Construction Technologies Reshaping Job Sites in 2024",
+   731→   731→    excerpt:
+   732→   732→      "From BIM to drones to robotics, here are the five technologies we have deployed across active job sites this year — and the measurable impact each delivers.",
+   733→   733→    category: "Technology",
+   734→   734→    author: "Elena Vasquez",
+   735→   735→    date: "2024-08-28",
+   736→   736→    readTime: "6 min",
+   737→   737→    image: "/images/blog/blog-2.png",
+   738→   738→    content:
+   739→   739→      "Construction has historically been one of the least-digitized industries. That is changing fast. At BUILDCORE we pilot, measure, and scale technology that produces real ROI — not tech for its own sake.\n\n## 1. Building Information Modeling (BIM)\n\nOur in-house BIM team models every project to LOD 350, clash-detecting MEP against structure before a single pipe is ordered. On Meridian Tower this prevented 1,200+ field clashes.\n\n## 2. Drones & Photogrammetry\n\nWeekly drone flights produce orthophoto progress maps and earthwork volume calculations. Owners see their project from above without leaving their office.\n\n## 3. Robotics & Automation\n\nWe have deployed layout robots on three active sites, cutting layout time by 60% and eliminating rework from manual transcription errors.\n\n## 4. Reality Capture & 3D Scanning\n\nLiDAR scans at foundation, framing, and MEP rough-in create an as-built record that feeds our closeout documentation and future facility management.\n\n## 5. Field-Reporting Apps\n\nEvery superintendent logs daily reports from a tablet, with photos and weather auto-captured. This single change improved our schedule accuracy by 18%.",
+   740→   740→  },
+   741→   741→  {
+   742→   742→    slug: "value-engineering-guide",
+   743→   743→    title: "A Practical Guide to Value Engineering (Without Cutting Corners)",
+   744→   744→    excerpt:
+   745→   745→      "Value engineering has a bad reputation because it is often used to mean cost-cutting. Here is how real VE actually improves projects.",
+   746→   746→    category: "Pre-Construction",
+   747→   747→    author: "David Chen",
+   748→   748→    date: "2024-08-10",
+   749→   749→    readTime: "7 min",
+   750→   750→    image: "/images/blog/blog-3.png",
+   751→   751→    content:
+   752→   752→      "Value engineering is one of the most misunderstood concepts in construction. Done right, it delivers better buildings for less money. Done wrong, it is the thin end of the wedge that compromises quality.\n\n## What Value Engineering Actually Means\n\nVE is the systematic analysis of a design to identify alternative materials, systems, or methods that deliver equal or better function at lower cost — without sacrificing quality, safety, or lifecycle performance.\n\n## The VE Workshop\n\nWe run VE workshops in early design development. Architects, engineers, estimators, and superintendents brainstorm alternatives, and each idea is scored on cost, schedule, quality, and maintainability.\n\n## A Real Example\n\nOn Port Logistics Center we substituted cast-in-place columns with precast, saving $1.4M and three weeks without reducing clear height or load capacity.\n\n## Red Flags\n\nBeware any VE suggestion that touches life-safety systems, structural redundancy, or envelope performance. Those are not value — they are value destruction.",
+   753→   753→  },
+   754→   754→  {
+   755→   755→    slug: "construction-safety-culture",
+   756→   756→    title: "Building a Zero-Incident Safety Culture That Sticks",
+   757→   757→    excerpt:
+   758→   758→      "An EMR of 0.71 doesn't happen by accident. Here are the five practices that define our safety culture — and how any contractor can adopt them.",
+   759→   759→    category: "Safety",
+   760→   760→    author: "Raymond Castillo",
+   761→   761→    date: "2024-07-22",
+   762→   762→    readTime: "9 min",
+   763→   763→    image: "/images/blog/blog-4.png",
+   764→   764→    content:
+   765→   765→      "Safety is not a poster in the trailer. It is the sum of a thousand small decisions made every shift by every person on site. Our EMR of 0.71 — among the top 5% of contractors nationally — reflects a culture we have built deliberately over 15 years.\n\n## 1. Leadership Walks the Talk\n\nEvery project kickoff begins with a safety walkthrough led by a principal. Field crews watch what leadership does, not what they say.\n\n## 2. Job Hazard Analysis Every Shift\n\nNo crew starts work without a JHA specific to that day's tasks, location, and conditions. It takes 10 minutes and prevents the foreseeable.\n\n## 3. Near-Miss Reporting\n\nWe celebrate near-miss reports, not punish them. Each near-miss is a free lesson. In 2023 our crews logged 2,400 near-misses — and zero lost-time incidents.\n\n## 4. Stop-Work Authority\n\nEvery worker, every subcontractor, has unconditional stop-work authority. They have used it 47 times this year. Not once has it been the wrong call.\n\n## 5. Leading Indicators Over Lagging\n\nTRIR is a lagging indicator. We track leading indicators — JHAs completed, observations closed, training hours per craft — because those predict tomorrow's safety performance.",
+   766→   766→  },
+   767→   767→];
+   768→   768→
+   769→   769→export type FAQ = {
+   770→   770→  question: string;
+   771→   771→  answer: string;
+   772→   772→  category: string;
+   773→   773→};
+   774→   774→
+   775→   775→export const faqs: FAQ[] = [
+   776→   776→  {
+   777→   777→    category: "Getting Started",
+   778→   778→    question: "What geographic area does BUILDCORE serve?",
+   779→   779→    answer:
+   780→   780→      "We are headquartered in Oakland, California and serve the greater Bay Area plus Northern California. For select enterprise clients we have mobilized crews as far as Reno and Sacramento. If you are outside our core region, we are happy to refer a trusted partner.",
+   781→   781→  },
+   782→   782→  {
+   783→   783→    category: "Getting Started",
+   784→   784→    question: "What is the minimum project size you take on?",
+   785→   785→    answer:
+   786→   786→      "Our residential division takes on projects from $250,000. Commercial and industrial projects typically start around $1M, and infrastructure work begins at approximately $5M. We evaluate every inquiry individually — reach out and we will be candid about fit.",
+   787→   787→  },
+   788→   788→  {
+   789→   789→    category: "Getting Started",
+   790→   790→    question: "How do I request a quote or proposal?",
+   791→   791→    answer:
+   792→   792→      "The fastest path is our Contact page. Share your project type, location, and approximate budget. A pre-construction lead will respond within one business day to schedule a discovery call.",
+   793→   793→  },
+   794→   794→  {
+   795→   795→    category: "Pricing & Contracts",
+   796→   796→    question: "What contract structures do you offer?",
+   797→   797→    answer:
+   798→   798→      "We offer lump-sum (hard-bid), guaranteed maximum price (GMP), cost-plus-fee, and design-build contracts. For enterprise clients we also structure design-build-finance-operate (DBFO) arrangements. We recommend the structure that best fits your risk profile and project goals.",
+   799→   799→  },
+   800→   800→  {
+   801→   801→    category: "Pricing & Contracts",
+   802→   802→    question: "How is your per-square-foot pricing calculated?",
+   803→   803→    answer:
+   804→   804→      "Per-square-foot figures on our Pricing page are planning benchmarks for typical builds at standard, premium, and enterprise finish levels. Actual pricing is driven by site conditions, scope, finishes, schedule, and market conditions. We provide a transparent GMP before construction begins.",
+   805→   805→  },
+   806→   806→  {
+   807→   807→    category: "Pricing & Contracts",
+   808→   808→    question: "Do you offer financing or payment plans?",
+   809→   809→    answer:
+   810→   810→      "We do not provide direct financing, but we partner with several construction lenders and can introduce you to preferred financing partners for residential and commercial projects. Construction draw schedules follow AIA standard progress billing.",
+   811→   811→  },
+   812→   812→  {
+   813→   813→    category: "Process & Timeline",
+   814→   814→    question: "How long does a typical project take?",
+   815→   815→    answer:
+   816→   816→      "Timelines vary widely by scope. A kitchen renovation might take 8–12 weeks, a custom home 12–18 months, a mid-rise office 18–30 months, and a major infrastructure project 24–48 months. We provide a critical-path schedule during pre-construction and update it weekly.",
+   817→   817→  },
+   818→   818→  {
+   819→   819→    category: "Process & Timeline",
+   820→   820→    question: "What is included in your warranty?",
+   821→   821→    answer:
+   822→   822→      "Every BUILDCORE project includes a one-year craftsmanship warranty covering workmanship defects. Structural elements carry a ten-year warranty, and manufacturer warranties on systems (roof, HVAC, windows) are passed through in full. We also offer extended warranty programs.",
+   823→   823→  },
+   824→   824→  {
+   825→   825→    category: "Process & Timeline",
+   826→   826→    question: "Can I make changes after construction has started?",
+   827→   827→    answer:
+   828→   828→      "Yes — change orders are a normal part of construction. We document every change with a written change order including scope, price, and schedule impact before the work proceeds. Transparent change-order management is a hallmark of our process.",
+   829→   829→  },
+   830→   830→  {
+   831→   831→    category: "Safety & Compliance",
+   832→   832→    question: "What is your safety record?",
+   833→   833→    answer:
+   834→   834→      "Our Experience Modification Rate (EMR) is 0.71, placing us in the top 5% of contractors nationally. We have maintained zero lost-time incidents for 38 consecutive months across all active sites. Every superintendent is OSHA 30-certified and every project has a dedicated HSE manager.",
+   835→   835→  },
+   836→   836→  {
+   837→   837→    category: "Safety & Compliance",
+   838→   838→    question: "Are you licensed, bonded, and insured?",
+   839→   839→    answer:
+   840→   840→      "Yes. BUILDCORE holds California CSLB License #847291 (Class A General Engineering and Class B General Building). We carry $5M general liability, $2M workers' compensation, and are bonded up to $25M per project. Certificates available on request.",
+   841→   841→  },
+   842→   842→  {
+   843→   843→    category: "Sustainability",
+   844→   844→    question: "Do you build green / LEED-certified projects?",
+   845→   845→    answer:
+   846→   846→      "Sustainability is core to our practice. We have delivered LEED Platinum, LEED Gold, and WELL Silver certified projects, and our in-house team includes LEED APs. We also build net-zero and Passive House projects and can advise on incentives and tax credits.",
+   847→   847→  },
+   848→   848→];
+   849→   849→
+   850→   850→export const clientLogos = [
+   851→   851→  "Meridian Properties",
+   852→   852→  "Caltrans",
+   853→   853→  "Pacific Logistics",
+   854→   854→  "Fountain Realty",
+   855→   855→  "Bay Area Council",
+   856→   856→  "Port of Oakland",
+   857→   857→];
+   858→   858→
+   859→   859→export const certifications = [
+   860→   860→  "CSLB Class A General Engineering",
+   861→   861→  "OSHA 30 Certified Workforce",
+   862→   862→  "LEED AP Accredited Team",
+   863→   863→  "EMR 0.71 — Top 5% Safety",
+   864→   864→  "$25M Bonding Capacity",
+   865→   865→  "ISO 9001 Quality Management",
+   866→   866→];
+   867→   867→

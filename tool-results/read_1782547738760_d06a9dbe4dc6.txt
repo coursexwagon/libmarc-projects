@@ -1,0 +1,682 @@
+     1→     1→"use client";
+     2→     2→
+     3→     3→import * as React from "react";
+     4→     4→import Link from "next/link";
+     5→     5→import Image from "next/image";
+     6→     6→import {
+     7→     7→  ArrowRight,
+     8→     8→  ArrowUpRight,
+     9→     9→  Phone,
+    10→    10→  Star,
+    11→    11→  ShieldCheck,
+    12→    12→  Award,
+    13→    13→  Clock,
+    14→    14→  CheckCircle2,
+    15→    15→  Quote,
+    16→    16→  HardHat,
+    17→    17→  MapPin,
+    18→    18→  TrendingUp,
+    19→    19→  Users,
+    20→    20→  Building2,
+    21→    21→  Wrench,
+    22→    22→} from "lucide-react";
+    23→    23→import { Button } from "@/components/ui/button";
+    24→    24→import { Card, CardContent } from "@/components/ui/card";
+    25→    25→import { Badge } from "@/components/ui/badge";
+    26→    26→import {
+    27→    27→  SectionHeading,
+    28→    28→  Counter,
+    29→    29→  CTABand,
+    30→    30→  Reveal,
+    31→    31→} from "@/components/site/sections";
+    32→    32→import {
+    33→    33→  company,
+    34→    34→  stats,
+    35→    35→  services,
+    36→    36→  projects,
+    37→    37→  testimonials,
+    38→    38→  certifications,
+    39→    39→  clientLogos,
+    40→    40→} from "@/lib/site-data";
+    41→    41→
+    42→    42→export default function HomePage() {
+    43→    43→  return (
+    44→    44→    <>
+    45→    45→      {/* ===================== HERO ===================== */}
+    46→    46→      <section className="relative overflow-hidden bg-foreground text-background">
+    47→    47→        {/* Background image */}
+    48→    48→        <div className="absolute inset-0">
+    49→    49→          <Image
+    50→    50→            src="/images/hero-worker.png"
+    51→    51→            alt="Construction worker in yellow hard hat"
+    52→    52→            fill
+    53→    53→            priority
+    54→    54→            className="object-cover object-center opacity-40"
+    55→    55→            sizes="100vw"
+    56→    56→          />
+    57→    57→        </div>
+    58→    58→        <div className="absolute inset-0 bg-gradient-to-r from-foreground via-foreground/90 to-foreground/40" />
+    59→    59→        <div className="absolute inset-0 bg-gradient-to-t from-foreground via-transparent to-transparent" />
+    60→    60→        {/* Grid overlay */}
+    61→    61→        <div
+    62→    62→          className="absolute inset-0 opacity-[0.06]"
+    63→    63→          style={{
+    64→    64→            backgroundImage:
+    65→    65→              "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
+    66→    66→            backgroundSize: "48px 48px",
+    67→    67→          }}
+    68→    68→        />
+    69→    69→
+    70→    70→        <div className="container relative mx-auto px-4 py-20 lg:py-28">
+    71→    71→          <div className="grid lg:grid-cols-12 gap-10 items-center">
+    72→    72→            <div className="lg:col-span-7">
+    73→    73→              <Reveal>
+    74→    74→                <div className="inline-flex items-center gap-2 border border-background/20 bg-background/5 px-4 py-2 mb-6 backdrop-blur-sm">
+    75→    75→                  <span className="flex size-2 rounded-full bg-primary animate-pulse" />
+    76→    76→                  <span className="text-xs font-bold uppercase tracking-[0.18em] text-background/90">
+    77→    77→                    Trusted Bay Area Builder Since {company.founded}
+    78→    78→                  </span>
+    79→    79→                </div>
+    80→    80→              </Reveal>
+    81→    81→
+    82→    82→              <Reveal delay={100}>
+    83→    83→                <h1 className="font-display text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[0.95] tracking-tight">
+    84→    84→                  WE PROVIDE
+    85→    85→                  <br />
+    86→    86→                  <span className="text-primary">BEST SERVICE</span>
+    87→    87→                </h1>
+    88→    88→              </Reveal>
+    89→    89→
+    90→    90→              <Reveal delay={200}>
+    91→    91→                <p className="mt-6 text-lg lg:text-xl text-background/75 max-w-xl leading-relaxed">
+    92→    92→                  We will provide you the best service which you deserve —
+    93→    93→                  delivered fast, built safe, and engineered to last for
+    94→    94→                  generations.
+    95→    95→                </p>
+    96→    96→              </Reveal>
+    97→    97→
+    98→    98→              <Reveal delay={300}>
+    99→    99→                <div className="mt-8 flex flex-col sm:flex-row gap-3">
+   100→   100→                  <Button
+   101→   101→                    asChild
+   102→   102→                    size="lg"
+   103→   103→                    className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold uppercase tracking-wide h-14 px-8 text-base"
+   104→   104→                  >
+   105→   105→                    <Link href="/contact">
+   106→   106→                      Get a Free Quote
+   107→   107→                      <ArrowRight className="size-5" />
+   108→   108→                    </Link>
+   109→   109→                  </Button>
+   110→   110→                  <Button
+   111→   111→                    asChild
+   112→   112→                    variant="outline"
+   113→   113→                    size="lg"
+   114→   114→                    className="border-background/25 bg-transparent text-background hover:bg-background/10 hover:text-background font-bold uppercase tracking-wide h-14 px-8 text-base"
+   115→   115→                  >
+   116→   116→                    <Link href="/projects">
+   117→   117→                      View Our Work
+   118→   118→                      <ArrowUpRight className="size-5" />
+   119→   119→                    </Link>
+   120→   120→                  </Button>
+   121→   121→                </div>
+   122→   122→              </Reveal>
+   123→   123→
+   124→   124→              {/* Trust badges */}
+   125→   125→              <Reveal delay={400}>
+   126→   126→                <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
+   127→   127→                  {[
+   128→   128→                    { icon: ShieldCheck, label: "EMR 0.71 Safety" },
+   129→   129→                    { icon: Award, label: "15+ Years Experience" },
+   130→   130→                    { icon: CheckCircle2, label: "Licensed & Bonded" },
+   131→   131→                  ].map((b) => (
+   132→   132→                    <div
+   133→   133→                      key={b.label}
+   134→   134→                      className="flex items-center gap-2 text-sm text-background/80"
+   135→   135→                    >
+   136→   136→                      <b.icon className="size-5 text-primary" />
+   137→   137→                      {b.label}
+   138→   138→                    </div>
+   139→   139→                  ))}
+   140→   140→                </div>
+   141→   141→              </Reveal>
+   142→   142→            </div>
+   143→   143→
+   144→   144→            {/* Floating quote card */}
+   145→   145→            <div className="lg:col-span-5 hidden lg:block">
+   146→   146→              <Reveal delay={500}>
+   147→   147→                <div className="relative">
+   148→   148→                  <div className="absolute -top-4 -left-4 bg-primary text-primary-foreground px-5 py-3 z-10">
+   149→   149→                    <div className="text-3xl font-bold font-display">
+   150→   150→                      <Counter value={1500} suffix="+" />
+   151→   151→                    </div>
+   152→   152→                    <div className="text-xs uppercase tracking-wider font-semibold">
+   153→   153→                      Projects Completed
+   154→   154→                    </div>
+   155→   155→                  </div>
+   156→   156→                  <Card className="bg-background/95 backdrop-blur border-0 shadow-2xl">
+   157→   157→                    <CardContent className="p-7">
+   158→   158→                      <div className="flex items-center gap-1 mb-4">
+   159→   159→                        {[...Array(5)].map((_, i) => (
+   160→   160→                          <Star key={i} className="size-4 fill-primary text-primary" />
+   161→   161→                        ))}
+   162→   162→                        <span className="ml-2 text-sm font-semibold text-foreground">
+   163→   163→                          4.9/5
+   164→   164→                        </span>
+   165→   165→                        <span className="text-sm text-muted-foreground">
+   166→   166→                          (480 reviews)
+   167→   167→                        </span>
+   168→   168→                      </div>
+   169→   169→                      <Quote className="size-8 text-primary/30 mb-3" />
+   170→   170→                      <p className="text-foreground leading-relaxed">
+   171→   171→                        &ldquo;BUILDCORE delivered Meridian Tower two months ahead
+   172→   172→                        of schedule and under GMP. They are the only GC we use in
+   173→   173→                        the Bay Area now.&rdquo;
+   174→   174→                      </p>
+   175→   175→                      <div className="mt-5 flex items-center gap-3 pt-5 border-t border-border">
+   176→   176→                        <div className="flex size-11 items-center justify-center bg-foreground text-background font-bold">
+   177→   177→                          JP
+   178→   178→                        </div>
+   179→   179→                        <div>
+   180→   180→                          <div className="font-semibold text-foreground text-sm">
+   181→   181→                            Jonathan Pierce
+   182→   182→                          </div>
+   183→   183→                          <div className="text-xs text-muted-foreground">
+   184→   184→                            Director of Real Estate, Meridian Properties
+   185→   185→                          </div>
+   186→   186→                        </div>
+   187→   187→                      </div>
+   188→   188→                    </CardContent>
+   189→   189→                  </Card>
+   190→   190→                </div>
+   191→   191→              </Reveal>
+   192→   192→            </div>
+   193→   193→          </div>
+   194→   194→        </div>
+   195→   195→
+   196→   196→        {/* Hazard stripe bottom */}
+   197→   197→        <div className="hazard-stripe h-2 w-full" />
+   198→   198→      </section>
+   199→   199→
+   200→   200→      {/* ===================== CLIENT LOGOS ===================== */}
+   201→   201→      <section className="border-b border-border bg-background">
+   202→   202→        <div className="container mx-auto px-4 py-8">
+   203→   203→          <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-12">
+   204→   204→            <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground shrink-0">
+   205→   205→              Trusted by industry leaders
+   206→   206→            </p>
+   207→   207→            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
+   208→   208→              {clientLogos.map((logo) => (
+   209→   209→                <span
+   210→   210→                  key={logo}
+   211→   211→                  className="font-display text-lg lg:text-xl font-bold text-muted-foreground/60 hover:text-foreground transition-colors"
+   212→   212→                >
+   213→   213→                  {logo}
+   214→   214→                </span>
+   215→   215→              ))}
+   216→   216→            </div>
+   217→   217→          </div>
+   218→   218→        </div>
+   219→   219→      </section>
+   220→   220→
+   221→   221→      {/* ===================== STATS ===================== */}
+   222→   222→      <section className="bg-foreground text-background">
+   223→   223→        <div className="container mx-auto px-4 py-16 lg:py-20">
+   224→   224→          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4">
+   225→   225→            {stats.map((stat, i) => {
+   226→   226→              const icons = [Clock, Building2, Users, TrendingUp];
+   227→   227→              const Icon = icons[i];
+   228→   228→              return (
+   229→   229→                <Reveal key={stat.label} delay={i * 100}>
+   230→   230→                  <div className="relative group">
+   231→   231→                    {i > 0 && (
+   232→   232→                      <div className="hidden lg:block absolute -left-2 top-1/2 -translate-y-1/2 h-16 w-px bg-background/15" />
+   233→   233→                    )}
+   234→   234→                    <div className="text-center lg:text-left lg:pl-4">
+   235→   235→                      <Icon className="size-8 text-primary mx-auto lg:mx-0 mb-3" />
+   236→   236→                      <div className="font-display text-5xl lg:text-6xl font-bold text-primary leading-none">
+   237→   237→                        <Counter value={stat.value} suffix={stat.suffix} />
+   238→   238→                      </div>
+   239→   239→                      <div className="mt-2 text-sm uppercase tracking-wider text-background/70 font-medium">
+   240→   240→                        {stat.label}
+   241→   241→                      </div>
+   242→   242→                    </div>
+   243→   243→                  </div>
+   244→   244→                </Reveal>
+   245→   245→              );
+   246→   246→            })}
+   247→   247→          </div>
+   248→   248→        </div>
+   249→   249→      </section>
+   250→   250→
+   251→   251→      {/* ===================== ABOUT PREVIEW ===================== */}
+   252→   252→      <section className="py-20 lg:py-28">
+   253→   253→        <div className="container mx-auto px-4">
+   254→   254→          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+   255→   255→            <Reveal>
+   256→   256→              <div className="relative">
+   257→   257→                <div className="absolute -top-4 -left-4 w-full h-full border-2 border-primary z-0" />
+   258→   258→                <div className="relative aspect-[4/3] overflow-hidden bg-muted z-10">
+   259→   259→                  <Image
+   260→   260→                    src="/images/about-site.png"
+   261→   261→                    alt="Construction site aerial view"
+   262→   262→                    fill
+   263→   263→                    className="object-cover"
+   264→   264→                    sizes="(max-width: 1024px) 100vw, 50vw"
+   265→   265→                  />
+   266→   266→                </div>
+   267→   267→                {/* Floating badge */}
+   268→   268→                <div className="absolute -bottom-6 -right-6 bg-primary text-primary-foreground p-6 z-20 shadow-xl hidden sm:block">
+   269→   269→                  <div className="font-display text-4xl font-bold">15+</div>
+   270→   270→                  <div className="text-xs uppercase tracking-wider font-semibold mt-1">
+   271→   271→                    Years of Building
+   272→   272→                    <br />
+   273→   273→                    the Bay Area
+   274→   274→                  </div>
+   275→   275→                </div>
+   276→   276→              </div>
+   277→   277→            </Reveal>
+   278→   278→
+   279→   279→            <Reveal delay={150}>
+   280→   280→              <div>
+   281→   281→                <SectionHeading
+   282→   282→                  eyebrow="About BUILDCORE"
+   283→   283→                  title={
+   284→   284→                    <>
+   285→   285→                      Building the Bay Area with{" "}
+   286→   286→                      <span className="text-primary">precision & pride</span>{" "}
+   287→   287→                      since {company.founded}.
+   288→   288→                    </>
+   289→   289→                  }
+   290→   290→                  description="What started in 2009 with a single pickup truck and a zero-incident pledge has grown into one of Northern California's most trusted construction firms — without ever losing the craftsman's mindset that started it all."
+   291→   291→                />
+   292→   292→
+   293→   293→                <div className="mt-8 space-y-4">
+   294→   294→                  {[
+   295→   295→                    "Single-point accountability from design through handover",
+   296→   296→                    "In-house architects, engineers, and 750+ skilled craftspeople",
+   297→   297→                    "Top 5% safety record (EMR 0.71) with zero lost-time incidents",
+   298→   298→                    "Transparent GMP pricing — rarely needing a change order",
+   299→   299→                  ].map((point) => (
+   300→   300→                    <div key={point} className="flex items-start gap-3">
+   301→   301→                      <CheckCircle2 className="size-5 text-primary shrink-0 mt-0.5" />
+   302→   302→                      <span className="text-foreground/80">{point}</span>
+   303→   303→                    </div>
+   304→   304→                  ))}
+   305→   305→                </div>
+   306→   306→
+   307→   307→                <div className="mt-8 flex flex-col sm:flex-row gap-3">
+   308→   308→                  <Button
+   309→   309→                    asChild
+   310→   310→                    className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold uppercase tracking-wide"
+   311→   311→                  >
+   312→   312→                    <Link href="/about">
+   313→   313→                      Our Story
+   314→   314→                      <ArrowRight className="size-4" />
+   315→   315→                    </Link>
+   316→   316→                  </Button>
+   317→   317→                  <Button asChild variant="outline" className="font-bold uppercase tracking-wide">
+   318→   318→                    <Link href="/team">Meet the Team</Link>
+   319→   319→                  </Button>
+   320→   320→                </div>
+   321→   321→              </div>
+   322→   322→            </Reveal>
+   323→   323→          </div>
+   324→   324→        </div>
+   325→   325→      </section>
+   326→   326→
+   327→   327→      {/* ===================== SERVICES ===================== */}
+   328→   328→      <section className="py-20 lg:py-28 bg-muted/40">
+   329→   329→        <div className="container mx-auto px-4">
+   330→   330→          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+   331→   331→            <SectionHeading
+   332→   332→              eyebrow="What We Do"
+   333→   333→              title={
+   334→   334→                <>
+   335→   335→                  Comprehensive construction
+   336→   336→                  <br />
+   337→   337→                  <span className="text-primary">services</span> under one roof
+   338→   338→                </>
+   339→   339→              }
+   340→   340→              description="From pre-construction planning to final handover, our integrated teams cover every discipline a project demands."
+   341→   341→            />
+   342→   342→            <Button
+   343→   343→              asChild
+   344→   344→              variant="outline"
+   345→   345→              className="font-bold uppercase tracking-wide shrink-0"
+   346→   346→            >
+   347→   347→              <Link href="/services">
+   348→   348→                All Services
+   349→   349→                <ArrowRight className="size-4" />
+   350→   350→              </Link>
+   351→   351→            </Button>
+   352→   352→          </div>
+   353→   353→
+   354→   354→          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+   355→   355→            {services.slice(0, 6).map((service, i) => (
+   356→   356→              <Reveal key={service.slug} delay={i * 80}>
+   357→   357→                <Link href={`/services/${service.slug}`} className="group block h-full">
+   358→   358→                  <Card className="h-full overflow-hidden border-border hover:border-primary transition-all duration-300 hover:shadow-xl bg-background">
+   359→   359→                    <div className="relative aspect-[16/10] overflow-hidden bg-muted">
+   360→   360→                      <Image
+   361→   361→                        src={service.image}
+   362→   362→                        alt={service.title}
+   363→   363→                        fill
+   364→   364→                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+   365→   365→                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+   366→   366→                      />
+   367→   367→                      <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/10 to-transparent" />
+   368→   368→                      <div className="absolute top-4 left-4 flex size-11 items-center justify-center bg-primary text-primary-foreground">
+   369→   369→                        <service.icon className="size-5" strokeWidth={2.2} />
+   370→   370→                      </div>
+   371→   371→                      <Badge className="absolute top-4 right-4 bg-background/90 text-foreground border-0 backdrop-blur">
+   372→   372→                        {String(i + 1).padStart(2, "0")}
+   373→   373→                      </Badge>
+   374→   374→                    </div>
+   375→   375→                    <CardContent className="p-6">
+   376→   376→                      <h3 className="font-display text-xl font-bold group-hover:text-primary transition-colors">
+   377→   377→                        {service.title}
+   378→   378→                      </h3>
+   379→   379→                      <p className="mt-2 text-sm text-muted-foreground leading-relaxed line-clamp-2">
+   380→   380→                        {service.short}
+   381→   381→                      </p>
+   382→   382→                      <div className="mt-4 flex items-center gap-1.5 text-sm font-bold text-primary uppercase tracking-wide">
+   383→   383→                        Learn More
+   384→   384→                        <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+   385→   385→                      </div>
+   386→   386→                    </CardContent>
+   387→   387→                  </Card>
+   388→   388→                </Link>
+   389→   389→              </Reveal>
+   390→   390→            ))}
+   391→   391→          </div>
+   392→   392→        </div>
+   393→   393→      </section>
+   394→   394→
+   395→   395→      {/* ===================== FEATURED PROJECTS ===================== */}
+   396→   396→      <section className="py-20 lg:py-28 bg-foreground text-background">
+   397→   397→        <div className="container mx-auto px-4">
+   398→   398→          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+   399→   399→            <SectionHeading
+   400→   400→              light
+   401→   401→              eyebrow="Featured Work"
+   402→   402→              title={
+   403→   403→                <>
+   404→   404→                  Landmark projects that
+   405→   405→                  <br />
+   406→   406→                  <span className="text-primary">define skylines</span>
+   407→   407→                </>
+   408→   408→              }
+   409→   409→              description="A selection of recent projects spanning residential, commercial, industrial, and infrastructure."
+   410→   410→            />
+   411→   411→            <Button
+   412→   412→              asChild
+   413→   413→              variant="outline"
+   414→   414→              className="border-background/25 bg-transparent text-background hover:bg-background/10 hover:text-background font-bold uppercase tracking-wide shrink-0"
+   415→   415→            >
+   416→   416→              <Link href="/projects">
+   417→   417→                View All Projects
+   418→   418→                <ArrowRight className="size-4" />
+   419→   419→              </Link>
+   420→   420→            </Button>
+   421→   421→          </div>
+   422→   422→
+   423→   423→          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+   424→   424→            {projects.slice(0, 3).map((project, i) => (
+   425→   425→              <Reveal key={project.slug} delay={i * 100}>
+   426→   426→                <Link href={`/projects/${project.slug}`} className="group block relative aspect-[4/5] overflow-hidden bg-background/5">
+   427→   427→                  <Image
+   428→   428→                    src={project.image}
+   429→   429→                    alt={project.title}
+   430→   430→                    fill
+   431→   431→                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+   432→   432→                    sizes="(max-width: 768px) 100vw, 33vw"
+   433→   433→                  />
+   434→   434→                  <div className="absolute inset-0 bg-gradient-to-t from-foreground via-foreground/30 to-transparent" />
+   435→   435→                  <div className="absolute top-4 left-4">
+   436→   436→                    <Badge className="bg-primary text-primary-foreground border-0 font-bold uppercase tracking-wide">
+   437→   437→                      {project.category}
+   438→   438→                    </Badge>
+   439→   439→                  </div>
+   440→   440→                  <div className="absolute bottom-0 left-0 right-0 p-6">
+   441→   441→                    <div className="flex items-center gap-2 text-xs text-background/70 mb-2">
+   442→   442→                      <MapPin className="size-3.5 text-primary" />
+   443→   443→                      {project.location}
+   444→   444→                      <span className="mx-1">•</span>
+   445→   445→                      {project.year}
+   446→   446→                    </div>
+   447→   447→                    <h3 className="font-display text-2xl font-bold text-background group-hover:text-primary transition-colors">
+   448→   448→                      {project.title}
+   449→   449→                    </h3>
+   450→   450→                    <p className="mt-2 text-sm text-background/70 line-clamp-2 max-h-0 group-hover:max-h-20 overflow-hidden transition-all duration-500">
+   451→   451→                      {project.summary}
+   452→   452→                    </p>
+   453→   453→                    <div className="mt-3 flex items-center gap-1.5 text-sm font-bold text-primary uppercase tracking-wide">
+   454→   454→                      View Project
+   455→   455→                      <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+   456→   456→                    </div>
+   457→   457→                  </div>
+   458→   458→                </Link>
+   459→   459→              </Reveal>
+   460→   460→            ))}
+   461→   461→          </div>
+   462→   462→        </div>
+   463→   463→      </section>
+   464→   464→
+   465→   465→      {/* ===================== PRICING PREVIEW ===================== */}
+   466→   466→      <section className="py-20 lg:py-28">
+   467→   467→        <div className="container mx-auto px-4">
+   468→   468→          <SectionHeading
+   469→   469→            align="center"
+   470→   470→            eyebrow="Transparent Pricing"
+   471→   471→            title={
+   472→   472→              <>
+   473→   473→                Pricing built for <span className="text-primary">every project</span>
+   474→   474→              </>
+   475→   475→            }
+   476→   476→            description="Clear, per-square-foot benchmarks for residential and commercial builds. Enterprise and infrastructure projects are quoted custom."
+   477→   477→            className="mb-12"
+   478→   478→          />
+   479→   479→
+   480→   480→          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+   481→   481→            {[
+   482→   482→              { price: "$250", name: "Starter", desc: "Residential builds under 3,000 sq ft", popular: false },
+   483→   483→              { price: "$450", name: "Professional", desc: "Custom homes & light commercial", popular: true },
+   484→   484→              { price: "Custom", name: "Enterprise", desc: "Large commercial & infrastructure", popular: false },
+   485→   485→            ].map((tier, i) => (
+   486→   486→              <Reveal key={tier.name} delay={i * 100}>
+   487→   487→                <Card
+   488→   488→                  className={`relative h-full ${
+   489→   489→                    tier.popular
+   490→   490→                      ? "border-primary border-2 shadow-xl lg:scale-105"
+   491→   491→                      : "border-border"
+   492→   492→                  }`}
+   493→   493→                >
+   494→   494→                  {tier.popular && (
+   495→   495→                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1 text-xs font-bold uppercase tracking-wider">
+   496→   496→                      Most Popular
+   497→   497→                    </div>
+   498→   498→                  )}
+   499→   499→                  <CardContent className="p-7">
+   500→   500→                    <div className="text-sm font-bold uppercase tracking-wider text-muted-foreground">
+   501→   501→                      {tier.name}
+   502→   502→                    </div>
+   503→   503→                    <div className="mt-3 flex items-baseline gap-1">
+   504→   504→                      <span className="font-display text-5xl font-bold">{tier.price}</span>
+   505→   505→                      {tier.price !== "Custom" && (
+   506→   506→                        <span className="text-muted-foreground font-medium">/sq ft</span>
+   507→   507→                      )}
+   508→   508→                    </div>
+   509→   509→                    <p className="mt-3 text-sm text-muted-foreground">{tier.desc}</p>
+   510→   510→                    <Button
+   511→   511→                      asChild
+   512→   512→                      className={`mt-6 w-full font-bold uppercase tracking-wide ${
+   513→   513→                        tier.popular
+   514→   514→                          ? "bg-primary text-primary-foreground hover:bg-primary/90"
+   515→   515→                          : ""
+   516→   516→                      }`}
+   517→   517→                      variant={tier.popular ? "default" : "outline"}
+   518→   518→                    >
+   519→   519→                      <Link href="/pricing">View Details</Link>
+   520→   520→                    </Button>
+   521→   521→                  </CardContent>
+   522→   522→                </Card>
+   523→   523→              </Reveal>
+   524→   524→            ))}
+   525→   525→          </div>
+   526→   526→
+   527→   527→          <div className="mt-10 text-center">
+   528→   528→            <Button asChild variant="link" className="font-bold uppercase tracking-wide text-primary">
+   529→   529→              <Link href="/pricing">
+   530→   530→                See full pricing breakdown
+   531→   531→                <ArrowRight className="size-4" />
+   532→   532→              </Link>
+   533→   533→            </Button>
+   534→   534→          </div>
+   535→   535→        </div>
+   536→   536→      </section>
+   537→   537→
+   538→   538→      {/* ===================== PROCESS ===================== */}
+   539→   539→      <section className="py-20 lg:py-28 bg-muted/40">
+   540→   540→        <div className="container mx-auto px-4">
+   541→   541→          <SectionHeading
+   542→   542→            align="center"
+   543→   543→            eyebrow="How We Work"
+   544→   544→            title={
+   545→   545→              <>
+   546→   546→                A proven process from{" "}
+   547→   547→                <span className="text-primary">groundbreaking to handover</span>
+   548→   548→              </>
+   549→   549→            }
+   550→   550→            description="Four disciplined phases that turn your vision into a delivered building — on schedule and on budget."
+   551→   551→            className="mb-14"
+   552→   552→          />
+   553→   553→
+   554→   554→          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+   555→   555→            {/* Connecting line */}
+   556→   556→            <div className="hidden lg:block absolute top-12 left-[12.5%] right-[12.5%] h-0.5 bg-border" />
+   557→   557→            {[
+   558→   558→              { step: "01", title: "Consult", icon: Phone, desc: "We listen to your vision, budget, and timeline, then map feasibility." },
+   559→   559→              { step: "02", title: "Design", icon: HardHat, desc: "Architects and engineers finalize plans; we secure all permits." },
+   560→   560→              { step: "03", title: "Build", icon: Wrench, desc: "Site mobilization through finishes with weekly milestone reporting." },
+   561→   561→              { step: "04", title: "Deliver", icon: CheckCircle2, desc: "Final inspection, walkthrough, warranty docs, and keys in hand." },
+   562→   562→            ].map((p, i) => (
+   563→   563→              <Reveal key={p.step} delay={i * 100}>
+   564→   564→                <div className="relative text-center">
+   565→   565→                  <div className="relative inline-flex size-24 items-center justify-center bg-background border-2 border-primary mx-auto mb-5">
+   566→   566→                    <p.icon className="size-9 text-primary" strokeWidth={2} />
+   567→   567→                    <span className="absolute -top-3 -right-3 flex size-8 items-center justify-center bg-primary text-primary-foreground font-display font-bold text-sm">
+   568→   568→                      {p.step}
+   569→   569→                    </span>
+   570→   570→                  </div>
+   571→   571→                  <h3 className="font-display text-xl font-bold uppercase tracking-wide">
+   572→   572→                    {p.title}
+   573→   573→                  </h3>
+   574→   574→                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto">
+   575→   575→                    {p.desc}
+   576→   576→                  </p>
+   577→   577→                </div>
+   578→   578→              </Reveal>
+   579→   579→            ))}
+   580→   580→          </div>
+   581→   581→        </div>
+   582→   582→      </section>
+   583→   583→
+   584→   584→      {/* ===================== TESTIMONIALS ===================== */}
+   585→   585→      <section className="py-20 lg:py-28">
+   586→   586→        <div className="container mx-auto px-4">
+   587→   587→          <SectionHeading
+   588→   588→            align="center"
+   589→   589→            eyebrow="Client Voices"
+   590→   590→            title={
+   591→   591→              <>
+   592→   592→                What our <span className="text-primary">clients say</span>
+   593→   593→              </>
+   594→   594→            }
+   595→   595→            description="Over 480 verified reviews with a 4.9-star average. Here is what owners say about working with BUILDCORE."
+   596→   596→            className="mb-12"
+   597→   597→          />
+   598→   598→
+   599→   599→          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+   600→   600→            {testimonials.slice(0, 3).map((t, i) => (
+   601→   601→              <Reveal key={t.name} delay={i * 100}>
+   602→   602→                <Card className="h-full border-border hover:border-primary transition-colors">
+   603→   603→                  <CardContent className="p-7 flex flex-col h-full">
+   604→   604→                    <div className="flex items-center justify-between mb-4">
+   605→   605→                      <div className="flex items-center gap-1">
+   606→   606→                        {[...Array(t.rating)].map((_, j) => (
+   607→   607→                          <Star key={j} className="size-4 fill-primary text-primary" />
+   608→   608→                        ))}
+   609→   609→                      </div>
+   610→   610→                      <Quote className="size-7 text-primary/30" />
+   611→   611→                    </div>
+   612→   612→                    <p className="text-foreground/80 leading-relaxed flex-1">
+   613→   613→                      &ldquo;{t.quote}&rdquo;
+   614→   614→                    </p>
+   615→   615→                    <div className="mt-6 pt-5 border-t border-border flex items-center gap-3">
+   616→   616→                      <div className="relative size-12 overflow-hidden bg-muted shrink-0">
+   617→   617→                        <Image
+   618→   618→                          src={t.avatar}
+   619→   619→                          alt={t.name}
+   620→   620→                          fill
+   621→   621→                          className="object-cover"
+   622→   622→                          sizes="48px"
+   623→   623→                        />
+   624→   624→                      </div>
+   625→   625→                      <div>
+   626→   626→                        <div className="font-bold text-sm">{t.name}</div>
+   627→   627→                        <div className="text-xs text-muted-foreground">
+   628→   628→                          {t.title}, {t.company}
+   629→   629→                        </div>
+   630→   630→                      </div>
+   631→   631→                    </div>
+   632→   632→                  </CardContent>
+   633→   633→                </Card>
+   634→   634→              </Reveal>
+   635→   635→            ))}
+   636→   636→          </div>
+   637→   637→
+   638→   638→          <div className="mt-10 text-center">
+   639→   639→            <Button asChild variant="outline" className="font-bold uppercase tracking-wide">
+   640→   640→              <Link href="/testimonials">
+   641→   641→                Read All Reviews
+   642→   642→                <ArrowRight className="size-4" />
+   643→   643→              </Link>
+   644→   644→            </Button>
+   645→   645→          </div>
+   646→   646→        </div>
+   647→   647→      </section>
+   648→   648→
+   649→   649→      {/* ===================== CERTIFICATIONS ===================== */}
+   650→   650→      <section className="py-16 lg:py-20 bg-muted/40 border-y border-border">
+   651→   651→        <div className="container mx-auto px-4">
+   652→   652→          <div className="grid lg:grid-cols-4 gap-8 items-center">
+   653→   653→            <div className="lg:col-span-1">
+   654→   654→              <ShieldCheck className="size-12 text-primary mb-3" />
+   655→   655→              <h2 className="font-display text-2xl font-bold">
+   656→   656→                Certified & Compliant
+   657→   657→              </h2>
+   658→   658→              <p className="text-sm text-muted-foreground mt-1">
+   659→   659→                Every credential you need from a modern contractor.
+   660→   660→              </p>
+   661→   661→            </div>
+   662→   662→            <div className="lg:col-span-3 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+   663→   663→              {certifications.map((cert) => (
+   664→   664→                <div
+   665→   665→                  key={cert}
+   666→   666→                  className="flex items-center gap-3 bg-background border border-border p-4"
+   667→   667→                >
+   668→   668→                  <CheckCircle2 className="size-5 text-primary shrink-0" />
+   669→   669→                  <span className="text-sm font-medium">{cert}</span>
+   670→   670→                </div>
+   671→   671→              ))}
+   672→   672→            </div>
+   673→   673→          </div>
+   674→   674→        </div>
+   675→   675→      </section>
+   676→   676→
+   677→   677→      {/* ===================== CTA ===================== */}
+   678→   678→      <CTABand />
+   679→   679→    </>
+   680→   680→  );
+   681→   681→}
+   682→   682→
