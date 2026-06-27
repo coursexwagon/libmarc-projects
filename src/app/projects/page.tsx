@@ -24,6 +24,7 @@ import {
   CTABand,
   Reveal,
 } from "@/components/site/sections";
+import { Lightbox, type LightboxItem } from "@/components/site/lightbox";
 import { projects, company } from "@/lib/site-data";
 
 const categories = [
@@ -67,6 +68,7 @@ const stats = [
 
 export default function ProjectsPage() {
   const [active, setActive] = React.useState<Category>("All");
+  const [lightboxIndex, setLightboxIndex] = React.useState(-1);
 
   const filtered =
     active === "All"
@@ -75,6 +77,20 @@ export default function ProjectsPage() {
 
   const categoryCount = (cat: Category) =>
     cat === "All" ? projects.length : projects.filter((p) => p.category === cat).length;
+
+  const lightboxItems: LightboxItem[] = React.useMemo(
+    () =>
+      filtered.map((p) => ({
+        src: p.image,
+        alt: p.title,
+        title: p.title,
+        category: p.category,
+        location: p.location,
+        year: p.year,
+        description: p.summary,
+      })),
+    [filtered]
+  );
 
   return (
     <>
@@ -145,14 +161,17 @@ export default function ProjectsPage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map((project, i) => (
               <Reveal key={project.slug} delay={(i % 3) * 100}>
-                <article className="group bg-card border border-border overflow-hidden hover:border-primary hover:shadow-xl transition-all duration-300 flex flex-col">
+                <article
+                  onClick={() => setLightboxIndex(i)}
+                  className="group bg-card border border-border overflow-hidden hover:border-primary hover:shadow-premium-xl hover-lift transition-all duration-300 flex flex-col cursor-pointer"
+                >
                   {/* Image */}
-                  <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-muted img-zoom">
                     <Image
                       src={project.image}
                       alt={project.title}
                       fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="object-cover"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/10 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
@@ -192,7 +211,7 @@ export default function ProjectsPage() {
                       </span>
                       <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-primary">
                         View Gallery
-                        <ArrowRight className="size-3.5" />
+                        <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
                       </span>
                     </div>
                   </div>
@@ -200,6 +219,14 @@ export default function ProjectsPage() {
               </Reveal>
             ))}
           </div>
+
+          {/* Lightbox */}
+          <Lightbox
+            items={lightboxItems}
+            index={lightboxIndex}
+            onClose={() => setLightboxIndex(-1)}
+            onNavigate={setLightboxIndex}
+          />
 
           {filtered.length === 0 && (
             <div className="text-center py-20 text-muted-foreground">

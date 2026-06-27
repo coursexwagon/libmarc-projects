@@ -32,6 +32,7 @@ import {
   Marquee,
 } from "@/components/site/sections";
 import { CostEstimator } from "@/components/site/cost-estimator";
+import { BeforeAfter } from "@/components/site/before-after";
 import {
   company,
   stats,
@@ -545,13 +546,64 @@ export default function HomePage() {
         <div className="hazard-stripe h-1.5 w-full" />
       </section>
 
+      {/* ===================== BEFORE / AFTER SHOWCASE ===================== */}
+      <section className="py-20 lg:py-28 bg-muted/30 border-y border-border">
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+            <div className="lg:col-span-5">
+              <Reveal>
+                <SectionHeading
+                  number="04"
+                  eyebrow="The Transformation"
+                  title={
+                    <>
+                      See the difference <span className="text-primary">we make</span>
+                    </>
+                  }
+                  description="Drag the slider to reveal the before and after of a recent Yeoville demolition. What was a condemned, unsafe structure becomes a clean, build-ready site — usually within a week."
+                />
+                <div className="mt-8 space-y-4">
+                  {[
+                    { label: "Site cleared", value: "100%" },
+                    { label: "Rubble removed", value: "180m³" },
+                    { label: "Project duration", value: "5 days" },
+                    { label: "Disposal slips", value: "Provided" },
+                  ].map((stat) => (
+                    <div key={stat.label} className="flex items-center justify-between border-b border-border pb-3">
+                      <span className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+                        {stat.label}
+                      </span>
+                      <span className="font-display text-lg font-bold text-primary">
+                        {stat.value}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </Reveal>
+            </div>
+            <div className="lg:col-span-7">
+              <Reveal delay={150}>
+                <BeforeAfter
+                  beforeSrc="/images/services/demolition.png"
+                  afterSrc="/images/projects/project-6.png"
+                  beforeLabel="Before"
+                  afterLabel="After"
+                  alt="Yeoville demolition before and after"
+                  className="shadow-premium-xl border border-border"
+                />
+              </Reveal>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ===================== RATES PREVIEW ===================== */}
       <section className="py-20 lg:py-28">
         <div className="container mx-auto px-4">
           <SectionHeading
             align="center"
             eyebrow="Starting Rates"
-            number="04"
+            number="05"
             title={
               <>
                 Transparent pricing,{" "}
@@ -616,7 +668,7 @@ export default function HomePage() {
           <SectionHeading
             align="center"
             eyebrow="How It Works"
-            number="05"
+            number="06"
             title={
               <>
                 From your call to{" "}
@@ -657,7 +709,7 @@ export default function HomePage() {
           <SectionHeading
             align="center"
             eyebrow="What Clients Say"
-            number="06"
+            number="07"
             title={
               <>
                 Johannesburg homeowners &amp;{" "}
@@ -746,7 +798,7 @@ export default function HomePage() {
             <Reveal>
               <div>
                 <SectionHeading
-                  number="07"
+                  number="08"
                   eyebrow="Free Tool"
                   title={
                     <>

@@ -671,3 +671,41 @@ Stage Summary:
 - New feature: interactive cost estimator with real ZAR pricing, live on /estimate AND embedded on home page
 - 14 routes total now (added /estimate)
 - All verified working, lint clean
+
+---
+Task ID: 10 (Lightbox gallery + Before/After slider)
+Agent: Cron review (job 235862)
+Task: QA pass + add premium image features (lightbox + before/after slider)
+
+Work Log:
+- QA: All 14 routes return 200, lint 100% clean, no runtime errors. Site is stable.
+- NEW FEATURE 1 — IMAGE LIGHTBOX GALLERY (Projects page):
+  * Created src/components/site/lightbox.tsx — full-screen premium lightbox with:
+    - Keyboard navigation (← → arrows to navigate, Esc to close)
+    - Click outside / close button / prev-next buttons
+    - Image counter (01 / 08)
+    - Caption bar with category badge, title, description, location, year
+    - Thumbnail strip at bottom (desktop) for direct navigation
+    - Body scroll lock when open, scale-in animation
+  * Wired into Projects page: clicking any project card now opens the lightbox with that project's image + details
+  * Cards now have cursor-pointer, hover-lift, img-zoom, shadow-premium-xl hover
+- NEW FEATURE 2 — BEFORE/AFTER COMPARISON SLIDER (Home page):
+  * Created src/components/site/before-after.tsx — draggable comparison slider with:
+    - Mouse + touch drag support, drag handle with MoveHorizontal icon
+    - Before label (dark) + After label (yellow)
+    - "Drag to compare" hint that fades on hover
+    - Divider line with circular handle, scale-110 on hover
+    - Resize listener to keep the before-image width synced
+  * Added as section 04 on home page ("The Transformation") showcasing a Yeoville demolition before/after, with a stats sidebar (Site cleared 100%, Rubble removed 180m³, Project duration 5 days, Disposal slips Provided)
+- RENumbered home page sections 01-08 to accommodate the new before/after section (04)
+- Fixed lint error: BeforeAfter component was accessing containerRef.current during render — refactored to use containerWidth state with resize listener
+- VERIFIED via agent-browser: before/after slider present on home (cursor-ew-resize), lightbox opens on project card click (dialog role), Next button navigates, Escape closes it, no console errors
+
+Stage Summary:
+- 2 new premium features added: full-screen lightbox gallery (Projects) + draggable before/after slider (Home)
+- Both fully interactive and verified
+- All 14 routes 200, lint clean, no errors
+- Home page now has 8 editorial-numbered sections (01 Who We Are → 08 Free Tool/Cost Estimator)
+- Projects page cards are now clickable → opens immersive lightbox with keyboard nav + thumbnails
+
+Next round opportunities: live chat widget, blog/insights section, careers page, animated stat counters on more pages, image lazy-loading with blur-up placeholders, FAQ accordion on contact page
