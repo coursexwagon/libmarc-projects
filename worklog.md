@@ -604,3 +604,43 @@ Stage Summary:
 - Mobile responsive with working hamburger menu ✅
 
 Project Status: COMPLETE & VERIFIED
+
+---
+Task ID: 8 (Premium design upgrade + cron fix)
+Agent: Main (Z.ai Code)
+Task: Fix broken cron job and elevate design to premium $10k+ standard
+
+Work Log:
+- DIAGNOSED: The 15-min cron (job 235782) was failing with "model glm-5.2 concurrency limit exceeded" AND its prompt still referenced the old "BUILDCORE" branding + removed pages (team/testimonials/blog/faq/pricing). So the automated review loop never actually worked.
+- DELETED broken cron (235782) and CREATED a new one (job 235862) with correct Libmarc Projects context, the 13 actual pages, and a mandate to push toward $10k+ designer quality with more features.
+- UPGRADED globals.css with a premium design foundation:
+  * Custom easing curves (ease-out-expo, ease-out-quart) for cinematic motion
+  * 6-tier layered shadow system (xs→2xl) + primary glow shadow
+  * Smooth scroll, premium text selection, refined focus-visible
+  * New utilities: .grain (film grain overlay), .dot-pattern, .grid-pattern-light, .glass/.glass-dark (glassmorphism), .hover-lift, .btn-fill, .link-underline, .img-zoom, .card-premium, .text-gradient-primary
+  * Animations: .animate-marquee, .animate-shimmer, .animate-pulse-slow, .animate-fade-up, .animate-scale-in, .scroll-progress
+  * Reduced-motion media query for accessibility
+- UPGRADED sections.tsx with 3 NEW premium components + refined existing ones:
+  * NEW ScrollProgress: fixed top gradient progress bar (scroll-linked)
+  * NEW WhatsAppFloat: floating green WhatsApp button (bottom-right) that expands to a chat panel showing BOTH numbers (078 150 0069 + 070 359 9092) with pre-filled quote message, plus a call button
+  * NEW Marquee: infinite scrolling text/logos with fade edges
+  * Refined PageHero: layered gradients for depth, grain texture, decorative corner hazard stripe, staggered fade-up animations
+  * Refined SectionHeading: editorial section numbers (01, 02...) + refined eyebrow
+  * Refined Counter: easeOutExpo easing for premium count-up
+  * Refined Reveal: better easing + rootMargin for earlier trigger
+  * Refined CTABand: grain texture, primary glow shadow on CTA
+- ADDED to layout.tsx: ScrollProgress (top), WhatsAppFloat (bottom-right), ScrollToTop moved to bottom-left to avoid overlap
+- POLISHED home page:
+  * Replaced static client logos with animated Marquee (infinite scroll, fade edges)
+  * Added editorial section numbers (01-06) to all SectionHeadings
+  * Service cards: hover-lift + img-zoom + shadow-premium-xl on hover
+- VERIFIED via agent-browser: all premium features present (scrollProgress, whatsappFloat, grain, marquee, 5 hover-lift, 5 img-zoom), all 13 routes return 200, WhatsApp widget expands to show both numbers, lint 100% clean, no compile errors
+
+Stage Summary:
+- Cron fixed (job 235862) with correct Libmarc context — will now actually run and improve the site every 15 min
+- Systemic premium design foundation laid: shadows, easing, grain, glass, marquee, animations
+- 3 new global features: scroll progress bar, floating WhatsApp widget (both numbers), animated logo marquee
+- Home page polished: editorial numbering, animated marquee, refined card hovers
+- All 13 routes verified working, lint clean
+
+Honest status: The systemic upgrade is complete and verified. The new cron will continue iterating (more polish, new features like cost estimator/quote wizard/lightbox gallery) every 15 minutes. The site is significantly more premium than before but a true "$10k+ designer" standard is an ongoing process that the cron will keep pushing toward.
