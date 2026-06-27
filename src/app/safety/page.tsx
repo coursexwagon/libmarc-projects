@@ -234,25 +234,28 @@ export default function SafetyPage() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
             {[
               {
-                icon: ShieldCheck,
-                value: 100,
-                suffix: "%",
-                label: "Safety Compliance",
-                prefix: "",
-              },
-              {
                 icon: HardHat,
                 value: 0,
                 suffix: "",
-                label: "Lost-Time Incidents (12 mo)",
+                label: "Lost-Time Incidents",
                 prefix: "",
+                footnote: "2023 – 2024",
               },
               {
-                icon: FileCheck,
+                icon: ShieldCheck,
                 value: 5,
                 suffix: "M",
                 label: "Public Liability Cover",
                 prefix: "R",
+                footnote: "Every project, big or small",
+              },
+              {
+                icon: FileCheck,
+                value: 100,
+                suffix: "%",
+                label: "Crews with Valid PPE",
+                prefix: "",
+                footnote: "Checked every shift",
               },
               {
                 icon: ClipboardCheck,
@@ -260,6 +263,7 @@ export default function SafetyPage() {
                 suffix: "+",
                 label: "Certified Crew Members",
                 prefix: "",
+                footnote: "COID-registered",
               },
             ].map((s, i) => (
               <Reveal key={i} delay={i * 100} className="text-center">
@@ -270,6 +274,9 @@ export default function SafetyPage() {
                 </div>
                 <div className="mt-2 text-xs lg:text-sm font-bold uppercase tracking-wider text-background/70">
                   {s.label}
+                </div>
+                <div className="mt-1 text-[11px] text-background/50 font-medium normal-case tracking-normal">
+                  {s.footnote}
                 </div>
               </Reveal>
             ))}

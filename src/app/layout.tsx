@@ -8,6 +8,7 @@ import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { ScrollToTop } from "@/components/site/scroll-to-top";
 import { ScrollProgress, WhatsAppFloat } from "@/components/site/sections";
+import { StickyMobileBar } from "@/components/site/sticky-mobile-bar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -77,6 +78,7 @@ export default function RootLayout({
           </div>
           <ScrollToTop />
           <WhatsAppFloat />
+          <StickyMobileBar />
         </ThemeProvider>
         <Toaster />
         <SonnerToaster position="top-center" richColors closeButton />

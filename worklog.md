@@ -785,3 +785,48 @@ Stage Summary:
 - About/Contact/Services-detail pages were already authentic (no changes needed beyond data-layer propagation)
 
 Key insight: The biggest AI tell was using team member photos as customer avatars — a real designer would never do that. The second biggest was "100% Safety Compliance" — no real contractor claims 100%. Both fixed, plus a dozen smaller tells.
+
+---
+Task ID: 12 (FAQ Accordion + Sticky Mobile CTA Bar + Safety Stats Fix)
+Agent: Main (Z.ai Code)
+Task: QA-pass-driven fixes + two new conversion features. User asked for continued premium polish and more features.
+
+Work Log:
+- QA PASSED: All 14 routes 200, lint clean, no runtime errors. Site stable after Task 11 authenticity pass.
+- BUG FOUND: /safety stats band still had "100% Safety Compliance" (line 240) — missed in the Task 11 authenticity pass. FIXED: replaced with "Crews with Valid PPE" (footnote: "Checked every shift") and "Lost-Time Incidents" (footnote: "2023 – 2024"). Reordered stats so the honest 0-incidents figure leads. Added footnotes to all 4 safety stats.
+
+- NEW FEATURE 1 — FAQ ACCORDION (Contact page):
+  * Created src/components/site/faq.tsx — uses shadcn Accordion (single-collapsible, first item open by default).
+  * 8 authentic Johannesburg contractor FAQs: free site visits, how quickly we start, permits, areas covered, insurance/registration, payment methods, after-hours/weekends, disposal slips.
+  * Answers are plain-spoken and specific: mention "call before 10am for same-day", "5–10 working days for permits", "EFT preferred, cash for small jobs", "50% on booking / 50% on completion", "after-hours carries 25–50% premium", "deduct call-out fee from final bill".
+  * Two-column editorial layout: heading + "Can't find your answer?" callout on left (lg:col-span-4), accordion on right (lg:col-span-8). Each item is a bordered box with editorial number (01–08), turns yellow border + shadow when open.
+  * Wired into /contact above the CTA band.
+
+- NEW FEATURE 2 — STICKY MOBILE CTA BAR (Global, mobile-only):
+  * Created src/components/site/sticky-mobile-bar.tsx — fixed bottom bar, mobile only (lg:hidden).
+  * 3 equal-width buttons: Call (tel:), WhatsApp (wa.me with pre-filled quote message), Get Quote (link to /contact). Yellow "Get Quote" button stands out, Call/WhatsApp are neutral.
+  * Appears on scroll past 480px (translate-y-full → translate-y-0 transition), so it doesn't cover hero CTAs. Hazard stripe top accent, backdrop-blur, safe-area-inset-bottom padding for iOS.
+  * WhatsAppFloat changed to lg:flex (desktop-only) to avoid overlap on mobile — mobile now uses the sticky bar's WhatsApp button instead. No redundancy.
+  * Added pb-14 lg:pb-0 to the footer so the sticky bar doesn't cover footer content on mobile (the bar sits over the extended dark footer area).
+  * Wired into layout.tsx alongside ScrollToTop and WhatsAppFloat.
+
+Verification:
+- `bun run lint` → 0 errors, 0 warnings.
+- All 14 routes return 200.
+- agent-browser DOM verification:
+  * /contact FAQ: 8 accordion items render, all 8 questions present ("Do you offer free site visits?", "Do you handle the permits?", "What payment methods do you accept?", "Can you work after hours or on weekends?", etc.)
+  * Accordion toggle: faq-0 starts open (aria-expanded=true), clicking faq-1 closes faq-0 and opens faq-1 (single-collapsible confirmed)
+  * Sticky mobile bar: in DOM with translate-y-full (hidden) at top of page, transitions to translate-y-0 (visible) after scrolling 600px. All 3 CTAs present: Call (tel:+27781500069), WhatsApp (wa.me/27781500069), Get Quote (link to /contact)
+  * /safety stats: "100% Safety Compliance" gone, now shows "LOST-TIME INCIDENTS", "CREWS WITH VALID PPE", footnotes render ("2023 – 2024", "CHECKED EVERY SHIFT")
+- VLM (glm-4.6v) visual check of FAQ section: "The two-column layout looks premium and editorial. The questions are realistic and specific to a South African construction business (permits, rubble disposal, service areas)."
+
+Stage Summary:
+- Bug fixed: /safety "100% Safety Compliance" → honest stats with footnotes ✅
+- New feature: FAQ accordion with 8 authentic SA contractor Q&A on /contact ✅
+- New feature: sticky mobile CTA bar (Call/WhatsApp/Quote) appears on scroll, mobile-only ✅
+- WhatsAppFloat now desktop-only (no mobile overlap with sticky bar) ✅
+- Footer gets mobile bottom padding so sticky bar doesn't cover content ✅
+- All 14 routes 200, lint clean, accordion + sticky bar verified via DOM ✅
+- VLM confirms premium editorial layout ✅
+
+Conversion impact: Mobile visitors (the majority for a contractor site) now have persistent Call/WhatsApp/Quote access after scrolling past the hero. Contact page visitors get 8 common questions answered before they have to call — reduces friction and "phone tag". Both features directly serve the "get more quotes" goal of a small business site.

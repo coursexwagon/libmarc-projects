@@ -21,6 +21,7 @@ import {
   Reveal,
 } from "@/components/site/sections";
 import { ContactForm } from "@/components/site/contact-form";
+import { FaqAccordion } from "@/components/site/faq";
 import { company } from "@/lib/site-data";
 
 export const metadata: Metadata = {
@@ -317,6 +318,9 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+
+      {/* ===================== FAQ ===================== */}
+      <FaqAccordion />
 
       {/* ===================== CTA ===================== */}
       <CTABand

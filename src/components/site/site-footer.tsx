@@ -19,7 +19,7 @@ export function SiteFooter() {
   const topNav = navItems.filter((n) => n.href !== "/").slice(0, 8);
 
   return (
-    <footer className="mt-auto bg-foreground text-background">
+    <footer className="mt-auto bg-foreground text-background pb-14 lg:pb-0">
       {/* Hazard stripe accent */}
       <div className="hazard-stripe h-2 w-full" />
 
