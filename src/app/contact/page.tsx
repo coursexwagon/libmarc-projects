@@ -44,22 +44,22 @@ const socials = [
 const trustBadges = [
   {
     title: "Same-Day Quotes",
-    detail: "Most enquiries quoted within hours.",
+    detail: "Most enquiries quoted same business day.",
     icon: Clock3,
   },
   {
     title: "Free Site Visit",
-    detail: "Free on-site assessment in Greater JHB.",
+    detail: "On-site assessment in Greater JHB.",
     icon: MapPinned,
   },
   {
     title: "Fully Insured",
-    detail: "R5M public liability cover on every job.",
+    detail: "R5M public liability on every job.",
     icon: ShieldCheck,
   },
   {
     title: "All of Gauteng",
-    detail: "From the CBD to Sandton & Soweto.",
+    detail: "CBD to Sandton to Soweto.",
     icon: BadgeCheck,
   },
 ];
@@ -77,7 +77,7 @@ export default function ContactPage() {
       <PageHero
         eyebrow="Contact"
         title="Get a Free Quote Today"
-        description="Tell us about your project and we'll send a transparent quote within one business day. Prefer to talk? Call or WhatsApp — a real person picks up."
+        description="Tell us about your project and we'll come back to you with a quote the same business day. Prefer to talk? Call or WhatsApp — a real person picks up."
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Contact" }]}
         image="/images/cta-bg.png"
       />
@@ -96,8 +96,18 @@ export default function ContactPage() {
                     <span className="text-primary">Libmarc</span> team
                   </>
                 }
-                description="Two phone numbers, two WhatsApp lines, one email. However you prefer to reach out — we'll get back to you fast."
+                description="Two phone numbers, two WhatsApp lines, one email. However you prefer to reach out — we respond to enquiries usually within 2 hours during business hours."
               />
+
+              {/* Response-time notice — honest small-business touch */}
+              <div className="mt-6 flex items-start gap-3 border-l-2 border-primary bg-muted/40 px-4 py-3">
+                <Clock3 className="size-5 text-primary shrink-0 mt-0.5" />
+                <p className="text-sm text-foreground/90 leading-relaxed">
+                  <span className="font-semibold">Response time:</span>{" "}
+                  {company.responseWindow}. Outside business hours we reply the
+                  next morning.
+                </p>
+              </div>
 
               {/* Phone numbers — clickable tel: cards */}
               <div className="mt-8 grid sm:grid-cols-2 gap-4">
@@ -311,7 +321,7 @@ export default function ContactPage() {
       {/* ===================== CTA ===================== */}
       <CTABand
         title="Prefer to talk it through?"
-        description="Call or WhatsApp us directly — we keep both lines open during business hours and respond fast to urgent jobs across Gauteng."
+        description="Call or WhatsApp us directly — both lines are open during business hours. For urgent jobs across Gauteng we'll do our best to come out the same day."
       />
     </>
   );

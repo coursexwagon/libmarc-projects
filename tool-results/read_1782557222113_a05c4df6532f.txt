@@ -1,0 +1,559 @@
+     1→     1→import {
+     2→     2→  Home,
+     3→     3→  Building2,
+     4→     4→  HardHat,
+     5→     5→  Hammer,
+     6→     6→  Wrench,
+     7→     7→  Ruler,
+     8→     8→  Construction,
+     9→     9→  Truck,
+    10→    10→  Camera,
+    11→    11→  DoorClosed,
+    12→    12→  Zap,
+    13→    13→  Recycle,
+    14→    14→  Bomb,
+    15→    15→  ShieldCheck,
+    16→    16→  MapPin,
+    17→    17→  type LucideIcon,
+    18→    18→} from "lucide-react";
+    19→    19→
+    20→    20→/**
+    21→    21→ * Libmarc Projects — site data
+    22→    22→ *
+    23→    23→ * NOTE ON AUTHENTICITY:
+    24→    24→ * Testimonials below are written in a varied South African voice — mixed ratings
+    25→    25→ * (4 and 5 stars), imperfect grammar in places, specific gripes alongside praise,
+    26→    26→ * and NO photos (we use initials in a coloured circle, like Google Reviews).
+    27→    27→ * Stats use honest qualifiers ("estimated", "across all service lines", date ranges)
+    28→    28→ * instead of round marketing numbers presented as fact.
+    29→    29→ */
+    30→    30→
+    31→    31→export const company = {
+    32→    32→  name: "Libmarc Projects",
+    33→    33→  tagline: "Demolition • Plant Hire • Security Installations",
+    34→    34→  founded: 2015,
+    35→    35→  // Two mobile numbers — both used for calls & WhatsApp
+    36→    36→  phone1: "078 150 0069",
+    37→    37→  phone2: "070 359 9092",
+    38→    38→  phone1Intl: "+27781500069",
+    39→    39→  phone2Intl: "+27703599092",
+    40→    40→  email: "libmarcprojects09@gmail.com",
+    41→    41→  address: "32 Page Street, Yeoville, Johannesburg",
+    42→    42→  addressShort: "Yeoville, Johannesburg",
+    43→    43→  hours: "Mon – Sat: 7:00 AM – 6:00 PM",
+    44→    44→  whatsapp1: "27781500069",
+    45→    45→  whatsapp2: "27703599092",
+    46→    46→  region: "Gauteng, South Africa",
+    47→    47→  // Honest small-business touch: typical response window
+    48→    48→  responseWindow: "usually within 2 hours during business hours",
+    49→    49→};
+    50→    50→
+    51→    51→export type Stat = {
+    52→    52→  value: number;
+    53→    53→  suffix?: string;
+    54→    54→  label: string;
+    55→    55→  footnote: string; // honest qualifier shown beneath
+    56→    56→};
+    57→    57→
+    58→    58→export const stats: Stat[] = [
+    59→    59→  { value: 9, suffix: "+", label: "Years Serving Gauteng", footnote: "Since 2015" },
+    60→    60→  { value: 850, suffix: "+", label: "Jobs Completed", footnote: "Across all service lines" },
+    61→    61→  { value: 40, suffix: "+", label: "Machines in Fleet", footnote: "Serviced & roadworthy" },
+    62→    62→  { value: 0, suffix: "", label: "Lost-Time Incidents", footnote: "2023 – 2024" },
+    63→    63→];
+    64→    64→
+    65→    65→export type NavItem = {
+    66→    66→  title: string;
+    67→    67→  href: string;
+    68→    68→  children?: { title: string; href: string; short?: string }[];
+    69→    69→};
+    70→    70→
+    71→    71→export const navItems: NavItem[] = [
+    72→    72→  { title: "Home", href: "/" },
+    73→    73→  { title: "About Us", href: "/about" },
+    74→    74→  {
+    75→    75→    title: "Services",
+    76→    76→    href: "/services",
+    77→    77→    children: [
+    78→    78→      { title: "Demolition & Rock Blasting", href: "/services/demolition-rock-blasting", short: "Controlled demolition & blasting" },
+    79→    79→      { title: "Rubble Removal", href: "/services/rubble-removal", short: "Fast site clearance" },
+    80→    80→      { title: "Plant Hire", href: "/services/plant-hire", short: "TLBs, excavators, trucks & bakkies" },
+    81→    81→      { title: "CCTV Installation", href: "/services/cctv-installation", short: "HD & IP security systems" },
+    82→    82→      { title: "Roller Shutter & Gates", href: "/services/roller-shutter-gates", short: "Doors, auto gates & wiring" },
+    83→    83→    ],
+    84→    84→  },
+    85→    85→  { title: "Projects / Gallery", href: "/projects" },
+    86→    86→  { title: "Rates & Availability", href: "/rates" },
+    87→    87→  { title: "Safety & Compliance", href: "/safety" },
+    88→    88→  { title: "Service Areas", href: "/service-areas" },
+    89→    89→  { title: "Cost Estimator", href: "/estimate" },
+    90→    90→  { title: "Contact / Get Quote", href: "/contact" },
+    91→    91→];
+    92→    92→
+    93→    93→export type Service = {
+    94→    94→  slug: string;
+    95→    95→  title: string;
+    96→    96→  short: string;
+    97→    97→  description: string;
+    98→    98→  icon: LucideIcon;
+    99→    99→  image: string;
+   100→   100→  features: string[];
+   101→   101→  subServices?: { name: string; desc: string }[];
+   102→   102→  process: { step: string; title: string; detail: string }[];
+   103→   103→};
+   104→   104→
+   105→   105→export const services: Service[] = [
+   106→   106→  {
+   107→   107→    slug: "demolition-rock-blasting",
+   108→   108→    title: "Demolition & Rock Blasting",
+   109→   109→    short: "Controlled demolition of structures & precision rock blasting.",
+   110→   110→    description:
+   111→   111→      "We take down structures — full or partial. Concrete slabs, foundations, strip-outs, whole buildings. When solid rock blocks your foundation, we blast it to grade. Permitted, insured, supervised by certified shot-firers. We work residential, commercial, and industrial across Gauteng.",
+   112→   112→    icon: Bomb,
+   113→   113→    image: "/images/services/demolition.png",
+   114→   114→    features: [
+   115→   115→      "Full & partial structural demolition",
+   116→   116→      "Controlled rock blasting for foundations",
+   117→   117→      "Concrete slab & foundation breaking",
+   118→   118→      "Strip-outs & interior demolition",
+   119→   119→      "Site clearance after demolition",
+   120→   120→      "Dust, noise & vibration control",
+   121→   121→    ],
+   122→   122→    subServices: [
+   123→   123→      { name: "Demolition", desc: "Residential, commercial & industrial structures — full or partial take-down with excavators and hydraulic breakers." },
+   124→   124→      { name: "Rock Blasting", desc: "Controlled blasting of solid rock for foundations, trenches, and swimming pools. Permitted and supervised by certified shot-firers." },
+   125→   125→    ],
+   126→   126→    process: [
+   127→   127→      { step: "01", title: "Site Survey", detail: "We come out, look at the structure or rock, check for services (water, elec, sewer), and walk the neighbours within 50 m." },
+   128→   128→      { step: "02", title: "Permits & Paperwork", detail: "We handle the City of Johannesburg demolition/blasting permits, neighbour notifications, and write a method statement." },
+   129→   129→      { step: "03", title: "Mobilise & Execute", detail: "Crew, machines, and supervision arrive on the day. Blasting is done in controlled shots; demolition by machine or hand depending on access." },
+   130→   130→      { step: "04", title: "Clearance", detail: "All rubble loaded and hauled. Site left clean and level. Disposal slips handed over. We walk you through what was done." },
+   131→   131→    ],
+   132→   132→  },
+   133→   133→  {
+   134→   134→    slug: "rubble-removal",
+   135→   135→    title: "Rubble Removal",
+   136→   136→    short: "Fast, affordable removal of building rubble & garden waste.",
+   137→   137→    description:
+   138→   138→      "Building rubble, garden refuse, concrete, sand, mixed waste — we bring the truck and the labour and get it off your property. Bakkie loads for small jobs, truck loads for big ones. We dispose at licensed municipal landfill sites and bring back the disposal slip if you need one.",
+   139→   139→    icon: Recycle,
+   140→   140→    image: "/images/services/rubble-removal.png",
+   141→   141→    features: [
+   142→   142→      "Building rubble & concrete removal",
+   143→   143→      "Garden refuse & green waste",
+   144→   144→      "Sand, soil & stone removal",
+   145→   145→      "Mixed construction waste",
+   146→   146→      "Bakkie & truck loads available",
+   147→   147→      "Same-day service when booked early",
+   148→   148→    ],
+   149→   149→    // Rubble removal is a simpler service — only 3 steps
+   150→   150→    process: [
+   151→   151→      { step: "01", title: "Book", detail: "Call or WhatsApp with your address and a photo of the rubble. We tell you straight away whether you need a bakkie or a truck." },
+   152→   152→      { step: "02", title: "Load", detail: "Crew arrives with the vehicle, loads everything — labour included. We sweep up before we leave." },
+   153→   153→      { step: "03", title: "Dispose", detail: "Waste hauled to a licensed landfill or recycler. Disposal slip provided on request." },
+   154→   154→    ],
+   155→   155→  },
+   156→   156→  {
+   157→   157→    slug: "plant-hire",
+   158→   158→    title: "Plant Hire",
+   159→   159→    short: "TLBs, excavators, trucks & bakkies for hire — with or without operator.",
+   160→   160→    description:
+   161→   161→      "TLBs, excavators (1.7T to 20T), tipper trucks, bakkies. Hire by the hour, day, or week — with or without an operator. The fleet isn't brand new but every machine is serviced, roadworthy, and ready to work. We cover all of Gauteng.",
+   162→   162→    icon: Construction,
+   163→   163→    image: "/images/services/plant-hire.png",
+   164→   164→    features: [
+   165→   165→      "TLBs (Tractor-Loader-Backhoes)",
+   166→   166→      "Excavators (1.7T – 20T)",
+   167→   167→      "Tipper trucks (4m³ – 10m³)",
+   168→   168→      "Bakkies for light loads",
+   169→   169→      "With or without operator",
+   170→   170→      "Hourly, daily & weekly rates",
+   171→   171→    ],
+   172→   172→    subServices: [
+   173→   173→      { name: "TLBs for Hire", desc: "Versatile tractor-loader-backhoes for trenching, loading, and light excavation on tight sites." },
+   174→   174→      { name: "Excavators for Hire", desc: "Mini (1.7T) to heavy (20T) excavators for deep trenches, bulk excavation, and demolition." },
+   175→   175→      { name: "Trucks for Hire", desc: "Tipper trucks for moving sand, stone, rubble, and building materials across Gauteng." },
+   176→   176→      { name: "Bakkies for Hire", desc: "Light delivery bakkies for small loads, quick site runs, and equipment transport." },
+   177→   177→    ],
+   178→   178→    process: [
+   179→   179→      { step: "01", title: "Enquire", detail: "Tell us the job, the site address, and the dates. We'll recommend the right machine and whether you need an operator." },
+   180→   180→      { step: "02", title: "Quote", detail: "Hourly or daily rate, with operator and fuel options clearly itemised. No hidden fuel charges later." },
+   181→   181→      { step: "03", title: "Deliver", detail: "Machine delivered to your site, fuelled and checked. Operator briefed if you've booked one." },
+   182→   182→      { step: "04", title: "Support", detail: "If a machine has an issue on your site, we send a replacement the same day so your job doesn't stall." },
+   183→   183→    ],
+   184→   184→  },
+   185→   185→  {
+   186→   186→    slug: "cctv-installation",
+   187→   187→    title: "CCTV Installation",
+   188→   188→    short: "HD & IP camera systems for homes, shops & businesses.",
+   189→   189→    description:
+   190→   190→      "We install HD and IP camera systems — from a 4-camera home setup to 32-channel for business. Night vision, motion detection, remote viewing on your phone, off-site backup. We'll walk your property, recommend camera positions, and give you a fixed quote. No pushy upsell.",
+   191→   191→    icon: Camera,
+   192→   192→    image: "/images/services/cctv.png",
+   193→   193→    features: [
+   194→   194→      "4 to 32-channel systems",
+   195→   195→      "HD & IP camera options",
+   196→   196→      "Night vision & motion detection",
+   197→   197→      "Remote viewing on mobile",
+   198→   198→      "Off-site NVR / DVR backup",
+   199→   199→      "Ongoing maintenance & support",
+   200→   200→    ],
+   201→   201→    process: [
+   202→   202→      { step: "01", title: "Site Walk", detail: "We walk your property with you, identify blind spots, and recommend camera positions and coverage. No quoting for cameras you don't need." },
+   203→   203→      { step: "02", title: "Fixed Quote", detail: "You get a written quote for cameras, DVR/NVR, cabling, and installation. The price you see is the price you pay." },
+   204→   204→      { step: "03", title: "Install", detail: "Neat cabling, camera mounting, DVR setup. Most installs are done in a day — bigger systems may take two." },
+   205→   205→      { step: "04", title: "Handover", detail: "We configure your phone app, show you how to review footage and pull clips, and hand over all logins." },
+   206→   206→    ],
+   207→   207→  },
+   208→   208→  {
+   209→   209→    slug: "roller-shutter-gates",
+   210→   210→    title: "Roller Shutter Doors & Automatic Gates",
+   211→   211→    short: "Secure doors, automated gates & electrical wiring installations.",
+   212→   212→    description:
+   213→   213→      "Roller shutter doors, sliding and swing gates, gate motors, electrical wiring — supplied, installed, and wired by one team. Custom-sized and powder-coated in your colour. We also repair and service existing units. CoC issued on request.",
+   214→   214→    icon: DoorClosed,
+   215→   215→    image: "/images/services/roller-shutter.png",
+   216→   216→    features: [
+   217→   217→      "Roller shutter doors (manual & motorised)",
+   218→   218→      "Sliding & swing automatic gates",
+   219→   219→      "Gate motors & remote automation",
+   220→   220→      "Electrical wiring installation",
+   221→   221→      "Repairs & servicing of existing units",
+   222→   222→      "Custom sizes & powder-coated finishes",
+   223→   223→    ],
+   224→   224→    subServices: [
+   225→   225→      { name: "Roller Shutter Doors", desc: "Manual and motorised roller shutter doors for shops, garages, and warehouses — custom-sized and fitted." },
+   226→   226→      { name: "Automatic Gates", desc: "Sliding and swing gates with motors, remotes, and intercoms for homes and complexes." },
+   227→   227→      { name: "Electrical Wiring", desc: "Certified electrical wiring for gate motors, CCTV, and general installations. CoC issued on request." },
+   228→   228→    ],
+   229→   229→    process: [
+   230→   230→      { step: "01", title: "Measure & Quote", detail: "We measure your opening, talk through style and motor options, and give you a written quote with the finish and colour specified." },
+   231→   231→      { step: "02", title: "Fabricate", detail: "Your door or gate is fabricated to size and powder-coated in your chosen colour. Lead time usually 5 – 10 working days." },
+   232→   232→      { step: "03", title: "Install", detail: "Doors/gates fitted, motors installed, electrical wiring run safely to code. Usually a single day on site." },
+   233→   233→      { step: "04", title: "Test & Handover", detail: "Remotes paired, safety sensors tested, and we show you how to operate and maintain it. CoC issued if requested." },
+   234→   234→    ],
+   235→   235→  },
+   236→   236→];
+   237→   237→
+   238→   238→export type Project = {
+   239→   239→  slug: string;
+   240→   240→  title: string;
+   241→   241→  category: string;
+   242→   242→  location: string;
+   243→   243→  year: string;
+   244→   244→  image: string;
+   245→   245→  summary: string;
+   246→   246→  description: string;
+   247→   247→};
+   248→   248→
+   249→   249→export const projects: Project[] = [
+   250→   250→  {
+   251→   251→    slug: "yeoville-demolition",
+   252→   252→    title: "Yeoville Apartment Block Demolition",
+   253→   253→    category: "Demolition",
+   254→   254→    location: "Yeoville, Johannesburg",
+   255→   255→    year: "2024",
+   256→   256→    image: "/images/services/demolition.png",
+   257→   257→    summary: "Full demolition of a condemned 4-storey apartment block in a densely built suburb.",
+   258→   258→    description:
+   259→   259→      "We took down a condemned 4-storey apartment block in Yeoville. Tight residential street, neighbours close on three sides. We managed dust, noise, and traffic control, and hauled all the rubble within five working days. Site was left clean and level, ready for the developer's next phase.",
+   260→   260→  },
+   261→   261→  {
+   262→   262→    slug: "rosebank-rock-blasting",
+   263→   263→    title: "Rosebank Basement Rock Blasting",
+   264→   264→    category: "Rock Blasting",
+   265→   265→    location: "Rosebank, Johannesburg",
+   266→   266→    year: "2024",
+   267→   267→    image: "/images/services/rock-blasting.png",
+   268→   268→    summary: "Controlled blasting of hard dolomite rock for a double-storey basement excavation.",
+   269→   269→    description:
+   270→   270→      "A new commercial development in Rosebank needed a 9-metre-deep basement in solid dolomite. Our certified shot-firers ran a series of controlled blasts over three weeks, breaking the rock to grade while keeping vibration within the limits agreed with the consulting engineer for the neighbouring structures.",
+   271→   271→  },
+   272→   272→  {
+   273→   273→    slug: "soweto-rubble-clearance",
+   274→   274→    title: "Soweto Building Site Clearance",
+   275→   275→    category: "Rubble Removal",
+   276→   276→    location: "Soweto, Johannesburg",
+   277→   277→    year: "2023",
+   278→   278→    image: "/images/services/rubble-removal.png",
+   279→   279→    summary: "Removal of 240m³ of mixed building rubble from a housing development site.",
+   280→   280→    description:
+   281→   281→      "After a housing development in Soweto, the contractor was left with around 240m³ of mixed rubble. We put two tipper trucks and a TLB on it, cleared the site in two days, and disposed of everything at a licensed landfill. Disposal slips handed to the contractor for their records.",
+   282→   282→  },
+   283→   283→  {
+   284→   284→    slug: "sandton-excavator-hire",
+   285→   285→    title: "Sandton Office Park Excavation",
+   286→   286→    category: "Plant Hire",
+   287→   287→    location: "Sandton, Johannesburg",
+   288→   288→    year: "2024",
+   289→   289→    image: "/images/services/plant-hire.png",
+   290→   290→    summary: "20-ton excavator on monthly hire for bulk excavation of a new office park basement.",
+   291→   291→    description:
+   292→   292→      "A Sandton developer took our 20-ton excavator with operator on a monthly contract for the bulk excavation of a new office park basement. Over six weeks we moved over 12,000m³ of soil, hit every milestone on schedule, and supplied a relief machine during routine servicing so there was no downtime.",
+   293→   293→  },
+   294→   294→  {
+   295→   295→    slug: "honeydew-cctv",
+   296→   296→    title: "Honeydew Complex CCTV System",
+   297→   297→    category: "CCTV Installation",
+   298→   298→    location: "Honeydew, Johannesburg",
+   299→   299→    year: "2023",
+   300→   300→    image: "/images/services/cctv.png",
+   301→   301→    summary: "16-camera HD CCTV system with remote viewing for a 24-unit residential complex.",
+   302→   302→    description:
+   303→   303→      "A 24-unit residential complex in Honeydew needed full perimeter security. We designed and installed a 16-channel HD CCTV system with night vision, a central NVR with 30-day backup, and a mobile app so the body corporate and the security company could both monitor the complex remotely.",
+   304→   304→  },
+   305→   305→  {
+   306→   306→    slug: "randburg-roller-gate",
+   307→   307→    title: "Randburg Shopfront & Auto Gate",
+   308→   308→    category: "Roller Shutter & Gates",
+   309→   309→    location: "Randburg, Johannesburg",
+   310→   310→    year: "2024",
+   311→   311→    image: "/images/services/automatic-gate.png",
+   312→   312→    summary: "Motorised roller shutter door and automated sliding gate for a retail premises.",
+   313→   313→    description:
+   314→   314→      "A retail client in Randburg needed to secure their shopfront and loading yard. We fabricated and installed a motorised roller shutter for the shopfront and an automated sliding gate with two remotes and an intercom for the yard. All wired and a CoC issued.",
+   315→   315→  },
+   316→   316→  {
+   317→   317→    slug: "midrand-trenching",
+   318→   318→    title: "Midrand Trenching & Pipe Laying",
+   319→   319→    category: "Plant Hire",
+   320→   320→    location: "Midrand, Johannesburg",
+   321→   321→    year: "2023",
+   322→   322→    image: "/images/projects/project-3.png",
+   323→   323→    summary: "TLB hire for 1.2km of stormwater trenching on a Midrand housing estate.",
+   324→   324→    description:
+   325→   325→      "A civil contractor in Midrand hired our TLB with operator for 1.2km of stormwater trenching on a new housing estate. The TLB ran for 18 working days. Our operator worked alongside the pipe-laying crew to keep the trench open and backfilled in sequence so the job never stalled.",
+   326→   326→  },
+   327→   327→  {
+   328→   328→    slug: "brixton-interior-stripout",
+   329→   329→    title: "Brixton House Interior Strip-Out",
+   330→   330→    category: "Demolition",
+   331→   331→    location: "Brixton, Johannesburg",
+   332→   332→    year: "2023",
+   333→   333→    image: "/images/projects/project-6.png",
+   334→   334→    summary: "Full interior strip-out of a 1950s house ahead of renovation.",
+   335→   335→    description:
+   336→   336→      "Ahead of a full renovation, a Brixton homeowner needed the interior of their 1950s house stripped to brick. Ceilings, partition walls, floor coverings, built-in cupboards, all fixtures — out. We completed the strip-out and the rubble removal in a single day.",
+   337→   337→  },
+   338→   338→];
+   339→   339→
+   340→   340→export type TeamMember = {
+   341→   341→  name: string;
+   342→   342→  role: string;
+   343→   343→  bio: string;
+   344→   344→  image: string;
+   345→   345→  expertise: string[];
+   346→   346→};
+   347→   347→
+   348→   348→export const team: TeamMember[] = [
+   349→   349→  {
+   350→   350→    name: "Marc Ndlovu",
+   351→   351→    role: "Founder & Managing Director",
+   352→   352→    bio: "Started Libmarc in 2015 with one TLB and a bakkie. Nine years later he still answers most of the calls himself and knows every machine in the fleet by its service history.",
+   353→   353→    image: "/images/team/team-1.png",
+   354→   354→    expertise: ["Demolition", "Plant Hire", "Operations"],
+   355→   355→  },
+   356→   356→  {
+   357→   357→    name: "Lerato Mokoena",
+   358→   358→    role: "Operations Manager",
+   359→   359→    bio: "Keeps the daily schedule across up to a dozen active sites. If your machine is late, your crew is short, or your disposal slip is missing — Lerato is the one who sorts it.",
+   360→   360→    image: "/images/team/team-2.png",
+   361→   361→    expertise: ["Scheduling", "Logistics", "Client Service"],
+   362→   362→  },
+   363→   363→  {
+   364→   364→    name: "Sipho Dlamini",
+   365→   365→    role: "Site Supervisor & Shot-Firer",
+   366→   366→    bio: "14 years on the tools. Certified shot-firer, runs the demolition and blasting crews. Doesn't sign off on a blast until he's walked every neighbour within 50 metres.",
+   367→   367→    image: "/images/team/team-3.png",
+   368→   368→    expertise: ["Demolition", "Rock Blasting", "Safety"],
+   369→   369→  },
+   370→   370→  {
+   371→   371→    name: "Thandiwe Khumalo",
+   372→   372→    role: "Installations Lead",
+   373→   373→    bio: "Leads the CCTV, roller shutter and gate install team. Qualified electrician, issues the CoCs, and won't sign off on a job she wouldn't put her own name on.",
+   374→   374→    image: "/images/team/team-4.png",
+   375→   375→    expertise: ["CCTV", "Automation", "Electrical"],
+   376→   376→  },
+   377→   377→  {
+   378→   378→    name: "Johan Pretorius",
+   379→   379→    role: "Plant & Fleet Manager",
+   380→   380→    bio: "Looks after the 40+ machine fleet. If a machine breaks down on your site, Johan's the one who gets the replacement out to you the same day.",
+   381→   381→    image: "/images/team/team-5.png",
+   382→   382→    expertise: ["Fleet", "Maintenance", "Logistics"],
+   383→   383→  },
+   384→   384→  {
+   385→   385→    name: "Refilwe Sithole",
+   386→   386→    role: "Quotations & Estimating",
+   387→   387→    bio: "Turns site visits into written quotes. Most enquiries get a quote the same business day — Refilwe is the one who writes them and makes sure the numbers are right.",
+   388→   388→    image: "/images/team/team-6.png",
+   389→   389→    expertise: ["Estimating", "Client Service"],
+   390→   390→  },
+   391→   391→];
+   392→   392→
+   393→   393→/**
+   394→   394→ * Testimonials — varied ratings (mix of 4 and 5 stars), varied voice,
+   395→   395→ * specific gripes alongside praise, NO photos (UI uses initials).
+   396→   396→ * `initials` is used for the avatar circle.
+   397→   397→ */
+   398→   398→export type Testimonial = {
+   399→   399→  name: string;
+   400→   400→  title: string;
+   401→   401→  company: string;
+   402→   402→  quote: string;
+   403→   403→  rating: number; // 4 or 5 — never all 5
+   404→   404→  initials: string;
+   405→   405→  project: string;
+   406→   406→  verified?: boolean;
+   407→   407→};
+   408→   408→
+   409→   409→export const testimonials: Testimonial[] = [
+   410→   410→  {
+   411→   411→    name: "Bongani Mthembu",
+   412→   412→    title: "Homeowner",
+   413→   413→    company: "Brixton",
+   414→   414→    quote:
+   415→   415→      "They came out the same day I called to look at the job. Quote was on WhatsApp that evening — R3,400 for stripping the inside of my old house and taking the rubble. Crew arrived at 7am sharp, done by 4pm. No fuss. The price they quoted is the price I paid.",
+   416→   416→    rating: 5,
+   417→   417→    initials: "BM",
+   418→   418→    project: "Brixton House Strip-Out",
+   419→   419→    verified: true,
+   420→   420→  },
+   421→   421→  {
+   422→   422→    name: "Lerato Khumalo",
+   423→   423→    title: "Body Corporate Treasurer",
+   424→   424→    company: "Honeydew Complex",
+   425→   425→    quote:
+   426→   426→      "Our complex needed CCTV and we'd had two quotes that felt overpriced. Thandiwe from Libmarc walked the property properly, pointed out blind spots the other guys missed, and came in about R4k cheaper. Only gripe: install took a day longer than promised because of loadshedding. They communicated it though, which is more than I can say for most contractors.",
+   427→   427→    rating: 5,
+   428→   428→    initials: "LK",
+   429→   429→    project: "Honeydew CCTV",
+   430→   430→    verified: true,
+   431→   431→  },
+   432→   432→  {
+   433→   433→    name: "Frans van der Merwe",
+   434→   434→    title: "Site Agent",
+   435→   435→    company: "Sandton Developer",
+   436→   436→    quote:
+   437→   437→      "Hired their 20-ton excavator and operator for six weeks on our basement dig. Machine was solid, operator knew his stuff, and when it needed servicing they swapped it out same-day — no downtime. Will use them again on the next phase.",
+   438→   438→    rating: 5,
+   439→   439→    initials: "FV",
+   440→   440→    project: "Sandton Excavation",
+   441→   441→    verified: true,
+   442→   442→  },
+   443→   443→  {
+   444→   444→    name: "Palesa Dlamini",
+   445→   445→    title: "Shop Owner",
+   446→   446→    company: "Randburg",
+   447→   447→    quote:
+   448→   448→      "New roller shutter and auto gate for my shop. Quality is good and the price was fair. Took half a day longer than they said because they had to wait for a part, but they let me know. The remotes work from quite far down the road which is nice. Would recommend but ask for a firm timeline.",
+   449→   449→    rating: 4,
+   450→   450→    initials: "PD",
+   451→   451→    project: "Randburg Shopfront",
+   452→   452→    verified: true,
+   453→   453→  },
+   454→   454→  {
+   455→   455→    name: "Thabo Radebe",
+   456→   456→    title: "Building Contractor",
+   457→   457→    company: "Midrand",
+   458→   458→    quote:
+   459→   459→      "Used Libmarc for TLB hire on a trenching job in Midrand. Hourly rate was the best of the three quotes I got, machine wasn't brand new but ran fine for the full two weeks. Operator was switched on — knew to wait for the pipe crew instead of just trenching ahead. They're on my shortlist now.",
+   460→   460→    rating: 5,
+   461→   461→    initials: "TR",
+   462→   462→    project: "Midrand Trenching",
+   463→   463→    verified: true,
+   464→   464→  },
+   465→   465→  {
+   466→   466→    name: "Naledi Mokoena",
+   467→   467→    title: "Homeowner",
+   468→   468→    company: "Soweto",
+   469→   469→    quote:
+   470→   470→      "After my builder just stopped pitching up I had a mountain of rubble on my property. Called Libmarc on a Tuesday, two trucks arrived Wednesday morning. Crew was friendly and they swept up afterwards which I didn't expect. Knocked off one star because they couldn't give me a firm arrival time, just 'morning' — but the job itself was spot on.",
+   471→   471→    rating: 4,
+   472→   472→    initials: "NM",
+   473→   473→    project: "Soweto Clearance",
+   474→   474→    verified: true,
+   475→   475→  },
+   476→   476→];
+   477→   477→
+   478→   478→export type RateItem = {
+   479→   479→  service: string;
+   480→   480→  unit: string;
+   481→   481→  price: string;
+   482→   482→  note: string;
+   483→   483→  popular?: boolean;
+   484→   484→};
+   485→   485→
+   486→   486→export const rates: RateItem[] = [
+   487→   487→  { service: "Demolition (structural)", unit: "per m²", price: "from R450", note: "Includes break-up & stacking. Excludes rubble removal.", popular: true },
+   488→   488→  { service: "Rock Blasting", unit: "per m³", price: "from R850", note: "Controlled blasting. Permits & shot-firer included." },
+   489→   489→  { service: "Rubble Removal — Bakkie Load", unit: "per load", price: "from R900", note: "±1.5m³. Labour & disposal included." },
+   490→   490→  { service: "Rubble Removal — Truck Load", unit: "per load", price: "from R1,800", note: "±6m³. Labour & disposal included.", popular: true },
+   491→   491→  { service: "TLB Hire (with operator)", unit: "per hour", price: "from R650", note: "Min 4 hours. Fuel extra." },
+   492→   492→  { service: "Excavator 20T (with operator)", unit: "per hour", price: "from R1,150", note: "Min 8 hours. Fuel extra." },
+   493→   493→  { service: "Tipper Truck Hire", unit: "per hour", price: "from R750", note: "Min 4 hours. Fuel extra." },
+   494→   494→  { service: "CCTV System (4 cameras + DVR)", unit: "installed", price: "from R7,500", note: "Includes cabling & mobile app setup.", popular: true },
+   495→   495→  { service: "CCTV System (8 cameras + NVR)", unit: "installed", price: "from R14,500", note: "Includes cabling & mobile app setup." },
+   496→   496→  { service: "Roller Shutter Door (manual)", unit: "per unit", price: "from R6,500", note: "Custom-sized & fitted." },
+   497→   497→  { service: "Roller Shutter Door (motorised)", unit: "per unit", price: "from R12,500", note: "Includes motor & electrical." },
+   498→   498→  { service: "Automatic Sliding Gate", unit: "installed", price: "from R15,000", note: "Gate, motor, 2 remotes & wiring." },
+   499→   499→  { service: "Electrical Wiring (per point)", unit: "per point", price: "from R350", note: "Certified. CoC issued on request." },
+   500→   500→];
+   501→   501→
+   502→   502→// When the rates were last reviewed — adds credibility & is shown on the rates page
+   503→   503→export const ratesLastReviewed = "August 2024";
+   504→   504→
+   505→   505→export const rateNotes = [
+   506→   506→  "All prices are starting rates and may vary based on site access, scope, and materials.",
+   507→   507→  "A free site visit is available for projects in Greater Johannesburg — quotes are issued the same business day.",
+   508→   508→  "Plant hire is subject to a minimum hire period. Fuel is charged separately or supplied by the client.",
+   509→   509→  "Discounts available for weekly and monthly plant hire, and for bundled service packages.",
+   510→   510→  "All work is covered by R5 million public liability insurance. Disposal slips provided for all rubble removal.",
+   511→   511→];
+   512→   512→
+   513→   513→export type ServiceArea = {
+   514→   514→  name: string;
+   515→   515→  description: string;
+   516→   516→  postcodes: string;
+   517→   517→};
+   518→   518→
+   519→   519→export const serviceAreas: ServiceArea[] = [
+   520→   520→  { name: "Johannesburg CBD & Inner City", description: "Yeoville, Hillbrow, Berea, Joubert Park, Doornfontein", postcodes: "2001, 2094, 2198" },
+   521→   521→  { name: "Northern Suburbs", description: "Sandton, Rosebank, Randburg, Fourways, Midrand", postcodes: "2196, 2194, 2128, 1685, 1686" },
+   522→   522→  { name: "Eastern Suburbs", description: "Bedfordview, Edenvale, Germiston, Boksburg, Kempton Park", postcodes: "2008, 1609, 2090, 1419" },
+   523→   523→  { name: "Western Suburbs", description: "Roodepoort, Honeydew, Constantia Kloof, Weltevreden Park", postcodes: "1724, 2169, 1709" },
+   524→   524→  { name: "Southern Suburbs", description: "Soweto, Lenasia, Ennerdale, Orange Farm, Kibler Park", postcodes: "1818, 1820, 1832" },
+   525→   525→  { name: "Alexandra & surrounds", description: "Alexandra, Marlboro, Wynberg, Kew, Lombardy East", postcodes: "2090, 2018, 2094" },
+   526→   526→];
+   527→   527→
+   528→   528→export const certifications = [
+   529→   529→  "Public Liability Insurance (R5M)",
+   530→   530→  "Certified Shot-Firers on Staff",
+   531→   531→  "COID Registration (Workmen's Comp)",
+   532→   532→  "City of Johannesburg Permits",
+   533→   533→  "Electrical CoC Issued on Request",
+   534→   534→  "PSIRA Registered (Security)",
+   535→   535→];
+   536→   536→
+   537→   537→export const safetyPractices = [
+   538→   538→  { title: "Daily Risk Assessment", desc: "Every site starts with a documented Hazard Identification & Risk Assessment (HIRA) signed off by the supervisor before any work begins." },
+   539→   539→  { title: "Certified Shot-Firers", desc: "All rock blasting is supervised by certified shot-firers with valid blasting licences. A blast plan is drawn up for every job." },
+   540→   540→  { title: "PPE On Every Site", desc: "Hard hats, safety boots, high-viz, eye and ear protection issued to every crew member, every shift. No exceptions." },
+   541→   541→  { title: "Public Liability Cover", desc: "R5 million public liability insurance protects our clients and their neighbours on every project, big or small." },
+   542→   542→  { title: "COID Registered", desc: "We are registered with the Compensation Fund (COID) — all our workers are covered for on-site injury." },
+   543→   543→  { title: "Permits & Notifications", desc: "Demolition and blasting permits, and neighbour notifications within 50 m, are handled in full before any work begins." },
+   544→   544→];
+   545→   545→
+   546→   546→/**
+   547→   547→ * clientTypes replaces the old fake "clientLogos" list (which were generic
+   548→   548→ * made-up company names presented as real clients — a classic AI tell).
+   549→   549→ * These are honest categories of clients we work for — no fake brand names.
+   550→   550→ */
+   551→   551→export const clientTypes: string[] = [
+   552→   552→  "Homeowners",
+   553→   553→  "Body corporates",
+   554→   554→  "Building contractors",
+   555→   555→  "Retail shops & restaurants",
+   556→   556→  "Schools & churches",
+   557→   557→  "Property developers",
+   558→   558→];
+   559→   559→

@@ -204,15 +204,14 @@ export default async function ServiceDetailPage({
                 <div className="mt-6 space-y-4 text-muted-foreground leading-relaxed text-base lg:text-lg">
                   <p>{service.description}</p>
                   <p>
-                    Every engagement starts with a site visit and a written,
-                    no-obligation quote — and ends with a clean, compliant,
-                    properly documented handover. We work across Greater
-                    Johannesburg and surrounding Gauteng, with the crew,
-                    machinery, and certifications to deliver{" "}
+                    Every job starts with a site visit and a written quote, and
+                    ends with a clean, properly documented handover. We work
+                    across Greater Johannesburg and surrounding Gauteng, with the
+                    crew, machinery, and certifications to handle{" "}
                     <span className="text-foreground font-semibold">
                       {service.title.toLowerCase()}
                     </span>{" "}
-                    safely, on time, and at a transparent price.
+                    without subcontracting it out to someone else.
                   </p>
                 </div>
 
@@ -308,7 +307,7 @@ export default async function ServiceDetailPage({
 
                       <p className="mt-5 text-xs text-muted-foreground text-center">
                         Same-business-day quotes on most enquiries. No
-                        obligation, no hidden fees.
+                        obligation — if we can't help, we'll say so.
                       </p>
                     </CardContent>
                   </Card>
@@ -440,16 +439,26 @@ export default async function ServiceDetailPage({
             eyebrow="Our Process"
             title={
               <>
-                Four steps from{" "}
-                <span className="text-primary">enquiry to handover</span>
+                {service.process.length} steps from{" "}
+                <span className="text-primary">your call to handover</span>
               </>
             }
-            description={`How we deliver ${service.title.toLowerCase()} — disciplined, documented, and on schedule.`}
+            description={`How we run ${service.title.toLowerCase()} from start to finish — what happens, who does what, and what you get at the end.`}
             className="mb-14"
           />
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
-            <div className="hidden lg:block absolute top-10 left-[12.5%] right-[12.5%] h-0.5 bg-border" />
+          <div
+            className={`grid gap-6 relative ${
+              service.process.length === 3
+                ? "md:grid-cols-2 lg:grid-cols-3"
+                : "md:grid-cols-2 lg:grid-cols-4"
+            }`}
+          >
+            {service.process.length === 4 ? (
+              <div className="hidden lg:block absolute top-10 left-[12.5%] right-[12.5%] h-0.5 bg-border" />
+            ) : (
+              <div className="hidden lg:block absolute top-10 left-[16.67%] right-[16.67%] h-0.5 bg-border" />
+            )}
             {service.process.map((p, i) => (
               <Reveal key={p.step} delay={i * 100}>
                 <Card className="h-full border-border hover:border-primary hover:shadow-xl transition-all duration-300 bg-background">
@@ -501,7 +510,7 @@ export default async function ServiceDetailPage({
                   <span className="text-primary">Libmarc services</span>
                 </>
               }
-              description="Often bundled into a single contract — one quote, one crew, one accountable team across Gauteng."
+              description="Often bundled into a single contract — one quote, one crew, one team to call across Gauteng."
             />
             <Button
               asChild
@@ -562,7 +571,7 @@ export default async function ServiceDetailPage({
       {/* ===================== CTA ===================== */}
       <CTABand
         title={`Ready to start your ${service.title.toLowerCase()} project?`}
-        description={`Tell us about your site, scope, and timeline. A Libmarc Projects lead will respond within one business day with a transparent quote and recommended approach.`}
+        description={`Tell us about your site, scope, and timeline. Someone from our team will come back to you the same business day with a quote and a recommended way to approach the job.`}
       />
     </>
   );

@@ -1,0 +1,712 @@
+     1→# BUILDCORE Construction Website — Worklog
+     2→
+     3→## Project Overview
+     4→Building a **13-page construction company website** ("BUILDCORE") based on an uploaded reference image showing a yellow/black/white construction theme with hero, services, pricing cards, project gallery, and statistics.
+     5→
+     6→## Tech Stack
+     7→- Next.js 16 (App Router) + TypeScript + Tailwind CSS 4 + shadcn/ui (New York)
+     8→- Fonts: Geist Sans (body) + **Oswald** (display/headings, industrial feel) loaded via next/font
+     9→- Theme: Yellow primary (amber-500 oklch 0.769 0.188 70.08) on white, near-black text (foreground oklch 0.18 0.005 285)
+    10→- Sticky header + sticky footer (footer uses `mt-auto` on flex-col wrapper in layout)
+    11→
+    12→## Brand
+    13→- Name: **BUILDCORE** (BUILD in dark, CORE in yellow)
+    14→- Tagline: "Construction & Engineering Excellence"
+    15→- Founded 2009, Bay Area (Oakland, CA)
+    16→- Phone: +1 (415) 555-0192, Email: hello@buildcore.co
+    17→- License: CSLB #847291
+    18→
+    19→## Design System (DONE)
+    20→- `src/app/globals.css` — yellow primary theme, `.font-display` utility, `.hazard-stripe` (yellow/black diagonal), `.grid-pattern`, custom yellow scrollbar
+    21→- `src/app/layout.tsx` — Oswald + Geist fonts, ThemeProvider, SiteHeader, SiteFooter, ScrollToTop, min-h-screen flex-col wrapper
+    22→- `src/components/theme-provider.tsx` — next-themes wrapper
+    23→- `src/components/site/site-header.tsx` — sticky header: top utility bar (dark), logo, 10-item nav, "Get a Quote" button, mobile Sheet menu
+    24→- `src/components/site/site-footer.tsx` — dark footer: hazard stripe, CTA band, 5-col grid (brand/company/services/contact), bottom bar
+    25→- `src/components/site/scroll-to-top.tsx` — floating yellow scroll-to-top button
+    26→- `src/components/site/sections.tsx` — reusable: `SectionHeading`, `Breadcrumbs`, `PageHero` (inner page hero with dark bg + image + breadcrumbs), `Counter` (animated count-up on scroll), `CTABand`, `Reveal` (scroll reveal animation)
+    27→
+    28→## Data (DONE)
+    29→- `src/lib/site-data.ts` — exports: `company`, `stats`, `navItems`, `services` (12 services with slug/title/desc/icon/image/features/process), `projects` (6 projects with full detail + gallery), `team` (6 members), `testimonials` (6), `pricingPlans` (3 tiers: Starter $250, Professional $450 popular, Enterprise custom), `blogPosts` (4 articles with markdown content), `faqs` (12 Q&As in categories), `clientLogos`, `certifications`
+    30→
+    31→## Navigation (13 pages)
+    32→1. `/` — Home (DONE)
+    33→2. `/about` — About
+    34→3. `/services` — Services listing
+    35→4. `/services/[slug]` — Service detail
+    36→5. `/projects` — Projects listing
+    37→6. `/projects/[slug]` — Project detail
+    38→7. `/pricing` — Pricing
+    39→8. `/team` — Team
+    40→9. `/testimonials` — Testimonials
+    41→10. `/blog` — Blog listing
+    42→11. `/blog/[slug]` — Blog post
+    43→12. `/contact` — Contact
+    44→13. `/faq` — FAQ
+    45→
+    46→## Images (IN PROGRESS — generating via gen-images.sh)
+    47→Paths in `/public/images/`:
+    48→- `hero-worker.png` (864x1152) — hero
+    49→- `about-site.png` (1440x720), `cta-bg.png` (1440x720)
+    50→- `projects/project-1.png` ... `project-6.png` (1024x1024)
+    51→- `team/team-1.png` ... `team-6.png` (864x1152)
+    52→- `blog/blog-1.png` ... `blog-4.png` (1344x768)
+    53→- `services/excavation.png` (optional)
+    54→
+    55→## Components Available
+    56→All shadcn/ui components in `src/components/ui/` (button, card, badge, accordion, tabs, form, input, textarea, select, dialog, sheet, carousel, avatar, etc.). Use `import { X } from "@/components/ui/x"`.
+    57→
+    58→## Page Building Conventions (MANDATORY for consistency)
+    59→1. **Page structure**: Use `PageHero` at top (dark bg with breadcrumb + title + description), then content sections, then `CTABand` at bottom.
+    60→2. **Use shared components**: `SectionHeading`, `Reveal`, `Counter`, `CTABand`, `Breadcrumbs` from `@/components/site/sections`.
+    61→3. **Image import**: `import Image from "next/image"`. Use `<Image src="..." fill className="object-cover" sizes="..." />` with aspect ratio containers.
+    62→4. **Buttons**: yellow CTA = `bg-primary text-primary-foreground hover:bg-primary/90 font-bold uppercase tracking-wide`. Use `<Button asChild>...<Link></Button>`.
+    63→5. **Dark sections**: `bg-foreground text-background` with hazard stripe accent (`<div className="hazard-stripe h-1.5 w-full" />`).
+    64→6. **Spacing**: section padding `py-20 lg:py-28`. Container: `container mx-auto px-4`.
+    65→7. **Icons**: lucide-react. Yellow accent icons `text-primary`.
+    66→8. **Cards**: hover `hover:border-primary hover:shadow-xl transition-all`.
+    67→9. **Dynamic routes**: use `generateStaticParams` + `notFound()` for `[slug]` pages. Import data from `@/lib/site-data`.
+    68→10. **Contact form**: build a client form that POSTs to `/api/contact` (create the API route too).
+    69→11. **Markdown blog content**: render `blogPost.content` (has `## ` headings and `\n\n` paragraphs) — split on `\n\n`, render headings vs paragraphs.
+    70→12. Keep pages responsive (mobile-first). Test with `bun run lint`.
+    71→
+    72→## Dev Server
+    73→- Running on port 3000 via `bun run dev` (setsid, background). Log at `/home/z/my-project/dev.log`.
+    74→- Only `/` route is compiled so far. Other routes compile on first visit.
+    75→
+    76→## Status
+    77→- ✅ Design system + shared components + data + Home page
+    78→- 🔄 Image generation (16 images, ~2 parallel)
+    79→- ⏳ 12 more pages to build
+    80→
+    81→---
+    82→Task ID: 1-5
+    83→Agent: Main (Z.ai Code)
+    84→Task: Set up design system, shared components, data, and Home page for BUILDCORE construction website
+    85→
+    86→Work Log:
+    87→- Analyzed uploaded reference image via VLM (yellow/black construction theme, hero "WE PROVIDE BEST SERVICE", pricing cards, project gallery, stats)
+    88→- Inspected existing project (Next.js 16, shadcn/ui New York, all components available)
+    89→- Wrote globals.css with amber-500 primary, Oswald display font, hazard-stripe + grid-pattern utilities, custom scrollbar
+    90→- Wrote layout.tsx with Geist + Oswald fonts, ThemeProvider, SiteHeader, SiteFooter, ScrollToTop, min-h-screen flex-col wrapper (sticky footer)
+    91→- Created lib/site-data.ts with full content: 12 services, 6 projects, 6 team members, 6 testimonials, 3 pricing tiers, 4 blog posts, 12 FAQs, certifications, client logos
+    92→- Created site-header.tsx (sticky, top utility bar, 10-item nav, mobile Sheet)
+    93→- Created site-footer.tsx (dark, hazard stripe, CTA band, 5-col grid)
+    94→- Created scroll-to-top.tsx and sections.tsx (SectionHeading, Breadcrumbs, PageHero, Counter, CTABand, Reveal)
+    95→- Wrote Home page with: hero (worker image + headline + quote card), client logos, stats (animated counters), about preview, services grid (6), featured projects (dark section), pricing preview, process (4 steps), testimonials, certifications, CTA
+    96→- Started dev server (port 3000, confirmed HTTP 200 on /)
+    97→- Started controlled image generation (16 images, 2 parallel) via gen-images.sh
+    98→
+    99→Stage Summary:
+   100→- Design system fully established: yellow/black industrial theme with Oswald headings
+   101→- Home page complete and compiling successfully
+   102→- Shared components reusable across all 13 pages
+   103→- Data layer complete — all pages can import from lib/site-data.ts
+   104→- Images generating in background; pages should reference the documented paths
+   105→
+   106→---
+   107→Task ID: 6-a
+   108→Agent: full-stack-developer (About/Services/ServiceDetail)
+   109→Task: Build About, Services listing, and Service Detail pages
+   110→
+   111→Work Log:
+   112→- Read worklog.md to understand project context, design system (yellow/black industrial, Oswald display font, hazard-stripe + grid-pattern utilities), and shared component APIs (SectionHeading, PageHero, Counter, CTABand, Reveal, Breadcrumbs)
+   113→- Read site-data.ts to inventory available data: 12 services (each with slug/title/short/description/icon/image/features/process), stats (4), certifications (6), team (6), company info
+   114→- Read sections.tsx to confirm exact component signatures and Reveal/Counter being client components (so server pages can import them freely)
+   115→- Read app/page.tsx to match style/quality: bold Oswald headings, yellow accents, hazard stripes on dark sections, Reveal-wrapped cards, hover effects, image-in-aspect-ratio-container pattern, Badge numbered cards
+   116→- Read globals.css to confirm utility classes (.hazard-stripe, .grid-pattern, .font-display) and theme tokens (bg-foreground/text-background for dark sections, bg-primary for yellow)
+   117→- Created /home/z/my-project/agent-ctx directory for cross-agent context
+   118→- Built src/app/about/page.tsx (server component, exports Metadata):
+   119→  * PageHero with eyebrow "Our Story", title "Building the Bay Area since 2009", breadcrumbs Home/About, image /images/about-site.png
+   120→  * Mission/Vision/Promise section: 3 cards with Target/Eye/ShieldCheck icons, dark icon-square badges, hover:border-primary + shadow-xl
+   121→  * Company story: 2-col layout with image (/images/cta-bg.png) inside border-2 primary frame + Counter(750+) floating badge; narrative text covering 2009 founding, 2013 first $10M, 2018 500th project, today's 750+ workers
+   122→  * Animated stats band: dark bg-foreground section with hazard-stripe top+bottom, grid-pattern overlay, Counter component for all 4 stats with calendar/building/users/check icons
+   123→  * Core values grid: 6 cards (Safety First, Craftsmanship, Integrity, Innovation, Collaboration, Sustainability) each with icon in primary/10 square that animates to solid primary on hover
+   124→  * Certifications: dark-on-muted band, 1+3 split with ShieldCheck heading and 6 certification cards with CheckCircle2 icons
+   125→  * Milestones timeline: vertical center-line with alternating left/right cards on desktop, single column with left marker on mobile; 5 milestones (2009 founded, 2013 first $10M, 2018 500th, 2022 Bay Bridge Connector, 2024 1500th); Flag markers in primary yellow
+   126→  * Team preview: 3 team member cards with image overlay gradient + name/role; link to /team
+   127→  * CTABand with custom title "Let's build your next chapter."
+   128→- Built src/app/services/page.tsx (server component, exports Metadata):
+   129→  * PageHero with eyebrow "Our Expertise", title "Construction services built to deliver", breadcrumbs Home/Services, image /images/projects/project-4.png
+   130→  * Intro section: SectionHeading + paragraph + "Get a Free Quote" button aligned right
+   131→  * Services grid: ALL 12 services, each card with image (aspect-16/10), primary yellow icon badge top-left, numbered Badge top-right, title, line-clamp-2 short desc, "Learn More" link; matches Home page services grid style exactly
+   132→  * Process section: 4-step Consult/Design/Build/Deliver with size-24 bordered squares, primary number badges, connecting line — same as home page
+   133→  * Why choose us: 6 feature cards (Safety, On-time, Transparency, In-house team, GMP pricing, Warranty) each with icon-badge that animates solid on hover
+   134→  * CTABand with custom title "Not sure which service fits your project?"
+   135→- Built src/app/services/[slug]/page.tsx (server component, dynamic route):
+   136→  * generateStaticParams() returns all 12 service slugs for SSG
+   137→  * generateMetadata({ params }) — params is Promise in Next.js 16; returns per-service title/description/openGraph
+   138→  * Default export async function receives { params: Promise<{ slug }> } — awaits slug, looks up service, calls notFound() if missing
+   139→  * PageHero with eyebrow "BUILDCORE Services", title=service.title, description=service.short, breadcrumbs Home/Services/{title}, image=service.image
+   140→  * Overview section: 12-col grid (7+5 split). Left col: SectionHeading + service.description + secondary paragraph + 16/9 image with primary icon badge overlay. Right col: sticky Key Features card with dark header (icon + "Key Features" eyebrow + service title), list of service.features with CheckCircle2 checkmarks, "Get a Quote" yellow button + "View Related Projects" outline button, plus response-time reassurance microcopy
+   141→  * Process section: service.process array rendered as 4 numbered cards with large primary/20 step number + small primary step counter, title, detail; "All Services" back-button below
+   142→  * Related services: 3 other services (filter current slug, slice 0-3) as small image cards with primary icon badges; "All Services" outline button in header
+   143→  * CTABand with dynamic title "Ready to start your {service.title} project?"
+   144→- Ran `bun run lint` — 0 errors, 0 warnings in my 3 new files. (1 pre-existing warning in sections.tsx unused eslint-disable for img element — out of scope, left alone.)
+   145→- Dev server log shows only home route visited so far; new routes will compile on first visit. Lint clean → TypeScript/JSX syntactically valid and Next.js rules satisfied.
+   146→
+   147→Stage Summary:
+   148→- 3 production-ready pages built, all matching Home page quality bar (Oswald display headings, yellow accents, hazard stripes on dark sections, hover effects, scroll-reveal animations)
+   149→- About page: 8 sections including visually-rich alternating timeline with primary-yellow flag markers
+   150→- Services page: all 12 services rendered as cards matching Home grid style; process + 6-card "why choose us" section
+   151→- Service detail: dynamic route with generateStaticParams (SSG all 12 slugs), generateMetadata, notFound() guard, sticky Key Features sidebar, per-service process cards, related services
+   152→- All pages are responsive (mobile-first: single column → md:2-col → lg:3-col grids; mobile timeline collapses to left-marker layout)
+   153→- All pages are server components — Reveal/Counter/PageHero (client) are imported and rendered as client islands
+   154→- Convention compliance verified: imports from "@/components/site/sections" and "@/lib/site-data", Image with fill+object-cover in aspect-ratio containers, yellow CTA buttons via Button asChild + Link, dark sections via bg-foreground text-background with hazard-stripe accent, section padding py-20 lg:py-28, container mx-auto px-4
+   155→- bun run lint: 0 errors in new files. 1 pre-existing warning in shared sections.tsx (out of scope).
+   156→
+   157→---
+   158→Task ID: 6-d
+   159→Agent: full-stack-developer (Blog/BlogPost/FAQ)
+   160→Task: Build Blog listing, Blog Post, and FAQ pages
+   161→
+   162→Work Log:
+   163→- Read worklog, site-data.ts (blogPosts/faqs/company), sections.tsx (PageHero/CTABand/Reveal), page.tsx (Home reference), globals.css (theme)
+   164→- Built `/blog` listing: PageHero (eyebrow "Insights", image blog-1.png) → featured post 2-col card (image + meta + title + excerpt + Read Article CTA) → category filter tabs (All, Project Delivery, Technology, Pre-Construction, Safety) → posts grid (4 cards with image/category badge/title/excerpt/author+date+read time) → dark newsletter signup section → CTABand
+   165→- Built `/blog/[slug]` detail: async server component with `generateStaticParams` + `generateMetadata` (Next.js 16 needs `params` unwrapped via `await`). PageHero with category eyebrow + post title + excerpt + breadcrumbs (Home/Blog/Title). Article meta bar with author avatar (initials circle) + date + read time + category badge + share buttons (Twitter/LinkedIn/Facebook/Copy). Cover image (21:9). Article body parses markdown-ish content (split on `\n\n`, `## ` → h2 with yellow `#` accent, else p) inside `max-w-3xl` prose container. Back-to-blog link. Author box card. Related posts (3 cards). CTABand.
+   166→- Built `/faq`: PageHero (eyebrow "Support", image blog-4.png) → live search input (filters FAQs by question/answer text) → 5 FAQ category sections (Getting Started, Pricing & Contracts, Process & Timeline, Safety & Compliance, Sustainability) each with shadcn `<Accordion type="single" collapsible>` of `<AccordionItem>`s → "Still have questions?" dark band with Contact + Call buttons → 3 quick contact cards (Call/Email/Visit) with icons → CTABand
+   167→- Fixed Next.js 16 params Promise issue (initial 404 on /blog/[slug] resolved by `await params`)
+   168→- Ran `bun run lint` — 0 errors (only pre-existing warning in sections.tsx)
+   169→- Verified all routes: `/blog` 200, all 4 `/blog/[slug]` 200, `/blog/nonexistent` 404, `/faq` 200
+   170→
+   171→Stage Summary:
+   172→- 3 pages complete: /blog (listing with filter), /blog/[slug] (detail with content parser, share, author box, related), /faq (with search + accordions + contact cards)
+   173→- 4 files added: src/app/blog/page.tsx, src/app/blog/blog-list-client.tsx, src/app/blog/blog-newsletter.tsx, src/app/blog/[slug]/page.tsx, src/app/faq/page.tsx, src/app/faq/faq-content.tsx
+   174→- All pages match Home quality: Oswald headings, yellow primary accents, hazard stripes on dark sections, generous spacing, hover effects on cards, scroll-reveal animations
+   175→- Footer is global (from layout) — not duplicated
+   176→- All routes compile and return correct HTTP codes; lint clean
+   177→
+   178→---
+   179→Task ID: 6-b
+   180→Agent: full-stack-developer (Projects/ProjectDetail/Pricing)
+   181→Task: Build Projects listing, Project Detail, and Pricing pages
+   182→
+   183→Work Log:
+   184→- Read worklog.md, site-data.ts, sections.tsx, page.tsx (Home), globals.css to lock in design system & conventions.
+   185→- Created `src/app/projects/page.tsx` (client component):
+   186→  * PageHero (eyebrow "Our Work", title "Projects That Define Skylines", image project-1.png, breadcrumbs Home/Projects)
+   187→  * Category filter buttons (All, Residential, Commercial, Industrial, Infrastructure, Renovation) using useState
+   188→  * 3-col grid of project cards: aspect-[4/5], hover-zoom images, category badge + year chip, MapPin location, title, summary on hover, value/duration meta row, "View Project" arrow link
+   189→  * Dark stats band with hazard stripe: 1500+ projects (Counter), $680M+ value (Counter with $ prefix), 96% on-time (Counter), 0.71 EMR (static, since Counter can't do decimals)
+   190→  * "Have a Project in Mind?" section: 2-col with image + bullet list of pre-construction deliverables + dual CTAs
+   191→  * CTABand
+   192→- Created `src/app/projects/[slug]/page.tsx` (server component):
+   193→  * generateStaticParams for all 6 slugs; async params unwrapped with await; notFound() on missing
+   194→  * generateMetadata returns project.title/summary/openGraph image
+   195→  * PageHero with eyebrow=category, title=title, description=summary, breadcrumbs Home/Projects/{title}, image=project.image
+   196→  * Meta bar: 6-col grid with icon + label + value (Client, Location, Year, Value, Duration, Category)
+   197→  * Overview 2-col: left = description + 3 inline impact metrics (value, duration, year); right = sticky Project Scope card with checkmark list + "Start a Similar Project" CTA
+   198→  * Gallery: 3-image grid with first image spanning 2x2, hover-zoom + image counter badge
+   199→  * Dark impact band with hazard stripe: 4 big metrics (value, duration, "100%" milestones, "0" lost-time incidents)
+   200→  * Next-project nav: full-width dark card linking to next project (wraps around), with hero image bg, category badge, title, summary, location/year meta, View Project button + hazard stripe footer
+   201→  * Back-to-all-projects link + CTABand
+   202→- Created `src/app/pricing/page.tsx` (server component):
+   203→  * PageHero (eyebrow "Pricing", title "Transparent Pricing for Every Project", image project-2.png, breadcrumbs Home/Pricing)
+   204→  * 3 pricing tier cards rendered from pricingPlans data: Starter $250, Professional $450 (popular with border-primary border-2 shadow-xl lg:scale-105 + "Most Popular" badge), Enterprise Custom. Each card has name, big price, period, description, checkmark feature list, CTA button → /contact
+   205→  * Comparison table: 18 curated feature rows × 3 tiers with yes/no/custom cells (yellow check, gray X, gray minus). Sticky tier headers with price + period. Legend below.
+   206→  * Cost factors section: 6 cards (Site Conditions, Scope & Finishes, Schedule, Location/Market, Permitting, Sustainability Goals) each with icon, numbered, hover-border-primary
+   207→  * Pricing FAQ snippet: filters faqs by category "Pricing & Contracts" (3 FAQs), rendered in shadcn Accordion inside bordered card. Side-by-side layout with FAQ heading + "View All FAQs" link.
+   208→  * GMP Transparency band (dark with hazard stripe + grid pattern): heading "We guarantee the maximum price — not just the minimum", copy about GMP open-book, 2 CTAs (Request GMP Quote + Read FAQ), 2×2 grid of trust badges (Price Lock, Shared Savings, Open-Book, Bonded $25M)
+   209→  * CTABand
+   210→- Ran `bun run lint` → 0 errors (only pre-existing warning in sections.tsx unrelated to my code).
+   211→- Verified via curl: all 6 project slugs return 200, /projects and /pricing return 200, /projects/does-not-exist returns 404 via notFound().
+   212→
+   213→Stage Summary:
+   214→- 3 production-ready pages built matching Home page quality: bold Oswald headings, yellow accents, hazard stripes on dark sections, generous spacing, hover effects, scroll-reveal animations.
+   215→- All shared components (PageHero, SectionHeading, Counter, CTABand, Reveal, Breadcrumbs) reused for consistency.
+   216→- All data sourced from @/lib/site-data (projects, pricingPlans, faqs, company).
+   217→- Dynamic route uses correct Next.js 16 async params API (works as reference for the blog [slug] page which currently has the Promise-unwrap bug).
+   218→- Pages compile cleanly under Turbopack with no warnings beyond the project-wide metadataBase notice.
+   219→
+   220→---
+   221→Task ID: 6-c
+   222→Agent: full-stack-developer (Team/Testimonials/Contact)
+   223→Task: Build Team, Testimonials, and Contact pages + contact API route
+   224→
+   225→Work Log:
+   226→- Read worklog.md, lib/site-data.ts (team[], testimonials[], company, clientLogos, faqs), components/site/sections.tsx (PageHero, SectionHeading, Counter, CTABand, Reveal, Breadcrumbs), src/app/page.tsx (Home), and globals.css to align with the established BUILDCORE design system (Oswald display, yellow primary, hazard stripes on dark sections, hover effects, scroll reveals).
+   227→- Confirmed layout.tsx mounts `<Toaster />` from `@/components/ui/toaster` (the useToast hook system), so the contact form uses `useToast` / `toast` from `@/hooks/use-toast` for success/error feedback.
+   228→- Verified team data shape: `{ name, role, bio, image, linkedin, expertise[] }` and testimonial shape: `{ name, title, company, quote, rating, avatar, project }`.
+   229→
+   230→Built pages & components:
+   231→
+   232→1. `src/app/team/page.tsx` (server component — Reveal/Counter handle client interactivity)
+   233→   - PageHero (eyebrow "Our People", title "The Builders Behind BUILDCORE", breadcrumbs Home/Team, image `/images/cta-bg.png`)
+   234→   - Team grid: all 6 members as Cards with portrait `aspect-[3/4]` images, gradient overlay, role (yellow), name overlay, bio (`line-clamp-3`), expertise badges (accent), LinkedIn icon link that fades/slides in on hover. Hover effects: image zoom (`group-hover:scale-105`), card lift (`hover:-translate-y-1`), border-primary, shadow-xl.
+   235→   - Culture & Values section (4 cards: Safety Culture, Craftsmanship, Continuous Learning, Community) with icon tiles (dark bg, yellow icon).
+   236→   - "Now Hiring" dark careers section (`bg-foreground text-background` + hazard stripe + grid overlay) with: pitch headline, 6 benefits checklist (competitive pay, medical/dental/vision, 401k, training, safety-first, advancement), 4 open role preview cards (Project Engineer, Superintendent, Estimator, Carpenter Journeyman) with type badges, and a yellow "View Open Roles" button -> /contact.
+   237→   - Stats section with Counter: 750+ workers, 35 avg yrs leadership experience, 100% OSHA 30 certified, 15+ years.
+   238→   - CTABand.
+   239→
+   240→2. `src/app/testimonials/page.tsx` (server component)
+   241→   - PageHero (eyebrow "Client Reviews", title "Trusted by Bay Area Owners", breadcrumbs Home/Testimonials, image `/images/projects/project-4.png`).
+   242→   - Rating summary band: huge 4.9/5, star row, "480+ verified reviews", rating distribution bars (5 star 92%, 4 star 6%, 3 star 1%, 2 star 1%, 1 star 0%) animated to width, plus 2 trust badges (98% satisfaction, 0 lost-time incidents).
+   243→   - Testimonials grid: all 6 testimonials as Cards with Quote icon, 5-star row, quote text, avatar (12x12 next/image), name, title/company, project badge. 3-col responsive grid with scroll-reveal stagger.
+   244→   - Featured testimonial dark section: hazard stripe + grid overlay, large centered Quote icon, big Oswald blockquote, avatar + name + role + star row + project badge.
+   245→   - Client logos row (rendered from `clientLogos`).
+   246→   - Review platforms: 3 cards (Google Reviews 4.9/312, Yelp 4.8/94, BBB A+/Accredited since 2011) with hover lift and ArrowUpRight.
+   247→   - CTABand.
+   248→
+   249→3. `src/components/site/contact-form.tsx` (`"use client"` component)
+   250→   - Controlled form with useState, fields: Full Name, Email, Phone, Project Type (Select: Residential/Commercial/Industrial/Infrastructure/Renovation/Other), Budget (Select: Under $250k / $250k-$1M / $1M-$10M / $10M+), Preferred Timeline (Select: ASAP / 3-6 / 6-12 / 12+ / Just exploring), Message (Textarea).
+   251→   - Client-side validation mirrors server (name >= 2 chars, valid email regex, message >= 10 chars) with destructive toast on failure.
+   252→   - POSTs JSON to `/api/contact`. On success: success toast with inquiry id, resets form, shows a "Message received" success state with a "Send another message" reset button.
+   253→   - Submit button shows loading spinner (`Loader2 animate-spin`) while submitting.
+   254→   - Uses shadcn Input, Textarea, Label, Select, Button — all `rounded-none` to match the industrial aesthetic.
+   255→
+   256→4. `src/app/contact/page.tsx` (server component)
+   257→   - PageHero (eyebrow "Contact", title "Let's Build Something Together", breadcrumbs Home/Contact, image `/images/cta-bg.png`).
+   258→   - 2-col grid (lg:col-span-5 / lg:col-span-7):
+   259→     - LEFT: SectionHeading, quick contact cards (clickable tel: and mailto:), HQ address card (with license), office hours card, Google Maps `<iframe>` embed (with grayscale + address pin overlay), Department Directory (4 depts: New Projects/Careers/Media/Subcontractor Bids — each a clickable mailto row), Follow Us social icons (LinkedIn, Instagram, Facebook, YouTube).
+   260→     - RIGHT: sticky wrapper with eyebrow + heading "Send us a project brief" + `<ContactForm />` client component.
+   261→   - FAQ snippet section (bg-secondary/60): "Getting Started" FAQs in an Accordion + button to /faq.
+   262→   - CTABand.
+   263→
+   264→5. `src/app/api/contact/route.ts` (server route, no "use client")
+   265→   - POST handler: parses JSON body, validates (name >= 2 chars, valid email regex, message >= 10 chars). Returns 400 with `{ success: false, error }` on validation failure. On success: generates an `INQ-<base36 timestamp>` id, logs the full submission to console, returns 200 with `{ success: true, id, message }`.
+   266→   - GET handler: returns API metadata (endpoint, method, required fields) for discoverability.
+   267→
+   268→Verification:
+   269→- `bun run lint`: 0 errors. The single warning is a pre-existing unused eslint-disable in sections.tsx (not mine).
+   270→- Dev server compile check: `/team` 200, `/testimonials` 200, `/contact` 200, `/api/contact` (GET) 200.
+   271→- API POST tested with curl: valid submission -> `{ success: true, id: "INQ-..." }`; invalid (short name) -> 400 with "Please enter your full name."; invalid (short message) -> 400 with "Please include a message of at least 10 characters."
+   272→
+   273→Stage Summary:
+   274→- 3 production-ready pages built matching the Home page quality bar: bold Oswald headings, yellow primary accents, hazard stripes on dark sections, generous `py-20 lg:py-28` spacing, scroll-reveal animations, hover effects on every interactive card.
+   275→- Team page: full 6-member grid with portrait cards + culture section + dark "Now Hiring" careers band with role previews + animated stats.
+   276→- Testimonials page: rating distribution band + 6-card grid + featured dark blockquote + client logos + review platform cards.
+   277→- Contact page: complete 2-column contact experience with department directory, Google Maps iframe embed, sticky form column, and FAQ accordion.
+   278→- Contact form: fully wired client component with validation, loading state, success state, and toast notifications via the globally-mounted Toaster.
+   279→- API route: validates required fields, generates inquiry IDs, logs submissions, returns proper status codes (200/400).
+   280→- All pages use only relative paths, no port numbers, and follow the established component conventions (PageHero, SectionHeading, Counter, CTABand, Reveal from `@/components/site/sections`).
+   281→
+   282→---
+   283→Task ID: 7
+   284→Agent: Main (Z.ai Code)
+   285→Task: Final verification, image generation completion, and lint cleanup
+   286→
+   287→Work Log:
+   288→- Generated all 19 construction images via z-ai image CLI (hero, about-site, cta-bg, 6 projects, 6 team, 4 blog) — fixed size bug (1440x720 rejected by API as non-multiple-of-32; 1440x768 rejected by CLI; settled on 1344x768 for wide landscape, 864x1152 for portraits, 1024x1024 for squares)
+   289→- Verified all 13 routes return HTTP 200: /, /about, /services, /services/[slug], /projects, /projects/[slug], /pricing, /team, /testimonials, /blog, /blog/[slug], /contact, /faq
+   290→- Verified contact API: POST /api/contact returns {success:true, id:"INQ-XXX"} for valid input, 400 for invalid
+   291→- agent-browser end-to-end tests passed:
+   292→  * Home page renders hero + services + projects + stats + testimonials, no console errors
+   293→  * Nav click Services → services page loads with correct title
+   294→  * Contact form: filled all fields, clicked Send → success toast "Message sent! Your inquiry INQ-MQW3AHGS is in"
+   295→  * Projects filter: Residential → shows 1 project; Commercial → shows 2 projects (filtering works)
+   296→  * FAQ accordion: clicked question → expanded=true, answer visible
+   297→  * Mobile viewport (390x844): hamburger menu opens with all 10 nav links + Get a Quote + phone
+   298→  * Team images: all 6 portraits load (naturalWidth=475, complete=true)
+   299→- Fixed blog [slug] params error (was stale; code already correct with await params)
+   300→- Fixed lint warning: removed unused eslint-disable directive in sections.tsx PageHero
+   301→- Final lint: 0 errors, 0 warnings
+   302→
+   303→Stage Summary:
+   304→- ALL 13 PAGES COMPLETE AND VERIFIED ✅
+   305→- All 19 AI-generated construction images in place ✅
+   306→- Lint 100% clean ✅
+   307→- End-to-end interactivity confirmed via agent-browser ✅
+   308→- Sticky footer confirmed (layout uses min-h-screen flex-col + mt-auto) ✅
+   309→- Mobile responsive with working hamburger menu ✅
+   310→- Contact form → API → success toast works end-to-end ✅
+   311→- Project category filtering works ✅
+   312→- FAQ accordion works ✅
+   313→- Site is production-ready
+   314→
+   315→Project Status: COMPLETE
+   316→
+   317→---
+   318→Task ID: REBRAND-1
+   319→Agent: Main (Z.ai Code)
+   320→Task: Rebrand site to "Libmarc Projects" — Johannesburg demolition/plant-hire/security company with new 13-page nav and contact details
+   321→
+   322→Work Log:
+   323→- User provided real business details: name "Libmarc Projects", phones 078 150 0069 / 070 359 9092, email libmarcprojects09@gmail.com, WhatsApp both numbers, address 32 Page Street Yeoville Johannesburg, 13-item nav, and service list (Demolition, Rubble Removal, Rock Blasting, Plant Hire [TLBs/Excavators/Trucks/Bakkies], CCTV, Roller Shutter Doors, Automatic Gates, Electrical Wiring)
+   324→- Rewrote src/lib/site-data.ts completely: company (2 phones, 2 WhatsApps, JHB address, ZAR rates), stats, 13 navItems, 5 services (demolition-rock-blasting, rubble-removal, plant-hire, cctv-installation, roller-shutter-gates) with subServices, 8 projects (SA locations: Yeoville/Rosebank/Soweto/Sandton/Honeydew/Randburg/Midrand/Brixton), 6 team, 6 testimonials, 13 rateItems in ZAR (R), rateNotes, 6 serviceAreas (Johannesburg regions), certifications, safetyPractices
+   325→- Updated layout.tsx metadata (Libmarc Projects, JHB keywords)
+   326→- Rewrote site-header.tsx: dual phone numbers in top bar, WhatsApp link, 13-item compact nav (px-2.5 text-[13px] for 13 items to fit xl screens), mobile Sheet with both phones + WhatsApp buttons
+   327→- Rewrote site-footer.tsx: brand "LIBMARC Projects · Johannesburg", both phone links, both WhatsApp links, services list, JHB address, email
+   328→- Updated sections.tsx CTABand: WhatsApp button (wa.me/27781500069) instead of single phone
+   329→- Deleted old unused pages: /team, /testimonials, /blog, /blog/[slug], /faq, /pricing, /projects/[slug]
+   330→- Started generating 12 new SA/demolition-themed images (hero-demolition, 7 service images, about-site, cta-bg, johannesburg-skyline) in background
+   331→- Design system unchanged: yellow primary, Oswald headings, hazard stripes, sticky footer
+   332→
+   333→New 13-page structure:
+   334→1. / Home
+   335→2. /about About Us
+   336→3. /services Services
+   337→4. /services/demolition-rock-blasting
+   338→5. /services/rubble-removal
+   339→6. /services/plant-hire
+   340→7. /services/cctv-installation
+   341→8. /services/roller-shutter-gates
+   342→9. /projects Projects/Gallery
+   343→10. /rates Rates & Availability
+   344→11. /safety Safety & Compliance
+   345→12. /service-areas Service Areas
+   346→13. /contact Contact/Get Quote
+   347→
+   348→Stage Summary:
+   349→- Core data + header + footer + layout all updated for Libmarc Projects
+   350→- Old pages deleted; existing page files (home, about, services, services/[slug], projects, contact) still contain OLD BuildCore content — MUST be rewritten by subagents
+   351→- New images generating in background
+   352→- Dev server currently 500 because old page files import removed exports (faqs, blogPosts, pricingPlans) — will resolve once subagents rewrite the pages
+   353→
+   354→---
+   355→Task ID: 5-b
+   356→Agent: full-stack-developer (Service Detail Pages)
+   357→Task: Rebuild 5 service detail pages at `/services/[slug]` for Libmarc Projects rebrand
+   358→
+   359→Work Log:
+   360→- Read worklog.md (REBRAND-1 section), lib/site-data.ts (5 services with subServices/process/features), sections.tsx (PageHero, SectionHeading, CTABand, Reveal, Breadcrumbs), and the OLD BuildCore service detail page that needed full overwrite.
+   361→- Verified image paths referenced in site-data.ts (5 services + 2 extra: /images/services/demolition.png, rubble-removal.png, plant-hire.png, cctv.png, roller-shutter.png — generation still in background per REBRAND-1 log; page references paths from site-data so they'll resolve when generation completes).
+   362→- Completely OVERWROTE `src/app/services/[slug]/page.tsx` (was old BuildCore content with "BUILDCORE Services" eyebrow, generic description, 12-service related grid, View Related Projects button).
+   363→- New file structure (server component, async params per Next.js 16):
+   364→  * `generateStaticParams()` returns all 5 slugs for SSG
+   365→  * `generateMetadata({ params })` is async, awaits Promise<{slug}>, returns per-service metadata with "Libmarc Projects" brand
+   366→  * Default export async function awaits params, looks up service, calls notFound() if missing
+   367→  * Per-service `categoryEyebrow` lookup: demolition→"Demolition & Blasting", rubble-removal→"Waste Removal", plant-hire→"Plant Hire", cctv→"Security", roller-shutter→"Access Control"
+   368→  * Per-service `complianceHighlights` lookup with 3 service-specific talking points each (label + value):
+   369→    - demolition: City of JHB permits / certified shot-firers / R5M public liability
+   370→    - rubble-removal: bakkie + truck loads / licensed landfill disposal / disposal slips
+   371→    - plant-hire: with/without operator / 40+ machine fleet / hourly-daily-weekly rates
+   372→    - cctv: 4-32 channel scale / mobile app + night vision / PSIRA registered
+   373→    - roller-shutter: full scope in one team / certified wiring / CoC issued
+   374→- Page sections (top to bottom):
+   375→  1. PageHero (eyebrow=category, title=service.title, description=service.short, breadcrumbs Home/Services/{title}, image=service.image)
+   376→  2. Overview section (lg:grid-cols-12, 7+5 split): LEFT = SectionHeading "What this service includes" + service.description + secondary Libmarc/JHB paragraph + 16/9 service image with primary icon badge. RIGHT = sticky Key Features card with dark header (icon + "Key Features" eyebrow + service.title), features list with CheckCircle2 + "Get a Quote" yellow button (→/contact) + "WhatsApp Us" outline link (→wa.me/27781500069) + both phone numbers as tel: links + same-business-day reassurance
+   377→  3. Compliance & Assurance dark band (bg-foreground text-background + hazard stripe + grid overlay): 3-col grid of service-specific highlights with primary-yellow label + value text + R5M/COID badge in header (only renders if highlights exist — all 5 services have them)
+   378→  4. Sub-services section (only if service.subServices exists): center-aligned SectionHeading, responsive grid (4-col for plant-hire's 4 subs, 3-col for demolition's 2 / roller-shutter's 3), each card with primary/10 number tile, "Sub-service" Badge, name, desc, "Enquire" link →/contact. Rubble-removal and cctv-installation (no subServices) correctly skip this section.
+   379→  5. Process section: 4-step cards (lg:grid-cols-4) with primary/20 large step number + primary step counter badge + title + detail, plus connecting line on desktop, plus "All Services" back-button
+   380→  6. Related services section (bg-muted/40): grid of all 4 OTHER services (sm:grid-cols-2 lg:grid-cols-4) as image cards with primary icon badge, title (line-clamp-2), short desc, "Learn More" arrow link with hover-translate
+   381→  7. CTABand with dynamic title "Ready to start your {service.title} project?"
+   382→
+   383→Convention compliance:
+   384→- `import { services, company } from "@/lib/site-data"` ✓
+   385→- `import { PageHero, SectionHeading, CTABand, Reveal } from "@/components/site/sections"` ✓
+   386→- `import Image from "next/image"` with fill + object-cover + aspect-ratio containers ✓
+   387→- Yellow CTA: `bg-primary text-primary-foreground hover:bg-primary/90 font-bold uppercase tracking-wide` ✓
+   388→- WhatsApp button: `<a href={https://wa.me/${company.whatsapp1}} ... border border-border hover:border-primary hover:text-primary>` with MessageCircle icon ✓
+   389→- Dark sections: `bg-foreground text-background` + hazard stripe ✓
+   390→- generateMetadata async + await params (Next.js 16) ✓
+   391→- ZAR only (no $ anywhere) ✓
+   392→- Both phone numbers wired as tel: links ✓
+   393→
+   394→Verification:
+   395→- `bun run lint` — 0 errors, 0 warnings
+   396→- HTTP checks: all 5 routes return 200 (/services/demolition-rock-blasting, /rubble-removal, /plant-hire, /cctv-installation, /roller-shutter-gates); unknown slug returns 404 via notFound()
+   397→- Content checks via curl grep:
+   398→  * Demolition: "City of Johannesburg", "certified shot-firers", "R5 million", "WhatsApp Us", "Get a Quote", "Rock Blasting" all present
+   399→  * Rubble-removal: "Bakkie loads", "licensed municipal landfill", "Disposal slips" all present
+   400→  * Plant-hire: "TLBs", "Excavators", "Trucks", "Bakkies", "with or without", "40+ machines" all present (4 sub-service cards rendered)
+   401→  * CCTV: "4-channel", "32-channel", "Mobile app", "PSIRA", "night vision" all present
+   402→  * Roller-shutter: "Roller Shutter", "Automatic Gates", "Electrical Wiring", "Certificate of Compliance" all present (3 sub-service cards rendered)
+   403→- Sub-services count verified: demolition=2, rubble-0, plant=4, cctv=0, roller=3
+   404→- Related services: 4 distinct cards per page (excluded current slug), verified via href extraction on plant-hire page (returned 4 unique other-service slugs)
+   405→
+   406→Stage Summary:
+   407→- 1 dynamic route file rebuilt, serving all 5 Libmarc service detail pages with consistent design language (Oswald display, yellow primary, hazard stripes, scroll reveals, hover effects)
+   408→- Each page dynamically adapts: 3 services show sub-services grid (demolition/plant-hire/roller-shutter), 2 don't (rubble/cctv) — conditional rendering works
+   409→- Service-specific compliance highlights add differentiation while keeping the shared template consistent
+   410→- Sticky Key Features sidebar with dual CTAs (Quote + WhatsApp) + both phone numbers on every page
+   411→- All pages responsive (mobile-first: 1-col → sm:2-col → lg:4-col grids)
+   412→- Lint clean; all 5 routes return 200; unknown slug returns 404; verified all required mentions present in HTML output
+   413→
+   414→---
+   415→Task ID: 5-c
+   416→Agent: full-stack-developer (Projects / Rates / Safety)
+   417→Task: Build 3 NEW pages for Libmarc Projects rebrand — Projects/Gallery, Rates & Availability, Safety & Compliance
+   418→
+   419→Work Log:
+   420→- Read worklog.md (REBRAND-1 section confirmed: new Libmarc brand, 13-page nav, 8 SA projects with SA locations, 13 ZAR rates, safetyPractices/certifications arrays), site-data.ts (company with dual phones + WhatsApp, projects[8], rates[13], rateNotes[5], certifications[6], safetyPractices[6]), sections.tsx (PageHero/SectionHeading/Counter/CTABand/Reveal/Breadcrumbs API).
+   421→- Inspected existing BuildCore projects/page.tsx (was using US categories + project.value + project.duration which no longer exist in site-data.ts after rebrand) — OVERWROTE completely.
+   422→- Verified available images in /public/images: projects/project-1..6.png, about-site.png, cta-bg.png, hero-worker.png exist; /images/services/*.png folder is empty (referenced by site-data.ts after rebrand; REBRAND-1 worklog confirms 7 service images being generated in background).
+   423→
+   424→Page 9 — `/projects` (OVERWRITE src/app/projects/page.tsx, "use client"):
+   425→- PageHero: eyebrow "Our Work", title "Projects & Gallery" (yellow on "Gallery"), description about 850+ projects across Gauteng since 2015, breadcrumbs Home/Projects, image /images/projects/project-1.png
+   426→- Filter tabs (useState): All / Demolition / Rock Blasting / Rubble Removal / Plant Hire / CCTV Installation / Roller Shutter & Gates — each with live count badge
+   427→- Gallery grid: 3-col responsive, each card non-clickable <article> with aspect-[4/3] image (group-hover:scale-110), yellow Badge category + year chip top corners, gradient overlay, MapPin+location+title overlay at bottom, summary line-clamp-3 in body, footer hint row "View Gallery"
+   428→- Stats band (dark + hazard stripes top+bottom + grid overlay): Counter for 850+ Projects / 9+ Years / 40+ Machines / 100% Safety
+   429→- "Have a Project in Mind?" 2-col: image /images/cta-bg.png with "Active Project / Gauteng Demolition & Rubble Clearance" overlay + SectionHeading + 5 Libmarc bullets (free site visit, ZAR rates, R5M liability, disposal slips, certified shot-firers) + dual CTAs (Start Your Project → /contact, WhatsApp Us → wa.me/27781500069)
+   430→- CTABand
+   431→
+   432→Page 10 — `/rates` (CREATE src/app/rates/page.tsx, server component + metadata export):
+   433→- PageHero: eyebrow "Pricing", title "Rates & Availability" (yellow on "Availability"), breadcrumbs Home/Rates, image /images/services/plant-hire.png
+   434→- Rate card grouped by 5 categories (local rateGroups array with icon + match function): Demolition & Rock Blasting (Bomb), Rubble Removal (Recycle), Plant Hire (Construction), CCTV Installation (Camera), Roller Shutter/Gates/Electrical (DoorClosed). Each group card: dark header strip with yellow icon tile + name + count; desktop <table> with Service/Unit/Price(ZAR)/Note columns + yellow Popular Badge on popular rows; mobile stacked cards
+   435→- Rate notes: rendered from rateNotes as 2-col bulleted list inside border-2 border-primary/30 bg-primary/5 highlighted card with Info icon header
+   436→- Availability section (bg-secondary/40, "Check Machine Availability"): 6-machine demo fleet (TLB, 20T Excavator, Tipper Truck 10m³, Mini Excavator, Bakkie, Tipper Truck 6m³) with colored status badges (Available Now emerald / On Site amber / Booked zinc) + Book a Machine CTA + phone call button
+   437→- Bundled packages: 3 cards (Demolition+Removal save 10%, Site Security Bundle save 12% [POPULAR], Plant Hire Weekly save 15%) each with icon + save % + price + description + feature checkmarks + Get Quote button → /contact
+   438→- Quick reassurance row: Same-day quotes / R5M public liability / COID registered / Free JHB site visit
+   439→- Stats band (dark): 40+ Machines / 24h Quote Turnaround / R5M Liability Cover (Counter with R prefix) / 850+ Projects Billed
+   440→- CTABand with custom title "Need a custom rate?"
+   441→
+   442→Page 11 — `/safety` (CREATE src/app/safety/page.tsx, server component + metadata export):
+   443→- PageHero: eyebrow "Safety", title "Safety & Compliance" (yellow on "Compliance"), breadcrumbs Home/Safety, image /images/services/rock-blasting.png
+   444→- Safety intro 2-col: text about zero-incident culture since 2015 (HIRA, R5M liability, COID, certified shot-firers, City of JHB permits) + dual CTAs (Request Safety Pack → /contact, PhoneCall to company.phone1Intl); image /images/cta-bg.png with "Zero Incidents / 9 years of disciplined delivery across Gauteng" overlay
+   445→- Safety practices grid (6 cards on bg-secondary/40): renders safetyPractices array; icons mapped by index: ClipboardCheck, Bomb, HardHat, ShieldCheck, FileCheck, Stamp. Each card: yellow icon tile (animates to primary on hover), faded step number, title, desc.
+   446→- Stats band (dark + hazard stripes): 100% Safety Compliance / 0 Lost-Time Incidents (12 mo) / R5M Public Liability Cover (Counter value=5 suffix=M prefix=R) / 40+ Certified Crew Members
+   447→- Certifications (2-col 5+7 split): left SectionHeading + warning callout about unregistered contractors (AlertTriangle); right grid of 6 cert cards (CheckCircle2 + "Verified & current" subtitle)
+   448→- Safety process (4 steps on bg-secondary/40): Risk Assessment → Method Statement → PPE & Signage → Execution & Cleanup. Each card: yellow icon tile, faded step number, title, detail
+   449→- Compliance documents (2-col 5+7 split): left SectionHeading + Request a Document CTA; right vertical list of 6 (HIRA, Method Statements, Blast Plans, CoC, Disposal Slips, Insurance Certificates) with FileText icon + name + note + faded index
+   450→- CTABand with custom title "Safety questions before you book?"
+   451→
+   452→Lint & compile verification:
+   453→- `bun run lint` → 0 errors, 0 warnings across all 3 new/modified files
+   454→- dev.log: GET /projects 200 (compile 108ms), GET /rates 200 (compile 431ms), GET /safety 200 (compile 391ms), all clean "✓ Compiled" lines
+   455→
+   456→Stage Summary:
+   457→- 3 production-ready pages built matching the rebranded Libmarc Projects design system
+   458→- /projects: filterable client-side gallery with 7 tabs, 8 SA projects, hover-zoom cards (no click-through since /projects/[slug] was removed), stats band, "Have a project in mind" section
+   459→- /rates: grouped rate card with all 13 ZAR items, mobile-responsive (table → stacked cards), rate notes callout, live fleet availability demo, 3 bundled packages with "Most Popular" highlight, stats band
+   460→- /safety: intro + 6 safety practices grid + stats band (incl. R5M Counter with R prefix and 0-incidents Counter) + certifications grid + 4-step process + compliance documents list
+   461→- All shared components reused (PageHero/SectionHeading/Counter/CTABand/Reveal/Breadcrumbs)
+   462→- All data sourced from @/lib/site-data (projects/rates/rateNotes/certifications/safetyPractices/company)
+   463→- ZAR only, dual phone numbers + WhatsApp links throughout
+   464→- Footer is global (from layout) — not duplicated
+   465→
+   466→---
+   467→Task ID: 5-d
+   468→Agent: full-stack-developer (Service Areas / Contact)
+   469→Task: Build Service Areas page (new) and rewrite Contact page + form + API route for Libmarc Projects rebrand
+   470→
+   471→Work Log:
+   472→- Read worklog.md (REBRAND-1 section), site-data.ts (company with dual phones/whatsapps, serviceAreas[6], services[5], stats), sections.tsx (PageHero, SectionHeading, Counter, CTABand, Reveal, Breadcrumbs), and the OLD BuildCore contact page / contact-form.tsx / api/contact/route.ts to understand what to overwrite.
+   473→- Confirmed layout.tsx mounts radix `Toaster` but NOT sonner's Toaster — added `SonnerToaster` from `@/components/ui/sonner` alongside so `toast.success()` from sonner actually renders (position top-center, richColors, closeButton). Kept existing radix Toaster intact for backward compat.
+   474→- johannesburg-skyline.png not present in /public/images — used /images/about-site.png for service-areas PageHero (the documented fallback). All service-*.png images missing site-wide but out of scope for this task.
+   475→
+   476→Files written/overwritten (4 files + 1 layout edit):
+   477→
+   478→1. `src/app/service-areas/page.tsx` (CREATE NEW — server component)
+   479→   - PageHero: eyebrow "Coverage", title "Areas We Serve Across Gauteng", description re Greater Johannesburg, breadcrumbs Home/Service Areas, image /images/about-site.png
+   480→   - Intro section: SectionHeading + 3 quick-fact cards (Yeoville Base / ~50km Radius / Same-Day Quotes) + right-column "Quick Enquiry" card with Call + WhatsApp buttons
+   481→   - Service areas grid: all 6 serviceAreas rendered as cards (3-col responsive) — each with MapPin icon tile (yellow on hover), region name, suburb description, postcodes in mono font on bordered footer
+   482→   - Coverage map: Google Maps iframe embed (`https://www.google.com/maps?q=Yeoville,Johannesburg,South+Africa&output=embed`), grayscale, h-96, with floating "Our Depot" address pin overlay
+   483→   - Response times section: 6 cards (JHB CBD & Inner City → Same day, Northern Suburbs → Same day, Eastern/Western/Southern → Next day, Greater Gauteng → 24–48 hrs) each with icon tile + yellow response-time badge + region + suburb detail
+   484→   - Dark stats band (bg-foreground text-background + hazard stripe + grid overlay): 4 metrics via Counter — 6 Regions Covered, 50km Service Radius (Counter suffix="km"), 850+ Projects Delivered, "Same-Day" (text, not counter) Quotes Available
+   485→   - "Not sure if we cover your area?" section: yellow-bordered (border-2 border-primary) card with text + 2 WhatsApp buttons (both numbers) + Call button + PSIRA/COID trust line
+   486→   - CTABand: "Ready to start your project?"
+   487→
+   488→2. `src/app/contact/page.tsx` (OVERWRITE — server component, replaces BuildCore content)
+   489→   - PageHero: eyebrow "Contact", title "Get a Free Quote Today", description, breadcrumbs Home/Contact, image /images/cta-bg.png
+   490→   - 2-col grid (lg:col-span-5 / lg:col-span-7):
+   491→     * LEFT contact info column:
+   492→       - 2 phone cards (clickable tel:company.phone1Intl and tel:company.phone2Intl) with Phone icons, hover-border-primary
+   493→       - 2 WhatsApp cards (green-600 border-2, wa.me/whatsapp1 and wa.me/whatsapp2) with MessageCircle icons
+   494→       - Email card (mailto:company.email) with Mail icon
+   495→       - Address card with MapPin icon + Google Maps iframe embed for "32 Page Street, Yeoville, Johannesburg" (grayscale, h-48)
+   496→       - Office hours card (company.hours) with Clock icon
+   497→       - Social links row (Facebook/Instagram/LinkedIn, size-11 squares)
+   498→     * RIGHT form column (sticky): heading "Send us a quote request" + <ContactForm/> + 4 trust-badge cards below (Same-Day Quotes / Free Site Visit / Fully Insured / All of Gauteng) with icons
+   499→   - CTABand: "Prefer to talk it through?"
+   500→   - Removed all BuildCore departments/fax/budget/timeline fields and Oakland references
+   501→
+   502→3. `src/components/site/contact-form.tsx` (OVERWRITE — "use client")
+   503→   - Switched toast lib from `useToast` (radix) to `import { toast } from "sonner"` → `toast.success("Quote request sent!")` / `toast.error(...)` (per task spec)
+   504→   - New field set: Full Name*, Phone (tel), Email, Service Required (Select with 5 Libmarc services + Other: Demolition & Rock Blasting / Rubble Removal / Plant Hire / CCTV Installation / Roller Shutter & Gates / Other), Site Address (text), Preferred Date (date input), Message* (textarea)
+   505→   - Client-side validation mirrors server: name ≥2, phone OR email required, valid email format if provided, message ≥10 — each with sonner toast.error on failure
+   506→   - Submit button "Send Quote Request" with Loader2 spinner during submit
+   507→   - Success state: CheckCircle2 + "Quote request received." + "Send another request" + WhatsApp Us buttons
+   508→   - "Or WhatsApp Us Directly" button below the form — opens wa.me/27781500069 with pre-filled message built dynamically from current form values (name/phone/email/service/site/date/message) via useMemo + encodeURIComponent
+   509→   - All inputs `rounded-none` to match industrial aesthetic; uses shadcn Input/Textarea/Label/Select/Button
+   510→
+   511→4. `src/app/api/contact/route.ts` (OVERWRITE — server route)
+   512→   - POST: validates name (≥2 chars), requires phone OR email (not strictly email — either is fine for Libmarc since many customers prefer WhatsApp/call), valid email format if email provided, message (≥10 chars). Returns 400 with `{success:false, error}` on validation failure.
+   513→   - On success: generates `LMP-<base36 timestamp + random>` id (Libmarc prefix), logs full submission to console with `[contact] New Libmarc enquiry` tag, returns 200 `{success:true, id, message}`.
+   514→   - GET: returns API metadata (endpoint, method, required/optional fields, company name).
+   515→   - Removed BuildCore INQ- prefix and email-required validation (now phone OR email).
+   516→
+   517→Verification:
+   518→- `bun run lint` → 0 errors, 0 warnings.
+   519→- Dev server: /service-areas 200 (726ms compile), /contact 200 (384ms first compile), /api/contact GET 200, /api/contact POST 200 (valid), POST 400 x3 (invalid name / no phone-or-email / short message).
+   520→- API curl tests confirmed: valid POST → `{"success":true,"id":"LMP-MQW4TTR9XGU4",...}`; invalid → correct 400 error messages.
+   521→- Content sanity-check via curl grep: both phone numbers (078 150 0069, 070 359 9092), email (libmarcprojects09@gmail.com), Yeoville, "Get a Free Quote Today", "Send Quote Request", "Or WhatsApp Us Directly" all present on /contact; all 6 service area names + "Same day"/"Next day"/"24–48 hrs" + stats labels all present on /service-areas.
+   522→- Sonner Toaster now globally mounted in layout.tsx (alongside existing radix Toaster) so `toast.success`/`toast.error` from the contact form will render visibly.
+   523→
+   524→Stage Summary:
+   525→- 2 pages complete: /service-areas (new, full coverage info with map + response times + stats + not-sure CTA) and /contact (rewritten with dual-phone/dual-WhatsApp/email/address/hours + sticky quote form + trust badges).
+   526→- 3 supporting files rewritten: contact-form.tsx (sonner toasts, new Libmarc service select, dynamic WhatsApp pre-fill), api/contact/route.ts (LMP- ids, phone-OR-email validation), layout.tsx (added SonnerToaster mount).
+   527→- All BuildCore/Oakland/$ content purged from contact flow.
+   528→- Form gives users 3 ways to reach out: fill the form, click WhatsApp (either number, with pre-filled message), or click-to-call (either number).
+   529→- Lint clean, all routes 200, API validation verified end-to-end.
+   530→
+   531→---
+   532→Task ID: 5-a
+   533→Agent: Main (Z.ai Code) — subagent for Home/About/Services rebrand
+   534→Task: Overwrite the 3 OLD "BUILDCORE" pages (/, /about, /services) with new "Libmarc Projects" Johannesburg content using new site-data.ts
+   535→
+   536→Work Log:
+   537→- Read worklog.md (REBRAND-1 section), src/lib/site-data.ts (new Libmarc data: 5 services, 8 projects, 6 team, 6 testimonials, 13 ZAR rate items, certifications, safetyPractices, serviceAreas, clientLogos, company with dual phones + WhatsApp + JHB address), src/components/site/sections.tsx (SectionHeading, PageHero, Breadcrumbs, Counter, CTABand, Reveal), src/components/site/site-header.tsx (already Libmarc-branded), src/app/globals.css (yellow primary, .hazard-stripe, .font-display, .grid-pattern)
+   538→- Discovered /images/hero-demolition.png and /images/services/*.png did not exist (REBRAND-1 said images were "generating in background" but never completed). Generated 8 new images via z-ai CLI (1344x768 landscape): hero-demolition.png, services/demolition.png, services/rock-blasting.png, services/rubble-removal.png, services/plant-hire.png, services/cctv.png, services/roller-shutter.png, services/automatic-gate.png (last one is bonus — referenced by projects page)
+   539→- Discovered all generated images were JPEG-content saved with .png extension. This caused Next.js Image optimizer (`/_next/image?url=...`) to return 400 "received null" because sharp detected JPEG magic bytes but file extension said PNG. Fixed by re-encoding every affected PNG via `ffmpeg -i input.jpg -f image2 -vcodec png output.png`. Converted 18 files total: 7 new service images + about-site.png + cta-bg.png + hero-worker.png + team/team-1..6.png + projects/project-1..6.png. All now real PNG image data (verified with `file` command). Existing pages that previously used these images (about, contact, services/[slug], projects, etc.) now also work properly with next/image.
+   540→- WROTE src/app/page.tsx (Home, "use client", ~700 lines): Hero with /images/hero-demolition.png background, headline "WE GET THE [TOUGH JOBS] DONE" (TOUGH JOBS in yellow), subtext about demolition/rubble/plant hire/CCTV/gates across Gauteng since 2015, "Trusted Johannesburg Contractor Since 2015" badge with pulsing dot, two CTAs (Get a Free Quote → /contact yellow button, WhatsApp Us → wa.me/27781500069 outline button with MessageCircle icon), floating quote card with Bongani M. (Brixton) 5-star testimonial, 3 hero trust badges (R5M Public Liability, 9+ Years in Gauteng, Certified Shot-Firers). Client logos strip (6 clientLogos). Dark stats band with Counter (9+ Years, 850+ Projects, 40+ Machines, 100% Safety Compliance). About preview 2-col with /images/about-site.png + floating "9+" badge, narrative about founded 2015 in Yeoville, grew to 40+ machine fleet, covers all of Gauteng, buttons "Our Story" + "View Rates". Services grid: ALL 5 services as cards (image + yellow icon badge + 01-05 number badge + title + short + "Learn More") + 6th "Explore All Services" tile linking to /services. Featured projects dark section: 3 projects (yeoville-demolition, rosebank-rock-blasting, sandton-excavator-hire) as 4:5 hover-reveal cards with category badge + location + title + hover summary. Rates preview: 3 cards (Demolition R450/m², Rubble Truck R1,800/load, TLB R650/hour) with "Popular" badges. Process: 4 steps (Enquire/Quote/Execute/Handover) with Phone/FileText/HardHat/CheckCircle2 icons. Testimonials: 3 SA testimonials (Bongani/Sarah N./Frans) with avatar + rating + name. Certifications strip (6 certifications with ShieldCheck). CTABand with custom title "Got a tough job? We'll handle it."
+   541→- WROTE src/app/about/page.tsx (About, server component with metadata): PageHero (eyebrow "About Us", title "Johannesburg's Demolition & [Plant Hire Specialists]" with yellow accent, description, breadcrumbs Home/About, image /images/about-site.png). Mission/Vision/Promise 3-card grid (Target/Eye/ShieldCheck icons). Company story 2-col with /images/cta-bg.png image + border-2 primary frame + floating "9+ Years" Counter badge; narrative covers Marc Ndlovu starting as contractor in 2009, founding Libmarc 2015, first major demolition contract 2018, added CCTV & gate installations 2020, 40+ machine fleet 2022, 850+ projects 2024. Animated stats band (dark, hazard stripes top+bottom, Counter for all 4 stats with Calendar/Building2/HardHat/ShieldCheck icons). Core values grid: 6 values (Safety First, Honest Pricing, On-Time Delivery, Skilled Crews, Fully Insured, Community Focused) with icons (ShieldCheck, BadgeDollarSign, Clock, Users, HardHat, Heart). Certifications grid (6 certs with CheckCircle2). Milestones timeline: 5 milestones (2009–2015, 2018, 2020, 2022, 2024) as vertical alternating timeline on desktop with Flag markers. Team preview: first 3 team members (Marc, Lerato, Sipho) with image + role + bio + expertise badges, plus careers CTA card linking to /contact (since /team page was deleted in REBRAND-1). CTABand with custom title "Got a job that needs doing? Let's talk."
+   542→- WROTE src/app/services/page.tsx (Services, server component with metadata): PageHero (eyebrow "Our Services", title "Complete site & [security solutions]", description covering all 5 service lines, breadcrumbs Home/Services, image /images/services/plant-hire.png). Intro: SectionHeading + right-aligned "Get a Free Quote" yellow button. Services grid: ALL 5 services as rich large cards in 2-col layout — each has 16/9 image with yellow icon badge (size-12) + numbered Badge (01-05) + title overlay on image + short description + key features list (first 4 features as 2-col bullet list with CheckCircle2) + "Learn More" + "View Details & Rates" footer. Sub-services breakdown section: filters services to those with subServices (3 services: demolition-rock-blasting, plant-hire, roller-shutter-gates) and renders each as a dark-left/light-right card with sub-services grid (Demolition/Rock Blasting for service 1; TLBs/Excavators/Trucks/Bakkies for service 3; Roller Shutters/Auto Gates/Electrical Wiring for service 5). Process: 4 steps (Enquire/Quote/Execute/Handover) with Phone/FileText/HardHat/CheckCircle2. Why choose us: 6 cards (Honest Pricing, Fully Insured, Certified Crews, Same-Day Quotes, All of Gauteng, 9+ Years) with icons (BadgeDollarSign, ShieldCheck, HardHat, Clock, MapPin, Calendar). CTABand with custom title "Not sure which service fits your project?"
+   543→- All 3 pages use shared components from @/components/site/sections (SectionHeading, PageHero, Counter, CTABand, Reveal) and data from @/lib/site-data
+   544→- Buttons use the exact spec pattern: `<Button asChild className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold uppercase tracking-wide"><Link href="...">Text <ArrowRight className="size-4" /></Link></Button>`
+   545→- WhatsApp button uses MessageCircle icon and `https://wa.me/${company.whatsapp1}` href (rel="noopener noreferrer" target="_blank")
+   546→- Dark sections use `bg-foreground text-background` with `<div className="hazard-stripe h-1.5 w-full" />` accents top and/or bottom
+   547→- Section padding `py-20 lg:py-28`, container `container mx-auto px-4`
+   548→- All images use `<Image fill className="object-cover" sizes="..." />` in aspect-ratio containers
+   549→- Pricing in ZAR (R) throughout — verified no $ anywhere
+   550→- Lint: `bun run lint` → 0 errors, 0 warnings
+   551→- Dev server verification: GET /, /about, /services all return 200; no image errors in dev.log after JPEG-to-PNG conversion; optimized `/_next/image?url=...&w=640&q=75` URLs return 200
+   552→
+   553→Stage Summary:
+   554→- 3 pages fully rebuilt with Libmarc Projects content (overwrote all old BUILDCORE references) ✅
+   555→- 8 new SA-themed images generated and converted to real PNG format ✅
+   556→- 10 pre-existing JPEG-as-PNG images also converted to real PNG format (fixes next/image on all pages, not just mine) ✅
+   557→- All hero/service/project/team images load cleanly through next/image optimizer ✅
+   558→- Lint 100% clean ✅
+   559→- All 3 pages return 200 OK with no errors in dev.log ✅
+   560→- Mobile-first responsive throughout (1-col → md:2-col → lg:3-col / 4-col grids) ✅
+   561→- Sticky footer respected (footer is global, pages don't add their own) ✅
+   562→- WhatsApp + dual phone numbers + JHB address + ZAR rates all wired through site-data.ts ✅
+   563→- Ready for downstream agents to build remaining pages (projects, rates, safety, service-areas, contact, services/[slug])
+   564→
+   565→Notes for downstream agents:
+   566→- All PNG files in /public/images/ are now REAL PNG format (verified with `file` command). Any new images you generate via z-ai CLI will be JPEG-content saved as .png — you MUST convert them with `ffmpeg -y -i /tmp/in.jpg -f image2 -vcodec png /tmp/out.png` then move into place, otherwise next/image will return 400 "received null".
+   567→- Image generation size constraint: only sizes 1024x1024, 768x1344, 864x1152, 1344x768, 1152x864, 720x1440 are accepted by the CLI. The CLI lists 1440x720 as supported but the API rejects it (not a multiple of 32). Use 1344x768 for all landscape images.
+   568→- Rate-limit (429) triggered when launching 7 image gens in parallel — run them sequentially with `sleep 8` between to avoid.
+   569→- The home page featured projects reference project.image URLs: yeoville-demolition uses /images/services/demolition.png, rosebank-rock-blasting uses /images/services/rock-blasting.png, sandton-excavator-hire uses /images/services/plant-hire.png — all exist and are real PNGs.
+   570→- The projects page (when built) will need /images/services/automatic-gate.png for the randburg-roller-gate project — already generated and converted.
+   571→- Sub-services breakdown on /services page filters `services.filter(s => s.subServices && s.subServices.length > 0)` — only 3 of 5 services have subServices defined in site-data.ts (demolition-rock-blasting, plant-hire, roller-shutter-gates). If you add subServices to rubble-removal or cctv-installation later, they'll automatically appear in this section.
+   572→- Home page hero uses /images/hero-demolition.png (1344x768 real PNG, 1.7MB). This is the only page that uses this image.
+   573→- About page story section uses /images/cta-bg.png — this is the existing image, now properly PNG. About page PageHero uses /images/about-site.png.
+   574→
+   575→---
+   576→Task ID: 6 (Rebrand verification)
+   577→Agent: Main (Z.ai Code)
+   578→Task: Final verification of Libmarc Projects rebrand — all 13 pages, images, contact details, mobile
+   579→
+   580→Work Log:
+   581→- All 4 subagents (5-a, 5-b, 5-c, 5-d) completed: Home, About, Services, 5 service details, Projects/Gallery, Rates & Availability, Safety & Compliance, Service Areas, Contact all rebuilt
+   582→- Re-encoded 10 new AI-generated images (hero-demolition, 7 service images, about-site, cta-bg) via ffmpeg from JPEG-content .png to valid PNG — fixed "received null" next/image errors
+   583→- Verified all 13 routes return HTTP 200 with NO runtime errors
+   584→- Verified lint: 0 errors, 0 warnings
+   585→- agent-browser end-to-end tests:
+   586→  * Home page: "Libmarc Projects" branding, both phone numbers (078 150 0069 / 070 359 9092), WhatsApp links, hero demolition image loads
+   587→  * Services page: 5 service cards with images (demolition excavator, dump truck, etc.) loading correctly
+   588→  * Contact form: filled name/phone/message, clicked Send → success toast "Quote request sent! Reference LMP-MQW5AY6BBSP0"
+   589→  * Rates page: ZAR pricing table (R450/m², R850/m³, R900/load, R1,800/load) with "PRICE (ZAR)" header
+   590→  * Service Areas page: Yeoville base, 6 Johannesburg regions, Google Maps embed
+   591→  * WhatsApp links: wa.me/27781500069 AND wa.me/27703599092 (both numbers) confirmed via DOM eval
+   592→  * tel: links: +27781500069 AND +27703599092 confirmed
+   593→  * mailto: libmarcprojects09@gmail.com confirmed
+   594→  * Mobile (390x844): hamburger menu opens with all 13 nav items visible
+   595→
+   596→Stage Summary:
+   597→- REBRAND COMPLETE ✅ Libmarc Projects (Johannesburg) — 13 pages, all contact details correct
+   598→- All images valid PNG and loading ✅
+   599→- All 13 routes 200, lint clean ✅
+   600→- Contact form → API → LMP- reference toast works ✅
+   601→- Both phone numbers + both WhatsApp numbers wired throughout (header, footer, CTAs, contact page) ✅
+   602→- ZAR pricing on rates page ✅
+   603→- Yeoville/Johannesburg address + Google Maps embed on contact & service-areas ✅
+   604→- Mobile responsive with working hamburger menu ✅
+   605→
+   606→Project Status: COMPLETE & VERIFIED
+   607→
+   608→---
+   609→Task ID: 8 (Premium design upgrade + cron fix)
+   610→Agent: Main (Z.ai Code)
+   611→Task: Fix broken cron job and elevate design to premium $10k+ standard
+   612→
+   613→Work Log:
+   614→- DIAGNOSED: The 15-min cron (job 235782) was failing with "model glm-5.2 concurrency limit exceeded" AND its prompt still referenced the old "BUILDCORE" branding + removed pages (team/testimonials/blog/faq/pricing). So the automated review loop never actually worked.
+   615→- DELETED broken cron (235782) and CREATED a new one (job 235862) with correct Libmarc Projects context, the 13 actual pages, and a mandate to push toward $10k+ designer quality with more features.
+   616→- UPGRADED globals.css with a premium design foundation:
+   617→  * Custom easing curves (ease-out-expo, ease-out-quart) for cinematic motion
+   618→  * 6-tier layered shadow system (xs→2xl) + primary glow shadow
+   619→  * Smooth scroll, premium text selection, refined focus-visible
+   620→  * New utilities: .grain (film grain overlay), .dot-pattern, .grid-pattern-light, .glass/.glass-dark (glassmorphism), .hover-lift, .btn-fill, .link-underline, .img-zoom, .card-premium, .text-gradient-primary
+   621→  * Animations: .animate-marquee, .animate-shimmer, .animate-pulse-slow, .animate-fade-up, .animate-scale-in, .scroll-progress
+   622→  * Reduced-motion media query for accessibility
+   623→- UPGRADED sections.tsx with 3 NEW premium components + refined existing ones:
+   624→  * NEW ScrollProgress: fixed top gradient progress bar (scroll-linked)
+   625→  * NEW WhatsAppFloat: floating green WhatsApp button (bottom-right) that expands to a chat panel showing BOTH numbers (078 150 0069 + 070 359 9092) with pre-filled quote message, plus a call button
+   626→  * NEW Marquee: infinite scrolling text/logos with fade edges
+   627→  * Refined PageHero: layered gradients for depth, grain texture, decorative corner hazard stripe, staggered fade-up animations
+   628→  * Refined SectionHeading: editorial section numbers (01, 02...) + refined eyebrow
+   629→  * Refined Counter: easeOutExpo easing for premium count-up
+   630→  * Refined Reveal: better easing + rootMargin for earlier trigger
+   631→  * Refined CTABand: grain texture, primary glow shadow on CTA
+   632→- ADDED to layout.tsx: ScrollProgress (top), WhatsAppFloat (bottom-right), ScrollToTop moved to bottom-left to avoid overlap
+   633→- POLISHED home page:
+   634→  * Replaced static client logos with animated Marquee (infinite scroll, fade edges)
+   635→  * Added editorial section numbers (01-06) to all SectionHeadings
+   636→  * Service cards: hover-lift + img-zoom + shadow-premium-xl on hover
+   637→- VERIFIED via agent-browser: all premium features present (scrollProgress, whatsappFloat, grain, marquee, 5 hover-lift, 5 img-zoom), all 13 routes return 200, WhatsApp widget expands to show both numbers, lint 100% clean, no compile errors
+   638→
+   639→Stage Summary:
+   640→- Cron fixed (job 235862) with correct Libmarc context — will now actually run and improve the site every 15 min
+   641→- Systemic premium design foundation laid: shadows, easing, grain, glass, marquee, animations
+   642→- 3 new global features: scroll progress bar, floating WhatsApp widget (both numbers), animated logo marquee
+   643→- Home page polished: editorial numbering, animated marquee, refined card hovers
+   644→- All 13 routes verified working, lint clean
+   645→
+   646→Honest status: The systemic upgrade is complete and verified. The new cron will continue iterating (more polish, new features like cost estimator/quote wizard/lightbox gallery) every 15 minutes. The site is significantly more premium than before but a true "$10k+ designer" standard is an ongoing process that the cron will keep pushing toward.
+   647→
+   648→---
+   649→Task ID: 9 (Nav restructure + Cost Estimator feature)
+   650→Agent: Main (Z.ai Code)
+   651→Task: Fix cluttered nav (services nested under dropdown) + add interactive cost estimator
+   652→
+   653→Work Log:
+   654→- RESTRUCTURED NAVIGATION: Changed flat 13-item top nav (with all 5 services as top-level) to a clean 9-item nav with Services as a dropdown:
+   655→  * Top-level now: Home, About Us, Services (dropdown), Projects/Gallery, Rates & Availability, Safety & Compliance, Service Areas, Cost Estimator, Contact/Get Quote
+   656→  * Updated site-data.ts navItems to a typed NavItem[] structure supporting `children?: {title, href, short}[]`
+   657→  * Rewrote site-header.tsx: desktop Services mega-dropdown (460px wide, dark header strip, icon + title + short desc per service, hover-triggered with 150ms close delay), mobile collapsible (Collapsible component, "All Services" link + 5 sub-items)
+   658→  * Desktop dropdown: shows service icons, titles, short descriptions, hover state with arrow
+   659→  * Mobile: Services is a collapsible button that expands to show All Services + 5 sub-links
+   660→- NEW FEATURE — COST ESTIMATOR (/estimate):
+   661→  * Created src/components/site/cost-estimator.tsx — interactive 3-step wizard: (1) select service, (2) select size (Small/Medium/Large/Extra Large with ZAR ranges), (3) select timeline (Standard / Rush +25%)
+   662→  * Price matrix: per-service × per-size ZAR ranges (e.g. Demolition Medium 50-150m² = R40,000–R120,000; Rubble Removal Small = R900–R2,700; TLB 4-8hrs = R2,600–R5,200)
+   663→  * Result view: big price range display, gradient range bar, "what's included" checklist, disclaimer, two CTAs (Get Exact Quote → /contact, WhatsApp This → wa.me with pre-filled message containing the estimate)
+   664→  * Created src/app/estimate/page.tsx — dedicated page with PageHero, estimator, 4 trust points, CTABand
+   665→  * Added "Cost Estimator" to nav (now 9 top-level items)
+   666→  * Embedded CostEstimator on home page as section 07 with left-side copy + right-side wizard
+   667→- VERIFIED via agent-browser: desktop dropdown opens on hover showing 5 services with icons/descriptions, mobile collapsible expands to show All Services + 5 sub-items, estimator end-to-end test (Demolition + Medium + Standard → R40,000–R120,000, WhatsApp pre-fill works), all 14 routes return 200, lint 100% clean
+   668→
+   669→Stage Summary:
+   670→- Nav fixed: clean 9-item top nav with Services mega-dropdown (was 13 cluttered items)
+   671→- New feature: interactive cost estimator with real ZAR pricing, live on /estimate AND embedded on home page
+   672→- 14 routes total now (added /estimate)
+   673→- All verified working, lint clean
+   674→
+   675→---
+   676→Task ID: 10 (Lightbox gallery + Before/After slider)
+   677→Agent: Cron review (job 235862)
+   678→Task: QA pass + add premium image features (lightbox + before/after slider)
+   679→
+   680→Work Log:
+   681→- QA: All 14 routes return 200, lint 100% clean, no runtime errors. Site is stable.
+   682→- NEW FEATURE 1 — IMAGE LIGHTBOX GALLERY (Projects page):
+   683→  * Created src/components/site/lightbox.tsx — full-screen premium lightbox with:
+   684→    - Keyboard navigation (← → arrows to navigate, Esc to close)
+   685→    - Click outside / close button / prev-next buttons
+   686→    - Image counter (01 / 08)
+   687→    - Caption bar with category badge, title, description, location, year
+   688→    - Thumbnail strip at bottom (desktop) for direct navigation
+   689→    - Body scroll lock when open, scale-in animation
+   690→  * Wired into Projects page: clicking any project card now opens the lightbox with that project's image + details
+   691→  * Cards now have cursor-pointer, hover-lift, img-zoom, shadow-premium-xl hover
+   692→- NEW FEATURE 2 — BEFORE/AFTER COMPARISON SLIDER (Home page):
+   693→  * Created src/components/site/before-after.tsx — draggable comparison slider with:
+   694→    - Mouse + touch drag support, drag handle with MoveHorizontal icon
+   695→    - Before label (dark) + After label (yellow)
+   696→    - "Drag to compare" hint that fades on hover
+   697→    - Divider line with circular handle, scale-110 on hover
+   698→    - Resize listener to keep the before-image width synced
+   699→  * Added as section 04 on home page ("The Transformation") showcasing a Yeoville demolition before/after, with a stats sidebar (Site cleared 100%, Rubble removed 180m³, Project duration 5 days, Disposal slips Provided)
+   700→- RENumbered home page sections 01-08 to accommodate the new before/after section (04)
+   701→- Fixed lint error: BeforeAfter component was accessing containerRef.current during render — refactored to use containerWidth state with resize listener
+   702→- VERIFIED via agent-browser: before/after slider present on home (cursor-ew-resize), lightbox opens on project card click (dialog role), Next button navigates, Escape closes it, no console errors
+   703→
+   704→Stage Summary:
+   705→- 2 new premium features added: full-screen lightbox gallery (Projects) + draggable before/after slider (Home)
+   706→- Both fully interactive and verified
+   707→- All 14 routes 200, lint clean, no errors
+   708→- Home page now has 8 editorial-numbered sections (01 Who We Are → 08 Free Tool/Cost Estimator)
+   709→- Projects page cards are now clickable → opens immersive lightbox with keyboard nav + thumbnails
+   710→
+   711→Next round opportunities: live chat widget, blog/insights section, careers page, animated stat counters on more pages, image lazy-loading with blur-up placeholders, FAQ accordion on contact page
+   712→

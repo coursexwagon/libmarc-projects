@@ -29,7 +29,7 @@ import {
   CTABand,
   Reveal,
 } from "@/components/site/sections";
-import { rates, rateNotes, company, type RateItem } from "@/lib/site-data";
+import { rates, rateNotes, ratesLastReviewed, company, type RateItem } from "@/lib/site-data";
 
 /* ---------- Rate category groupings ---------- */
 type RateGroup = {
@@ -182,16 +182,21 @@ export default function RatesPage() {
       {/* ===================== RATES BY CATEGORY ===================== */}
       <section className="py-20 lg:py-28">
         <div className="container mx-auto px-4">
-          <SectionHeading
-            eyebrow="Rate Card"
-            title={
-              <>
-                Transparent pricing in <span className="text-primary">Rand</span>
-              </>
-            }
-            description="All prices are starting rates in South African Rand. Site-specific quotes are issued after a free site visit. Popular services are marked with a star."
-            className="mb-12"
-          />
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-12">
+            <SectionHeading
+              eyebrow="Rate Card"
+              title={
+                <>
+                  Transparent pricing in <span className="text-primary">Rand</span>
+                </>
+              }
+              description="All prices are starting rates in South African Rand. Site-specific quotes are issued after a free site visit. Popular services are marked with a star."
+            />
+            <div className="inline-flex items-center gap-2 border border-border bg-muted/40 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-muted-foreground shrink-0">
+              <Clock className="size-4 text-primary" />
+              Last reviewed {ratesLastReviewed}
+            </div>
+          </div>
 
           <div className="space-y-12">
             {rateGroups.map((group, gi) => {

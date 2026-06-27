@@ -36,12 +36,12 @@ const whyChooseUs = [
   {
     icon: BadgeDollarSign,
     title: "Honest Pricing",
-    desc: "Written, itemised quotes — same business day. The price we quote is the price you pay. No hidden fees, no surprises.",
+    desc: "Written, itemised quotes — same business day. The price on the quote is the price you pay. If something's going to cost extra, we tell you before we do the work.",
   },
   {
     icon: ShieldCheck,
     title: "Fully Insured",
-    desc: "R5M public liability cover, COID-registered, PSIRA-registered for security work. Your site and your neighbours are covered.",
+    desc: "R5M public liability cover, COID-registered, PSIRA-registered for security work. Paperwork is on hand for any body corporate or developer that asks.",
   },
   {
     icon: HardHat,
@@ -76,7 +76,7 @@ const serviceProcess = [
     step: "02",
     title: "Quote",
     icon: FileText,
-    desc: "A transparent written quote with itemised rates. No hidden fees, no surprises, no obligation.",
+    desc: "A written quote with itemised rates. If something's not included, we say so — you won't get an extra invoice for it later.",
   },
   {
     step: "03",
@@ -296,11 +296,11 @@ export default function ServicesPage() {
             eyebrow="How We Work"
             title={
               <>
-                A proven process from{" "}
-                <span className="text-primary">enquiry to handover</span>
+                From your call to{" "}
+                <span className="text-primary">a clean site</span>
               </>
             }
-            description="Four disciplined phases that turn your call into a delivered, clean site — on schedule and on budget."
+            description="Four steps from the first phone call to handing back a site that's been cleared, cleaned, and signed off."
             className="mb-14"
           />
 
@@ -340,7 +340,7 @@ export default function ServicesPage() {
                 <span className="text-primary">coming back</span>
               </>
             }
-            description="Six concrete advantages that show up in every project we deliver — and in the 5-star reviews our Gauteng clients have written."
+            description="Six things that show up on every job we run — and that our Gauteng clients mention when they refer us to someone else."
             className="mb-14"
           />
 
@@ -369,7 +369,7 @@ export default function ServicesPage() {
       {/* ===================== CTA ===================== */}
       <CTABand
         title="Not sure which service fits your project?"
-        description="Tell us about your site and what you need done. We'll recommend the right service line — or bundle a few together — and send a transparent quote within one business day."
+        description="Tell us about your site and what you need done. We'll point you at the right service line — or bundle a few together — and send a quote the same business day."
       />
     </>
   );

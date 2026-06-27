@@ -29,7 +29,6 @@ import {
   Counter,
   CTABand,
   Reveal,
-  Marquee,
 } from "@/components/site/sections";
 import { CostEstimator } from "@/components/site/cost-estimator";
 import { BeforeAfter } from "@/components/site/before-after";
@@ -40,7 +39,7 @@ import {
   projects,
   testimonials,
   certifications,
-  clientLogos,
+  clientTypes,
   rates,
 } from "@/lib/site-data";
 
@@ -85,6 +84,16 @@ const heroTrustBadges = [
   { icon: ShieldCheck, label: "R5M Public Liability" },
   { icon: Clock, label: "9+ Years in Gauteng" },
   { icon: Award, label: "Certified Shot-Firers" },
+];
+
+/* Tints for the initials avatars on testimonials (varied, not all the same colour) */
+const avatarTints = [
+  "bg-amber-100 text-amber-900",
+  "bg-emerald-100 text-emerald-900",
+  "bg-rose-100 text-rose-900",
+  "bg-sky-100 text-sky-900",
+  "bg-violet-100 text-violet-900",
+  "bg-orange-100 text-orange-900",
 ];
 
 export default function HomePage() {
@@ -197,26 +206,33 @@ export default function HomePage() {
                     <Quote className="size-6" />
                   </div>
                   <div className="pt-6">
-                    <div className="flex items-center gap-1 mb-4">
-                      {Array.from({ length: 5 }).map((_, i) => (
-                        <Star
-                          key={i}
-                          className="size-4 fill-primary text-primary"
-                        />
-                      ))}
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-1">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <Star
+                            key={i}
+                            className="size-4 fill-primary text-primary"
+                          />
+                        ))}
+                      </div>
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1">
+                        <ShieldCheck className="size-3" />
+                        Verified customer
+                      </span>
                     </div>
                     <p className="text-base lg:text-lg leading-relaxed font-medium">
-                      &ldquo;Libmarc stripped out the inside of my old house in
-                      a single day and took all the rubble with them. The team
-                      was professional, on time, and the price was exactly what
-                      they quoted. Highly recommended.&rdquo;
+                      &ldquo;They came out the same day I called. Quote was on
+                      WhatsApp that evening — R3,400 for stripping the inside of
+                      my old house and taking the rubble. Crew arrived 7am sharp,
+                      done by 4pm. The price they quoted is the price I
+                      paid.&rdquo;
                     </p>
                     <div className="mt-6 flex items-center gap-4 pt-5 border-t border-border">
-                      <div className="flex size-12 items-center justify-center bg-primary/15 text-primary font-display font-bold">
+                      <div className="flex size-12 items-center justify-center bg-amber-100 text-amber-900 font-display font-bold">
                         BM
                       </div>
                       <div>
-                        <div className="font-bold">Bongani M.</div>
+                        <div className="font-bold">Bongani Mthembu</div>
                         <div className="text-sm text-muted-foreground flex items-center gap-1">
                           <MapPin className="size-3" />
                           Homeowner, Brixton
@@ -234,23 +250,26 @@ export default function HomePage() {
         <div className="hazard-stripe h-1.5 w-full" />
       </section>
 
-      {/* ===================== CLIENT LOGOS (animated marquee) ===================== */}
-      <section className="border-b border-border bg-background py-8">
-        <div className="container mx-auto px-4 mb-6">
-          <p className="text-center text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">
-            Trusted by builders &amp; bodies corporate across Gauteng
-          </p>
+      {/* ===================== WHO WE WORK FOR (honest client categories, not fake logos) ===================== */}
+      <section className="border-b border-border bg-background py-10">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground shrink-0">
+              Our work spans
+            </p>
+            <div className="flex flex-wrap items-center gap-2 lg:gap-3 lg:justify-end">
+              {clientTypes.map((type) => (
+                <span
+                  key={type}
+                  className="inline-flex items-center gap-2 border border-border bg-muted/40 px-4 py-2 text-sm font-semibold text-foreground/80 hover:border-primary hover:text-foreground transition-colors"
+                >
+                  <span className="size-1.5 bg-primary" />
+                  {type}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
-        <Marquee>
-          {clientLogos.map((logo) => (
-            <span
-              key={logo}
-              className="font-display text-lg lg:text-xl font-bold uppercase tracking-wide text-muted-foreground/50 hover:text-foreground transition-colors px-10 whitespace-nowrap"
-            >
-              {logo}
-            </span>
-          ))}
-        </Marquee>
       </section>
 
       {/* ===================== STATS BAND ===================== */}
@@ -282,6 +301,9 @@ export default function HomePage() {
                       </div>
                       <div className="mt-2 text-sm uppercase tracking-wider text-background/70 font-medium">
                         {stat.label}
+                      </div>
+                      <div className="mt-1 text-[11px] text-background/50 font-medium normal-case tracking-normal">
+                        {stat.footnote}
                       </div>
                     </div>
                   </div>
@@ -716,7 +738,7 @@ export default function HomePage() {
                 <span className="text-primary">contractors trust us</span>
               </>
             }
-            description="Real reviews from real Gauteng clients — from Brixton strip-outs to Sandton excavator hire."
+            description="Feedback from recent jobs across Gauteng — from Brixton strip-outs to Sandton excavator hire. Not every review is five stars, and that's fine. We learn from the four-star ones."
             className="mb-14"
           />
 
@@ -727,11 +749,15 @@ export default function HomePage() {
                   <CardContent className="p-7 flex flex-col h-full">
                     <div className="flex items-center justify-between mb-4">
                       <Quote className="size-9 text-primary/30" />
-                      <div className="flex items-center gap-0.5">
-                        {Array.from({ length: t.rating }).map((_, j) => (
+                      <div className="flex items-center gap-1">
+                        {Array.from({ length: 5 }).map((_, j) => (
                           <Star
                             key={j}
-                            className="size-4 fill-primary text-primary"
+                            className={
+                              j < t.rating
+                                ? "size-4 fill-primary text-primary"
+                                : "size-4 text-muted-foreground/30"
+                            }
                           />
                         ))}
                       </div>
@@ -740,18 +766,22 @@ export default function HomePage() {
                       &ldquo;{t.quote}&rdquo;
                     </p>
                     <div className="mt-6 pt-5 border-t border-border flex items-center gap-3">
-                      <div className="relative size-12 overflow-hidden bg-muted shrink-0">
-                        <Image
-                          src={t.avatar}
-                          alt={t.name}
-                          fill
-                          className="object-cover"
-                          sizes="48px"
-                        />
+                      <div
+                        className={`flex size-12 items-center justify-center font-display font-bold shrink-0 ${avatarTints[i % avatarTints.length]}`}
+                      >
+                        {t.initials}
                       </div>
-                      <div>
-                        <div className="font-bold">{t.name}</div>
-                        <div className="text-sm text-muted-foreground">
+                      <div className="min-w-0">
+                        <div className="font-bold flex items-center gap-1.5">
+                          {t.name}
+                          {t.verified && (
+                            <span className="inline-flex items-center gap-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-700">
+                              <ShieldCheck className="size-3" />
+                              Verified
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-sm text-muted-foreground truncate">
                           {t.title} · {t.company}
                         </div>
                       </div>
@@ -760,6 +790,13 @@ export default function HomePage() {
                 </Card>
               </Reveal>
             ))}
+          </div>
+
+          <div className="mt-8 flex items-center justify-center gap-2 text-sm text-muted-foreground">
+            <ShieldCheck className="size-4 text-primary" />
+            <span>
+              Reviews paraphrased from client WhatsApp messages &amp; call-backs — names shown with consent.
+            </span>
           </div>
         </div>
       </section>

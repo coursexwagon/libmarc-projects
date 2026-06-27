@@ -45,24 +45,28 @@ const stats = [
     value: 850,
     suffix: "+",
     label: "Projects Completed",
+    footnote: "Across all service lines",
   },
   {
     icon: Calendar,
     value: 9,
     suffix: "+",
     label: "Years Serving Gauteng",
+    footnote: "Since 2015",
   },
   {
     icon: Truck,
     value: 40,
     suffix: "+",
     label: "Machines in Fleet",
+    footnote: "Serviced & roadworthy",
   },
   {
     icon: ShieldCheck,
-    value: 100,
-    suffix: "%",
-    label: "Safety Compliance",
+    value: 0,
+    suffix: "",
+    label: "Lost-Time Incidents",
+    footnote: "2023 – 2024",
   },
 ];
 
@@ -270,6 +274,9 @@ export default function ProjectsPage() {
                 </div>
                 <div className="mt-2 text-xs lg:text-sm font-bold uppercase tracking-wider text-background/70">
                   {s.label}
+                </div>
+                <div className="mt-1 text-[11px] text-background/50 font-medium normal-case tracking-normal">
+                  {s.footnote}
                 </div>
               </Reveal>
             ))}

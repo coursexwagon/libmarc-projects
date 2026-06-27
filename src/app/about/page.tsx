@@ -62,7 +62,7 @@ const coreValues = [
   {
     icon: BadgeDollarSign,
     title: "Honest Pricing",
-    desc: "Written, itemised quotes — same business day. No hidden fees, no surprises on site. The price we quote is the price you pay.",
+    desc: "Written, itemised quotes — same business day. The price on the quote is the price you pay. If something's going to cost extra, we tell you before we do the work.",
   },
   {
     icon: Clock,
@@ -77,12 +77,12 @@ const coreValues = [
   {
     icon: HardHat,
     title: "Fully Insured",
-    desc: "R5M public liability insurance, COID-registered, and PSIRA-registered for security work. Your site and your neighbours are covered.",
+    desc: "R5M public liability insurance, COID-registered, and PSIRA-registered for security work. Paperwork is on hand for any body corporate or developer that asks.",
   },
   {
     icon: Heart,
     title: "Community Focused",
-    desc: "Born in Yeoville. We hire locally, support local suppliers, and treat every client — homeowner or developer — with the same respect.",
+    desc: "Based in Yeoville. We hire locally, use local suppliers where we can, and treat a homeowner with the same care we give a developer.",
   },
 ];
 
@@ -115,7 +115,7 @@ const milestones = [
     year: "2024",
     title: "850th Project Completed",
     detail:
-      "We complete our 850th project across Gauteng — from Soweto rubble clearance to Rosebank rock blasting — with a 100% safety record and a 5-star average review.",
+      "We complete our 850th project across Gauteng — from Soweto rubble clearance to Rosebank rock blasting. Zero lost-time incidents recorded across 2023 and 2024.",
   },
 ];
 
@@ -304,6 +304,9 @@ export default function AboutPage() {
                       </div>
                       <div className="mt-2 text-sm uppercase tracking-wider text-background/70 font-medium">
                         {stat.label}
+                      </div>
+                      <div className="mt-1 text-[11px] text-background/50 font-medium normal-case tracking-normal">
+                        {stat.footnote}
                       </div>
                     </div>
                   </div>
@@ -554,7 +557,7 @@ export default function AboutPage() {
       {/* ===================== CTA ===================== */}
       <CTABand
         title="Got a job that needs doing? Let's talk."
-        description="From a single bakkie load of rubble to a full basement excavation — tell us what you need and get a transparent, no-obligation quote within one business day."
+        description="From a single bakkie load of rubble to a full basement excavation — tell us what you need and we'll get back to you the same business day with a price."
       />
     </>
   );
