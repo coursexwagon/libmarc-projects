@@ -42,19 +42,31 @@ export const stats = [
   { value: 100, suffix: "%", label: "Safety Compliance" },
 ];
 
-export const navItems = [
+export type NavItem = {
+  title: string;
+  href: string;
+  children?: { title: string; href: string; short?: string }[];
+};
+
+export const navItems: NavItem[] = [
   { title: "Home", href: "/" },
   { title: "About Us", href: "/about" },
-  { title: "Services", href: "/services" },
-  { title: "Demolition & Rock Blasting", href: "/services/demolition-rock-blasting" },
-  { title: "Rubble Removal", href: "/services/rubble-removal" },
-  { title: "Plant Hire", href: "/services/plant-hire" },
-  { title: "CCTV Installation", href: "/services/cctv-installation" },
-  { title: "Roller Shutter & Gates", href: "/services/roller-shutter-gates" },
+  {
+    title: "Services",
+    href: "/services",
+    children: [
+      { title: "Demolition & Rock Blasting", href: "/services/demolition-rock-blasting", short: "Controlled demolition & blasting" },
+      { title: "Rubble Removal", href: "/services/rubble-removal", short: "Fast site clearance" },
+      { title: "Plant Hire", href: "/services/plant-hire", short: "TLBs, excavators, trucks & bakkies" },
+      { title: "CCTV Installation", href: "/services/cctv-installation", short: "HD & IP security systems" },
+      { title: "Roller Shutter & Gates", href: "/services/roller-shutter-gates", short: "Doors, auto gates & wiring" },
+    ],
+  },
   { title: "Projects / Gallery", href: "/projects" },
   { title: "Rates & Availability", href: "/rates" },
   { title: "Safety & Compliance", href: "/safety" },
   { title: "Service Areas", href: "/service-areas" },
+  { title: "Cost Estimator", href: "/estimate" },
   { title: "Contact / Get Quote", href: "/contact" },
 ];
 

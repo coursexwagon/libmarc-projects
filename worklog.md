@@ -644,3 +644,30 @@ Stage Summary:
 - All 13 routes verified working, lint clean
 
 Honest status: The systemic upgrade is complete and verified. The new cron will continue iterating (more polish, new features like cost estimator/quote wizard/lightbox gallery) every 15 minutes. The site is significantly more premium than before but a true "$10k+ designer" standard is an ongoing process that the cron will keep pushing toward.
+
+---
+Task ID: 9 (Nav restructure + Cost Estimator feature)
+Agent: Main (Z.ai Code)
+Task: Fix cluttered nav (services nested under dropdown) + add interactive cost estimator
+
+Work Log:
+- RESTRUCTURED NAVIGATION: Changed flat 13-item top nav (with all 5 services as top-level) to a clean 9-item nav with Services as a dropdown:
+  * Top-level now: Home, About Us, Services (dropdown), Projects/Gallery, Rates & Availability, Safety & Compliance, Service Areas, Cost Estimator, Contact/Get Quote
+  * Updated site-data.ts navItems to a typed NavItem[] structure supporting `children?: {title, href, short}[]`
+  * Rewrote site-header.tsx: desktop Services mega-dropdown (460px wide, dark header strip, icon + title + short desc per service, hover-triggered with 150ms close delay), mobile collapsible (Collapsible component, "All Services" link + 5 sub-items)
+  * Desktop dropdown: shows service icons, titles, short descriptions, hover state with arrow
+  * Mobile: Services is a collapsible button that expands to show All Services + 5 sub-links
+- NEW FEATURE — COST ESTIMATOR (/estimate):
+  * Created src/components/site/cost-estimator.tsx — interactive 3-step wizard: (1) select service, (2) select size (Small/Medium/Large/Extra Large with ZAR ranges), (3) select timeline (Standard / Rush +25%)
+  * Price matrix: per-service × per-size ZAR ranges (e.g. Demolition Medium 50-150m² = R40,000–R120,000; Rubble Removal Small = R900–R2,700; TLB 4-8hrs = R2,600–R5,200)
+  * Result view: big price range display, gradient range bar, "what's included" checklist, disclaimer, two CTAs (Get Exact Quote → /contact, WhatsApp This → wa.me with pre-filled message containing the estimate)
+  * Created src/app/estimate/page.tsx — dedicated page with PageHero, estimator, 4 trust points, CTABand
+  * Added "Cost Estimator" to nav (now 9 top-level items)
+  * Embedded CostEstimator on home page as section 07 with left-side copy + right-side wizard
+- VERIFIED via agent-browser: desktop dropdown opens on hover showing 5 services with icons/descriptions, mobile collapsible expands to show All Services + 5 sub-items, estimator end-to-end test (Demolition + Medium + Standard → R40,000–R120,000, WhatsApp pre-fill works), all 14 routes return 200, lint 100% clean
+
+Stage Summary:
+- Nav fixed: clean 9-item top nav with Services mega-dropdown (was 13 cluttered items)
+- New feature: interactive cost estimator with real ZAR pricing, live on /estimate AND embedded on home page
+- 14 routes total now (added /estimate)
+- All verified working, lint clean

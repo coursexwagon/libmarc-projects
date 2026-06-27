@@ -3,16 +3,31 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Phone, HardHat, ChevronDown, MessageCircle } from "lucide-react";
+import {
+  Menu,
+  Phone,
+  HardHat,
+  ChevronDown,
+  MessageCircle,
+  ArrowRight,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import { cn } from "@/lib/utils";
-import { navItems, company } from "@/lib/site-data";
+import { navItems, company, services } from "@/lib/site-data";
 
 export function SiteHeader() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = React.useState(false);
   const [open, setOpen] = React.useState(false);
+  const [servicesOpen, setServicesOpen] = React.useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = React.useState(false);
+  const closeTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -23,14 +38,23 @@ export function SiteHeader() {
 
   React.useEffect(() => {
     setOpen(false);
+    setMobileServicesOpen(false);
   }, [pathname]);
+
+  const handleServicesEnter = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setServicesOpen(true);
+  };
+  const handleServicesLeave = () => {
+    closeTimer.current = setTimeout(() => setServicesOpen(false), 150);
+  };
 
   return (
     <header
       className={cn(
         "sticky top-0 z-50 w-full transition-all duration-300",
         scrolled
-          ? "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 shadow-sm border-b border-border"
+          ? "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 shadow-premium-sm border-b border-border"
           : "bg-background border-b border-transparent"
       )}
     >
@@ -74,7 +98,7 @@ export function SiteHeader() {
       <div className="container mx-auto px-4">
         <div className="flex h-16 lg:h-20 items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="relative flex size-10 lg:size-11 items-center justify-center bg-primary text-primary-foreground">
+            <div className="relative flex size-10 lg:size-11 items-center justify-center bg-primary text-primary-foreground transition-transform group-hover:scale-105">
               <HardHat className="size-6" strokeWidth={2.2} />
               <span className="absolute -bottom-0.5 -right-0.5 size-2 bg-foreground" />
             </div>
@@ -88,25 +112,132 @@ export function SiteHeader() {
             </div>
           </Link>
 
-          {/* Desktop nav — compact for 13 items */}
-          <nav className="hidden xl:flex items-center gap-0">
+          {/* Desktop nav — clean 8 items + Services dropdown */}
+          <nav className="hidden xl:flex items-center gap-1">
             {navItems.map((item) => {
               const active =
                 item.href === "/"
                   ? pathname === "/"
+                  : item.href === "/services"
+                  ? pathname.startsWith("/services")
                   : pathname.startsWith(item.href);
+
+              // Services dropdown
+              if (item.children) {
+                return (
+                  <div
+                    key={item.href}
+                    className="relative"
+                    onMouseEnter={handleServicesEnter}
+                    onMouseLeave={handleServicesLeave}
+                  >
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        "flex items-center gap-1 px-3 py-2 text-sm font-medium transition-colors hover:text-primary",
+                        active ? "text-primary" : "text-foreground/80"
+                      )}
+                    >
+                      {item.title}
+                      <ChevronDown
+                        className={cn(
+                          "size-3.5 transition-transform duration-300",
+                          servicesOpen && "rotate-180"
+                        )}
+                      />
+                      {active && (
+                        <span className="absolute inset-x-3 -bottom-0.5 h-0.5 bg-primary" />
+                      )}
+                    </Link>
+
+                    {/* Mega dropdown */}
+                    {servicesOpen && (
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-[460px] animate-scale-in origin-top">
+                        <div className="bg-background border border-border shadow-premium-xl overflow-hidden">
+                          {/* Header strip */}
+                          <div className="bg-foreground text-background px-5 py-3 flex items-center justify-between">
+                            <span className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                              Our Services
+                            </span>
+                            <Link
+                              href="/services"
+                              className="text-xs font-semibold text-background/70 hover:text-primary flex items-center gap-1"
+                            >
+                              View all
+                              <ArrowRight className="size-3" />
+                            </Link>
+                          </div>
+                          {/* Service items */}
+                          <div className="p-2">
+                            {item.children.map((child) => {
+                              const childService = services.find(
+                                (s) => s.slug === child.href.split("/").pop()
+                              );
+                              const Icon = childService?.icon;
+                              const childActive = pathname === child.href;
+                              return (
+                                <Link
+                                  key={child.href}
+                                  href={child.href}
+                                  className={cn(
+                                    "flex items-start gap-3 p-3 rounded-md transition-colors group",
+                                    childActive
+                                      ? "bg-primary/10"
+                                      : "hover:bg-accent"
+                                  )}
+                                >
+                                  {Icon && (
+                                    <div
+                                      className={cn(
+                                        "flex size-9 items-center justify-center shrink-0 transition-colors",
+                                        childActive
+                                          ? "bg-primary text-primary-foreground"
+                                          : "bg-muted text-foreground group-hover:bg-primary group-hover:text-primary-foreground"
+                                      )}
+                                    >
+                                      <Icon className="size-4.5" strokeWidth={2.2} />
+                                    </div>
+                                  )}
+                                  <div className="flex-1 min-w-0">
+                                    <div
+                                      className={cn(
+                                        "text-sm font-bold",
+                                        childActive ? "text-primary" : "text-foreground"
+                                      )}
+                                    >
+                                      {child.title}
+                                    </div>
+                                    {child.short && (
+                                      <div className="text-xs text-muted-foreground mt-0.5">
+                                        {child.short}
+                                      </div>
+                                    )}
+                                  </div>
+                                  <ArrowRight className="size-4 text-muted-foreground opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all shrink-0 mt-1" />
+                                </Link>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
+              // Regular nav item
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "relative px-2.5 py-2 text-[13px] font-medium transition-colors hover:text-primary whitespace-nowrap",
+                    "relative px-3 py-2 text-sm font-medium transition-colors hover:text-primary whitespace-nowrap",
                     active ? "text-primary" : "text-foreground/80"
                   )}
                 >
                   {item.title}
                   {active && (
-                    <span className="absolute inset-x-2.5 -bottom-0.5 h-0.5 bg-primary" />
+                    <span className="absolute inset-x-3 -bottom-0.5 h-0.5 bg-primary" />
                   )}
                 </Link>
               );
@@ -117,7 +248,7 @@ export function SiteHeader() {
             <Button
               asChild
               size="lg"
-              className="hidden md:inline-flex bg-primary text-primary-foreground hover:bg-primary/90 font-bold uppercase tracking-wide text-sm"
+              className="hidden md:inline-flex bg-primary text-primary-foreground hover:bg-primary/90 font-bold uppercase tracking-wide text-sm shadow-primary-glow"
             >
               <Link href="/contact">Get a Quote</Link>
             </Button>
@@ -155,20 +286,83 @@ export function SiteHeader() {
                       const active =
                         item.href === "/"
                           ? pathname === "/"
+                          : item.href === "/services"
+                          ? pathname.startsWith("/services")
                           : pathname.startsWith(item.href);
+
+                      // Collapsible Services section
+                      if (item.children) {
+                        return (
+                          <Collapsible
+                            key={item.href}
+                            open={mobileServicesOpen}
+                            onOpenChange={setMobileServicesOpen}
+                          >
+                            <CollapsibleTrigger
+                              className={cn(
+                                "w-full flex items-center justify-between rounded-md px-3 py-2.5 text-[15px] font-medium transition-colors",
+                                active
+                                  ? "bg-primary/10 text-primary"
+                                  : "hover:bg-accent"
+                              )}
+                            >
+                              <span className="flex items-center gap-2">
+                                {item.title}
+                              </span>
+                              <ChevronDown
+                                className={cn(
+                                  "size-4 transition-transform duration-300",
+                                  mobileServicesOpen && "rotate-180"
+                                )}
+                              />
+                            </CollapsibleTrigger>
+                            <CollapsibleContent>
+                              <div className="ml-3 mt-1 border-l border-border pl-3 space-y-0.5">
+                                <Link
+                                  href={item.href}
+                                  className={cn(
+                                    "flex items-center justify-between rounded-md px-3 py-2 text-sm transition-colors",
+                                    pathname === item.href
+                                      ? "bg-primary/10 text-primary font-semibold"
+                                      : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                                  )}
+                                >
+                                  All Services
+                                  <ArrowRight className="size-3.5" />
+                                </Link>
+                                {item.children.map((child) => (
+                                  <Link
+                                    key={child.href}
+                                    href={child.href}
+                                    className={cn(
+                                      "flex items-center justify-between rounded-md px-3 py-2 text-sm transition-colors",
+                                      pathname === child.href
+                                        ? "bg-primary/10 text-primary font-semibold"
+                                        : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                                    )}
+                                  >
+                                    {child.title}
+                                    <ArrowRight className="size-3.5 opacity-50" />
+                                  </Link>
+                                ))}
+                              </div>
+                            </CollapsibleContent>
+                          </Collapsible>
+                        );
+                      }
+
+                      // Regular mobile nav item
                       return (
                         <Link
                           key={item.href}
                           href={item.href}
                           className={cn(
                             "flex items-center justify-between rounded-md px-3 py-2.5 text-[15px] font-medium transition-colors",
-                            active
-                              ? "bg-primary/10 text-primary"
-                              : "hover:bg-accent"
+                            active ? "bg-primary/10 text-primary" : "hover:bg-accent"
                           )}
                         >
                           {item.title}
-                          <ChevronDown className="size-4 -rotate-90 opacity-50" />
+                          <ArrowRight className="size-4 opacity-40" />
                         </Link>
                       );
                     })}

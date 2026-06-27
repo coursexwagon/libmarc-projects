@@ -31,6 +31,7 @@ import {
   Reveal,
   Marquee,
 } from "@/components/site/sections";
+import { CostEstimator } from "@/components/site/cost-estimator";
 import {
   company,
   stats,
@@ -734,6 +735,44 @@ export default function HomePage() {
                 </Reveal>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===================== COST ESTIMATOR ===================== */}
+      <section className="py-20 lg:py-28 bg-muted/30 border-t border-border">
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
+            <Reveal>
+              <div>
+                <SectionHeading
+                  number="07"
+                  eyebrow="Free Tool"
+                  title={
+                    <>
+                      Get an instant <span className="text-primary">ballpark price</span>
+                    </>
+                  }
+                  description="No waiting, no pressure. Pick your service and project size, and we'll show you a realistic price range based on our published ZAR rates — then you decide if you want a formal quote."
+                />
+                <div className="mt-8 space-y-4">
+                  {[
+                    "3-step wizard — takes under 30 seconds",
+                    "Real ZAR ranges, not vague 'contact us' pricing",
+                    "Rush-job multiplier for urgent timelines",
+                    "One-click WhatsApp with your estimate pre-filled",
+                  ].map((point) => (
+                    <div key={point} className="flex items-start gap-3">
+                      <CheckCircle2 className="size-5 text-primary shrink-0 mt-0.5" />
+                      <span className="text-foreground/80">{point}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+            <Reveal delay={150}>
+              <CostEstimator />
+            </Reveal>
           </div>
         </div>
       </section>
