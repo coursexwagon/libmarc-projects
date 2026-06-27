@@ -8,10 +8,11 @@ import {
   CheckCircle2,
   ShieldCheck,
   Clock,
-  Eye,
   Users,
   BadgeDollarSign,
-  FileCheck,
+  MapPin,
+  Calendar,
+  FileText,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -26,62 +27,92 @@ import { services } from "@/lib/site-data";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Construction Services | BUILDCORE",
+  title: "Our Services | Libmarc Projects — Johannesburg Demolition & Plant Hire",
   description:
-    "Twelve integrated construction services under one roof — residential, commercial, industrial, civil infrastructure, design-build, renovation, fit-out, and more.",
+    "Five integrated service lines: demolition & rock blasting, rubble removal, plant hire, CCTV installation, and roller shutter doors & automatic gates — delivered across Gauteng.",
 };
 
 const whyChooseUs = [
   {
+    icon: BadgeDollarSign,
+    title: "Honest Pricing",
+    desc: "Written, itemised quotes — same business day. The price we quote is the price you pay. No hidden fees, no surprises.",
+  },
+  {
     icon: ShieldCheck,
-    title: "Top 5% Safety",
-    desc: "EMR 0.71, zero lost-time incidents for 38 months, OSHA 30-certified supervisors on every site.",
+    title: "Fully Insured",
+    desc: "R5M public liability cover, COID-registered, PSIRA-registered for security work. Your site and your neighbours are covered.",
+  },
+  {
+    icon: HardHat,
+    title: "Certified Crews",
+    desc: "Certified shot-firers for blasting, qualified electricians for gates and CCTV, and 10-year operators on every machine we hire out.",
   },
   {
     icon: Clock,
-    title: "On-Time Delivery",
-    desc: "Design-build delivery 33% faster than design-bid-build, with critical-path schedules updated weekly.",
+    title: "Same-Day Quotes",
+    desc: "Call before lunch and most quotes land the same business day. We mobilise fast — many rubble removals go out same-day.",
   },
   {
-    icon: Eye,
-    title: "Total Transparency",
-    desc: "GMP pricing with full backup, written change orders before work proceeds, and live dashboards.",
+    icon: MapPin,
+    title: "All of Gauteng",
+    desc: "From Soweto to Sandton, Roodepoort to Kempton Park — we cover every suburb of greater Johannesburg with our own fleet.",
   },
   {
-    icon: Users,
-    title: "In-House Team",
-    desc: "Architects, engineers, and 750+ skilled craftspeople — all under one roof, no hand-offs to third parties.",
+    icon: Calendar,
+    title: "9+ Years in Gauteng",
+    desc: "Founded 2015 in Yeoville. 850+ projects completed. We're not going anywhere — ask around.",
+  },
+];
+
+const serviceProcess = [
+  {
+    step: "01",
+    title: "Enquire",
+    icon: Phone,
+    desc: "Call or WhatsApp us with your project, site address, and scope. We respond fast — usually the same business day.",
   },
   {
-    icon: BadgeDollarSign,
-    title: "GMP Pricing",
-    desc: "Guaranteed maximum price locked before construction begins. Rarely needs a change order.",
+    step: "02",
+    title: "Quote",
+    icon: FileText,
+    desc: "A transparent written quote with itemised rates. No hidden fees, no surprises, no obligation.",
   },
   {
-    icon: FileCheck,
-    title: "Real Warranty",
-    desc: "1-year craftsmanship, 10-year structural, plus manufacturer pass-through on every system we install.",
+    step: "03",
+    title: "Execute",
+    icon: HardHat,
+    desc: "Mobilise machines, certified crews, and supervision. HIRA signed off. Work carried out safely and on schedule.",
+  },
+  {
+    step: "04",
+    title: "Handover",
+    icon: CheckCircle2,
+    desc: "Site left clean and level. Disposal slips provided. We walk you through the completed work and hand over.",
   },
 ];
 
 export default function ServicesPage() {
+  // Only services with subServices defined get a breakdown block
+  const servicesWithSubs = services.filter((s) => s.subServices && s.subServices.length > 0);
+
   return (
     <>
       {/* ===================== PAGE HERO ===================== */}
       <PageHero
-        eyebrow="Our Expertise"
+        eyebrow="Our Services"
         title={
           <>
-            Construction services{" "}
-            <span className="text-primary">built to deliver</span>
+            Complete site &amp;{" "}
+            <span className="text-primary">security solutions</span>
           </>
         }
-        description="Twelve integrated disciplines under one roof — from pre-construction planning to final handover. Single-point accountability from the people who will actually build your project."
+        description="Five integrated service lines under one roof — demolition & rock blasting, rubble removal, plant hire, CCTV installation, and roller shutter doors & automatic gates. One team, one point of contact, across all of Gauteng."
         breadcrumbs={[
           { label: "Home", href: "/" },
           { label: "Services" },
         ]}
-        image="/images/projects/project-4.png"
+        image="/images/services/plant-hire.png"
       />
 
       {/* ===================== INTRO ===================== */}
@@ -90,14 +121,14 @@ export default function ServicesPage() {
           <div className="grid lg:grid-cols-12 gap-10 items-end">
             <div className="lg:col-span-8">
               <SectionHeading
-                eyebrow="Full-Service Builder"
+                eyebrow="Full-Service Contractor"
                 title={
                   <>
-                    Every discipline your project demands,{" "}
-                    <span className="text-primary">under one contract</span>
+                    Every discipline your site demands,{" "}
+                    <span className="text-primary">one phone call</span>
                   </>
                 }
-                description="Most general contractors coordinate a web of subcontractors. We staff the disciplines ourselves — architects, engineers, superintendents, and 750+ craftspeople — so when something needs to change on your project, the decision is made by people who share an office, not by lawyers reading separate contracts."
+                description="Most contractors coordinate a web of subcontractors. We staff the disciplines ourselves — demolition crews, plant operators, certified electricians, and CCTV installers — so when something changes on your site, the decision is made by people who share a fleet, not by separate companies reading separate contracts."
               />
             </div>
             <div className="lg:col-span-4 flex lg:justify-end">
@@ -115,43 +146,61 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* ===================== SERVICES GRID (all 12) ===================== */}
+      {/* ===================== SERVICES GRID (rich cards) ===================== */}
       <section className="pb-20 lg:pb-28">
         <div className="container mx-auto px-4">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid lg:grid-cols-2 gap-6">
             {services.map((service, i) => (
-              <Reveal key={service.slug} delay={(i % 3) * 80}>
+              <Reveal key={service.slug} delay={(i % 2) * 100}>
                 <Link
                   href={`/services/${service.slug}`}
                   className="group block h-full"
                 >
-                  <Card className="h-full overflow-hidden border-border hover:border-primary transition-all duration-300 hover:shadow-xl bg-background">
-                    <div className="relative aspect-[16/10] overflow-hidden bg-muted">
+                  <Card className="h-full overflow-hidden border-border hover:border-primary transition-all duration-300 hover:shadow-xl bg-background flex flex-col">
+                    <div className="relative aspect-[16/9] overflow-hidden bg-muted">
                       <Image
                         src={service.image}
                         alt={service.title}
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        sizes="(max-width: 1024px) 100vw, 50vw"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/10 to-transparent" />
-                      <div className="absolute top-4 left-4 flex size-11 items-center justify-center bg-primary text-primary-foreground">
-                        <service.icon className="size-5" strokeWidth={2.2} />
+                      <div className="absolute top-4 left-4 flex size-12 items-center justify-center bg-primary text-primary-foreground">
+                        <service.icon className="size-6" strokeWidth={2.2} />
                       </div>
-                      <Badge className="absolute top-4 right-4 bg-background/90 text-foreground border-0 backdrop-blur font-display font-bold">
+                      <Badge className="absolute top-4 right-4 bg-background/90 text-foreground border-0 backdrop-blur font-display font-bold text-base px-3 py-1">
                         {String(i + 1).padStart(2, "0")}
                       </Badge>
+                      <div className="absolute bottom-4 left-4 right-4">
+                        <h3 className="font-display text-2xl lg:text-3xl font-bold text-background group-hover:text-primary transition-colors">
+                          {service.title}
+                        </h3>
+                      </div>
                     </div>
-                    <CardContent className="p-6">
-                      <h3 className="font-display text-xl font-bold group-hover:text-primary transition-colors">
-                        {service.title}
-                      </h3>
-                      <p className="mt-2 text-sm text-muted-foreground leading-relaxed line-clamp-2">
+                    <CardContent className="p-7 flex-1 flex flex-col">
+                      <p className="text-base text-muted-foreground leading-relaxed">
                         {service.short}
                       </p>
-                      <div className="mt-4 flex items-center gap-1.5 text-sm font-bold text-primary uppercase tracking-wide">
-                        Learn More
-                        <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                      <ul className="mt-5 grid sm:grid-cols-2 gap-x-4 gap-y-2.5">
+                        {service.features.slice(0, 4).map((f) => (
+                          <li
+                            key={f}
+                            className="flex items-start gap-2 text-sm text-foreground/90"
+                          >
+                            <CheckCircle2 className="size-4 text-primary shrink-0 mt-0.5" />
+                            <span>{f}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="mt-6 pt-5 border-t border-border flex items-center justify-between">
+                        <span className="text-sm font-bold text-primary uppercase tracking-wide flex items-center gap-1.5">
+                          Learn More
+                          <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                        </span>
+                        <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+                          View Details &amp; Rates
+                        </span>
                       </div>
                     </CardContent>
                   </Card>
@@ -162,8 +211,85 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {/* ===================== SUB-SERVICES BREAKDOWN ===================== */}
+      <section className="py-20 lg:py-28 bg-muted/40 border-y border-border">
+        <div className="container mx-auto px-4">
+          <SectionHeading
+            align="center"
+            eyebrow="Breakdown"
+            title={
+              <>
+                What falls under{" "}
+                <span className="text-primary">each service line</span>
+              </>
+            }
+            description="A closer look at the sub-services within our demolition, plant hire, and roller shutter & gate divisions."
+            className="mb-14"
+          />
+
+          <div className="space-y-8">
+            {servicesWithSubs.map((service, idx) => (
+              <Reveal key={service.slug} delay={idx * 80}>
+                <div className="bg-background border border-border rounded-sm overflow-hidden">
+                  <div className="flex flex-col lg:flex-row">
+                    {/* Left: service summary */}
+                    <div className="lg:w-1/3 bg-foreground text-background p-7 lg:p-8 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="flex size-11 items-center justify-center bg-primary text-primary-foreground">
+                            <service.icon className="size-5" strokeWidth={2.2} />
+                          </div>
+                          <span className="font-display text-sm font-bold uppercase tracking-wider text-primary">
+                            Service {String(idx + 1).padStart(2, "0")}
+                          </span>
+                        </div>
+                        <h3 className="font-display text-2xl lg:text-3xl font-bold leading-tight">
+                          {service.title}
+                        </h3>
+                        <p className="mt-3 text-sm text-background/70 leading-relaxed">
+                          {service.short}
+                        </p>
+                      </div>
+                      <Link
+                        href={`/services/${service.slug}`}
+                        className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-primary uppercase tracking-wide hover:opacity-80"
+                      >
+                        Full Service Page
+                        <ArrowRight className="size-4" />
+                      </Link>
+                    </div>
+
+                    {/* Right: sub-services grid */}
+                    <div className="lg:w-2/3 p-7 lg:p-8">
+                      <div className="grid sm:grid-cols-2 gap-5">
+                        {service.subServices!.map((sub) => (
+                          <div
+                            key={sub.name}
+                            className="border border-border p-5 hover:border-primary hover:bg-primary/5 transition-colors"
+                          >
+                            <div className="flex items-center gap-2 mb-2">
+                              <CheckCircle2 className="size-4 text-primary" />
+                              <h4 className="font-display text-base font-bold uppercase tracking-wide">
+                                {sub.name}
+                              </h4>
+                            </div>
+                            <p className="text-sm text-muted-foreground leading-relaxed">
+                              {sub.desc}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ===================== PROCESS ===================== */}
-      <section className="py-20 lg:py-28 bg-muted/40">
+      <section className="py-20 lg:py-28">
         <div className="container mx-auto px-4">
           <SectionHeading
             align="center"
@@ -171,41 +297,16 @@ export default function ServicesPage() {
             title={
               <>
                 A proven process from{" "}
-                <span className="text-primary">groundbreaking to handover</span>
+                <span className="text-primary">enquiry to handover</span>
               </>
             }
-            description="Four disciplined phases that turn your vision into a delivered building — on schedule and on budget."
+            description="Four disciplined phases that turn your call into a delivered, clean site — on schedule and on budget."
             className="mb-14"
           />
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
             <div className="hidden lg:block absolute top-12 left-[12.5%] right-[12.5%] h-0.5 bg-border" />
-            {[
-              {
-                step: "01",
-                title: "Consult",
-                icon: Phone,
-                desc: "We listen to your vision, budget, and timeline, then map feasibility and recommend a delivery method.",
-              },
-              {
-                step: "02",
-                title: "Design",
-                icon: HardHat,
-                desc: "Architects and engineers finalize plans; we secure all permits and lock the guaranteed maximum price.",
-              },
-              {
-                step: "03",
-                title: "Build",
-                icon: Wrench,
-                desc: "Site mobilization through finishes with weekly milestone reporting and live dashboards.",
-              },
-              {
-                step: "04",
-                title: "Deliver",
-                icon: CheckCircle2,
-                desc: "Final inspection, walkthrough, warranty documentation, and keys in hand — on or ahead of schedule.",
-              },
-            ].map((p, i) => (
+            {serviceProcess.map((p, i) => (
               <Reveal key={p.step} delay={i * 100}>
                 <div className="relative text-center">
                   <div className="relative inline-flex size-24 items-center justify-center bg-background border-2 border-primary mx-auto mb-5">
@@ -228,18 +329,18 @@ export default function ServicesPage() {
       </section>
 
       {/* ===================== WHY CHOOSE US ===================== */}
-      <section className="py-20 lg:py-28">
+      <section className="py-20 lg:py-28 bg-muted/40 border-t border-border">
         <div className="container mx-auto px-4">
           <SectionHeading
             align="center"
-            eyebrow="Why BUILDCORE"
+            eyebrow="Why Libmarc"
             title={
               <>
-                Reasons owners keep{" "}
+                Reasons clients keep{" "}
                 <span className="text-primary">coming back</span>
               </>
             }
-            description="Six concrete advantages that show up in every project we deliver — and in the 480 five-star reviews our clients have written."
+            description="Six concrete advantages that show up in every project we deliver — and in the 5-star reviews our Gauteng clients have written."
             className="mb-14"
           />
 
@@ -268,7 +369,7 @@ export default function ServicesPage() {
       {/* ===================== CTA ===================== */}
       <CTABand
         title="Not sure which service fits your project?"
-        description="Tell us about your site, budget, and timeline. A pre-construction lead will respond within one business day with a recommended scope and delivery method."
+        description="Tell us about your site and what you need done. We'll recommend the right service line — or bundle a few together — and send a transparent quote within one business day."
       />
     </>
   );

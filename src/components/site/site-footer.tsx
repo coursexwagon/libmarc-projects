@@ -10,12 +10,13 @@ import {
   Linkedin,
   Instagram,
   ArrowUpRight,
+  MessageCircle,
 } from "lucide-react";
 import { company, services, navItems } from "@/lib/site-data";
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
-  const topServices = services.slice(0, 6);
+  const topNav = navItems.filter((n) => n.href !== "/").slice(0, 8);
 
   return (
     <footer className="mt-auto bg-foreground text-background">
@@ -28,12 +29,12 @@ export function SiteFooter() {
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
             <div className="max-w-xl">
               <h2 className="font-display text-2xl lg:text-4xl font-bold text-background">
-                Ready to break ground on <br className="hidden lg:block" />
-                <span className="text-primary">your next project?</span>
+                Ready to start your <br className="hidden lg:block" />
+                <span className="text-primary">next project?</span>
               </h2>
               <p className="mt-2 text-background/70 text-sm lg:text-base">
-                Get a transparent, no-obligation quote from a Bay Area contractor
-                that delivers on schedule and on budget.
+                Call or WhatsApp us for a free, no-obligation quote — usually
+                issued the same business day across Gauteng.
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
@@ -45,11 +46,13 @@ export function SiteFooter() {
                 <ArrowUpRight className="size-4" />
               </Link>
               <a
-                href={`tel:${company.phone.replace(/[^+\d]/g, "")}`}
+                href={`https://wa.me/${company.whatsapp1}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 border border-background/20 px-6 py-3.5 text-sm font-bold uppercase tracking-wide text-background hover:bg-background/10 transition-colors"
               >
-                <Phone className="size-4" />
-                Call Now
+                <MessageCircle className="size-4" />
+                WhatsApp
               </a>
             </div>
           </div>
@@ -66,19 +69,56 @@ export function SiteFooter() {
                 <HardHat className="size-6" strokeWidth={2.2} />
               </div>
               <div className="flex flex-col leading-none">
-                <span className="font-display text-2xl font-bold">
-                  BUILD<span className="text-primary">CORE</span>
-                </span>
-                <span className="text-[10px] uppercase tracking-[0.18em] text-background/60 font-medium mt-1">
-                  Construction & Engineering
+                <span className="font-display text-2xl font-bold">LIBMARC</span>
+                <span className="text-[10px] uppercase tracking-[0.18em] text-background/60 font-semibold mt-1">
+                  Projects · Johannesburg
                 </span>
               </div>
             </Link>
             <p className="mt-5 text-sm text-background/70 max-w-sm leading-relaxed">
-              A premier Bay Area construction firm delivering residential,
-              commercial, and industrial projects with precision, safety, and
-              unmatched craftsmanship since {company.founded}.
+              Johannesburg&rsquo;s trusted contractor for demolition, rock
+              blasting, rubble removal, plant hire, CCTV, and gate installations
+              since {company.founded}.
             </p>
+            {/* Both phone numbers + WhatsApp */}
+            <div className="mt-6 space-y-2">
+              <div className="flex flex-wrap gap-3">
+                <a
+                  href={`tel:${company.phone1Intl}`}
+                  className="inline-flex items-center gap-2 bg-background/5 border border-background/15 px-3 py-2 text-sm hover:border-primary hover:text-primary transition-colors"
+                >
+                  <Phone className="size-4 text-primary" />
+                  {company.phone1}
+                </a>
+                <a
+                  href={`tel:${company.phone2Intl}`}
+                  className="inline-flex items-center gap-2 bg-background/5 border border-background/15 px-3 py-2 text-sm hover:border-primary hover:text-primary transition-colors"
+                >
+                  <Phone className="size-4 text-primary" />
+                  {company.phone2}
+                </a>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <a
+                  href={`https://wa.me/${company.whatsapp1}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-primary/15 border border-primary/30 px-3 py-2 text-sm font-semibold text-primary hover:bg-primary/25 transition-colors"
+                >
+                  <MessageCircle className="size-4" />
+                  WhatsApp {company.phone1}
+                </a>
+                <a
+                  href={`https://wa.me/${company.whatsapp2}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-primary/15 border border-primary/30 px-3 py-2 text-sm font-semibold text-primary hover:bg-primary/25 transition-colors"
+                >
+                  <MessageCircle className="size-4" />
+                  WhatsApp {company.phone2}
+                </a>
+              </div>
+            </div>
             <div className="mt-6 flex items-center gap-3">
               {[Facebook, Twitter, Linkedin, Instagram].map((Icon, i) => (
                 <a
@@ -96,10 +136,10 @@ export function SiteFooter() {
           {/* Quick links */}
           <div>
             <h3 className="font-display text-sm font-bold uppercase tracking-wider text-background mb-4">
-              Company
+              Quick Links
             </h3>
             <ul className="space-y-2.5">
-              {navItems.slice(0, 6).map((item) => (
+              {topNav.slice(0, 6).map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
@@ -118,11 +158,11 @@ export function SiteFooter() {
               Services
             </h3>
             <ul className="space-y-2.5">
-              {topServices.map((s) => (
+              {services.map((s) => (
                 <li key={s.slug}>
                   <Link
                     href={`/services/${s.slug}`}
-                    className="text-sm text-background/70 hover:text-primary transition-colors line-clamp-1"
+                    className="text-sm text-background/70 hover:text-primary transition-colors"
                   >
                     {s.title}
                   </Link>
@@ -134,7 +174,7 @@ export function SiteFooter() {
           {/* Contact */}
           <div>
             <h3 className="font-display text-sm font-bold uppercase tracking-wider text-background mb-4">
-              Get in Touch
+              Contact
             </h3>
             <ul className="space-y-3.5">
               <li className="flex gap-3">
@@ -144,19 +184,10 @@ export function SiteFooter() {
                 </span>
               </li>
               <li className="flex gap-3">
-                <Phone className="size-4 text-primary shrink-0 mt-0.5" />
-                <a
-                  href={`tel:${company.phone.replace(/[^+\d]/g, "")}`}
-                  className="text-sm text-background/70 hover:text-primary transition-colors"
-                >
-                  {company.phone}
-                </a>
-              </li>
-              <li className="flex gap-3">
                 <Mail className="size-4 text-primary shrink-0 mt-0.5" />
                 <a
                   href={`mailto:${company.email}`}
-                  className="text-sm text-background/70 hover:text-primary transition-colors"
+                  className="text-sm text-background/70 hover:text-primary transition-colors break-all"
                 >
                   {company.email}
                 </a>
@@ -174,17 +205,18 @@ export function SiteFooter() {
       <div className="border-t border-background/10">
         <div className="container mx-auto px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-background/60 text-center sm:text-left">
-            © {year} {company.name}. All rights reserved. {company.license}
+            © {year} {company.name}. All rights reserved. Serving Gauteng, South Africa.
           </p>
           <div className="flex items-center gap-4 text-xs text-background/60">
-            <Link href="/faq" className="hover:text-primary transition-colors">
-              FAQ
+            <Link href="/service-areas" className="hover:text-primary transition-colors">
+              Service Areas
+            </Link>
+            <Link href="/safety" className="hover:text-primary transition-colors">
+              Safety
             </Link>
             <Link href="/contact" className="hover:text-primary transition-colors">
-              Support
+              Get Quote
             </Link>
-            <span>Privacy</span>
-            <span>Terms</span>
           </div>
         </div>
       </div>

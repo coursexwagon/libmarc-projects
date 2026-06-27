@@ -1,7 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { Send, Loader2, CheckCircle2 } from "lucide-react";
+import { Send, Loader2, CheckCircle2, MessageCircle } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -13,49 +14,36 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useToast } from "@/hooks/use-toast";
+import { company } from "@/lib/site-data";
 
-const projectTypes = [
-  "Residential",
-  "Commercial",
-  "Industrial",
-  "Infrastructure",
-  "Renovation",
+// Services offered by Libmarc Projects — used to populate the
+// "Service Required" select. The 5 services + "Other".
+const serviceOptions = [
+  "Demolition & Rock Blasting",
+  "Rubble Removal",
+  "Plant Hire",
+  "CCTV Installation",
+  "Roller Shutter & Gates",
   "Other",
-];
-
-const budgets = [
-  "Under $250k",
-  "$250k - $1M",
-  "$1M - $10M",
-  "$10M+",
-];
-
-const timelines = [
-  "ASAP (0-3 months)",
-  "3-6 months",
-  "6-12 months",
-  "12+ months",
-  "Just exploring",
 ];
 
 type FormState = {
   name: string;
-  email: string;
   phone: string;
-  projectType: string;
-  budget: string;
-  timeline: string;
+  email: string;
+  service: string;
+  siteAddress: string;
+  preferredDate: string;
   message: string;
 };
 
 const initialState: FormState = {
   name: "",
-  email: "",
   phone: "",
-  projectType: "",
-  budget: "",
-  timeline: "",
+  email: "",
+  service: "",
+  siteAddress: "",
+  preferredDate: "",
   message: "",
 };
 
@@ -63,43 +51,62 @@ export function ContactForm() {
   const [form, setForm] = React.useState<FormState>(initialState);
   const [submitting, setSubmitting] = React.useState(false);
   const [done, setDone] = React.useState(false);
-  const { toast } = useToast();
 
   const update =
     (key: keyof FormState) =>
-    (
-      e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
       setForm((s) => ({ ...s, [key]: e.target.value }));
 
-  const handleSelect = (key: keyof FormState) => (value: string) =>
-    setForm((s) => ({ ...s, [key]: value }));
+  const handleSelect = (value: string) =>
+    setForm((s) => ({ ...s, service: value }));
+
+  // Build a pre-filled WhatsApp message based on whatever the user
+  // has already typed into the form — handy for fast enquiries.
+  const whatsappMessage = React.useMemo(() => {
+    const lines = [
+      "Hi Libmarc Projects, I'd like to request a quote.",
+      "",
+      `Name: ${form.name || "—"}`,
+      form.phone ? `Phone: ${form.phone}` : null,
+      form.email ? `Email: ${form.email}` : null,
+      form.service ? `Service: ${form.service}` : null,
+      form.siteAddress ? `Site Address: ${form.siteAddress}` : null,
+      form.preferredDate ? `Preferred Date: ${form.preferredDate}` : null,
+      form.message ? `Message: ${form.message}` : null,
+    ].filter(Boolean);
+    return encodeURIComponent(lines.join("\n"));
+  }, [form]);
+
+  const whatsappHref = `https://wa.me/${company.whatsapp1}?text=${whatsappMessage}`;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    // Client-side validation (mirrors the server route).
+    // Client-side validation — mirrors the server route.
     if (form.name.trim().length < 2) {
-      toast({
-        title: "Name required",
+      toast.error("Name required", {
         description: "Please enter your full name.",
-        variant: "destructive",
       });
       return;
     }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
-      toast({
-        title: "Valid email required",
-        description: "Please enter a valid email address so we can reply.",
-        variant: "destructive",
+    if (!form.phone.trim() && !form.email.trim()) {
+      toast.error("Contact detail required", {
+        description: "Please enter either a phone number or an email so we can reply.",
+      });
+      return;
+    }
+    if (
+      form.email.trim() &&
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())
+    ) {
+      toast.error("Invalid email", {
+        description: "Please enter a valid email address.",
       });
       return;
     }
     if (form.message.trim().length < 10) {
-      toast({
-        title: "Message too short",
+      toast.error("Message too short", {
         description: "Please include at least 10 characters describing your project.",
-        variant: "destructive",
       });
       return;
     }
@@ -122,20 +129,17 @@ export function ContactForm() {
         throw new Error(data.error || "Submission failed.");
       }
 
-      toast({
-        title: "Message sent!",
-        description: `Your inquiry ${data.id ?? ""} is in. We'll reply within one business day.`,
+      toast.success("Quote request sent!", {
+        description: `Reference ${data.id ?? ""} — we'll reply within one business day.`,
       });
       setForm(initialState);
       setDone(true);
     } catch (err) {
-      toast({
-        title: "Something went wrong",
+      toast.error("Something went wrong", {
         description:
           err instanceof Error
             ? err.message
-            : "Please try again or call us directly.",
-        variant: "destructive",
+            : "Please try again or WhatsApp us directly.",
       });
     } finally {
       setSubmitting(false);
@@ -148,19 +152,31 @@ export function ContactForm() {
         <div className="inline-flex size-16 items-center justify-center bg-primary text-primary-foreground mb-5">
           <CheckCircle2 className="size-8" />
         </div>
-        <h3 className="font-display text-2xl font-bold">Message received.</h3>
+        <h3 className="font-display text-2xl font-bold">Quote request received.</h3>
         <p className="mt-2 text-sm text-muted-foreground max-w-md mx-auto">
-          Thanks for reaching out. A pre-construction lead will review your
-          inquiry and reply within one business day.
+          Thanks for reaching out. The Libmarc Projects team will review your
+          enquiry and reply within one business day. For urgent jobs, call or
+          WhatsApp us directly.
         </p>
-        <Button
-          type="button"
-          variant="outline"
-          className="mt-6"
-          onClick={() => setDone(false)}
-        >
-          Send another message
-        </Button>
+        <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+          <Button
+            type="button"
+            variant="outline"
+            className="rounded-none font-bold uppercase tracking-wide"
+            onClick={() => setDone(false)}
+          >
+            Send another request
+          </Button>
+          <a
+            href={`https://wa.me/${company.whatsapp1}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-9 items-center justify-center gap-2 border border-green-600 px-4 text-sm font-bold uppercase tracking-wide text-green-700 hover:bg-green-50 transition-colors"
+          >
+            <MessageCircle className="size-4" />
+            WhatsApp Us
+          </a>
+        </div>
       </div>
     );
   }
@@ -173,7 +189,10 @@ export function ContactForm() {
     >
       <div className="grid sm:grid-cols-2 gap-5">
         <div className="space-y-2">
-          <Label htmlFor="name" className="text-xs font-bold uppercase tracking-wide">
+          <Label
+            htmlFor="name"
+            className="text-xs font-bold uppercase tracking-wide"
+          >
             Full Name <span className="text-primary">*</span>
           </Label>
           <Input
@@ -187,25 +206,10 @@ export function ContactForm() {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="email" className="text-xs font-bold uppercase tracking-wide">
-            Email <span className="text-primary">*</span>
-          </Label>
-          <Input
-            id="email"
-            type="email"
-            value={form.email}
-            onChange={update("email")}
-            placeholder="jane@company.com"
-            autoComplete="email"
-            required
-            className="rounded-none"
-          />
-        </div>
-      </div>
-
-      <div className="grid sm:grid-cols-2 gap-5">
-        <div className="space-y-2">
-          <Label htmlFor="phone" className="text-xs font-bold uppercase tracking-wide">
+          <Label
+            htmlFor="phone"
+            className="text-xs font-bold uppercase tracking-wide"
+          >
             Phone
           </Label>
           <Input
@@ -213,26 +217,46 @@ export function ContactForm() {
             type="tel"
             value={form.phone}
             onChange={update("phone")}
-            placeholder="(415) 555-0192"
+            placeholder="071 234 5678"
             autoComplete="tel"
             className="rounded-none"
           />
         </div>
+      </div>
+
+      <div className="grid sm:grid-cols-2 gap-5">
         <div className="space-y-2">
-          <Label htmlFor="projectType" className="text-xs font-bold uppercase tracking-wide">
-            Project Type
-          </Label>
-          <Select
-            value={form.projectType}
-            onValueChange={handleSelect("projectType")}
+          <Label
+            htmlFor="email"
+            className="text-xs font-bold uppercase tracking-wide"
           >
-            <SelectTrigger id="projectType" className="rounded-none w-full">
-              <SelectValue placeholder="Select type" />
+            Email
+          </Label>
+          <Input
+            id="email"
+            type="email"
+            value={form.email}
+            onChange={update("email")}
+            placeholder="you@email.com"
+            autoComplete="email"
+            className="rounded-none"
+          />
+        </div>
+        <div className="space-y-2">
+          <Label
+            htmlFor="service"
+            className="text-xs font-bold uppercase tracking-wide"
+          >
+            Service Required
+          </Label>
+          <Select value={form.service} onValueChange={handleSelect}>
+            <SelectTrigger id="service" className="rounded-none w-full">
+              <SelectValue placeholder="Select a service" />
             </SelectTrigger>
             <SelectContent>
-              {projectTypes.map((t) => (
-                <SelectItem key={t} value={t}>
-                  {t}
+              {serviceOptions.map((s) => (
+                <SelectItem key={s} value={s}>
+                  {s}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -242,50 +266,50 @@ export function ContactForm() {
 
       <div className="grid sm:grid-cols-2 gap-5">
         <div className="space-y-2">
-          <Label htmlFor="budget" className="text-xs font-bold uppercase tracking-wide">
-            Budget Range
+          <Label
+            htmlFor="siteAddress"
+            className="text-xs font-bold uppercase tracking-wide"
+          >
+            Site Address
           </Label>
-          <Select value={form.budget} onValueChange={handleSelect("budget")}>
-            <SelectTrigger id="budget" className="rounded-none w-full">
-              <SelectValue placeholder="Select budget" />
-            </SelectTrigger>
-            <SelectContent>
-              {budgets.map((b) => (
-                <SelectItem key={b} value={b}>
-                  {b}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <Input
+            id="siteAddress"
+            value={form.siteAddress}
+            onChange={update("siteAddress")}
+            placeholder="Suburb or street address"
+            autoComplete="street-address"
+            className="rounded-none"
+          />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="timeline" className="text-xs font-bold uppercase tracking-wide">
-            Preferred Timeline
+          <Label
+            htmlFor="preferredDate"
+            className="text-xs font-bold uppercase tracking-wide"
+          >
+            Preferred Date
           </Label>
-          <Select value={form.timeline} onValueChange={handleSelect("timeline")}>
-            <SelectTrigger id="timeline" className="rounded-none w-full">
-              <SelectValue placeholder="Select timeline" />
-            </SelectTrigger>
-            <SelectContent>
-              {timelines.map((t) => (
-                <SelectItem key={t} value={t}>
-                  {t}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <Input
+            id="preferredDate"
+            type="date"
+            value={form.preferredDate}
+            onChange={update("preferredDate")}
+            className="rounded-none"
+          />
         </div>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="message" className="text-xs font-bold uppercase tracking-wide">
+        <Label
+          htmlFor="message"
+          className="text-xs font-bold uppercase tracking-wide"
+        >
           Message <span className="text-primary">*</span>
         </Label>
         <Textarea
           id="message"
           value={form.message}
           onChange={update("message")}
-          placeholder="Tell us about your project — location, scope, square footage, target dates, and anything else we should know."
+          placeholder="Tell us about your project — scope, site access, target dates, and anything else we should know."
           rows={5}
           required
           className="rounded-none resize-y"
@@ -294,7 +318,7 @@ export function ContactForm() {
 
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-1">
         <p className="text-xs text-muted-foreground max-w-sm">
-          By submitting, you agree to be contacted about your inquiry. We never
+          By submitting, you agree to be contacted about your enquiry. We never
           share your information.
         </p>
         <Button
@@ -311,10 +335,33 @@ export function ContactForm() {
           ) : (
             <>
               <Send className="size-4" />
-              Send Message
+              Send Quote Request
             </>
           )}
         </Button>
+      </div>
+
+      {/* Or WhatsApp us directly — pre-fills whatever the user typed. */}
+      <div className="mt-2 border-t border-border pt-5">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div>
+            <p className="text-sm font-bold text-foreground">
+              Prefer to chat now?
+            </p>
+            <p className="text-xs text-muted-foreground">
+              WhatsApp us directly — your details pre-fill automatically.
+            </p>
+          </div>
+          <a
+            href={whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-12 items-center justify-center gap-2 border-2 border-green-600 px-6 text-sm font-bold uppercase tracking-wide text-green-700 hover:bg-green-600 hover:text-white transition-colors"
+          >
+            <MessageCircle className="size-5" />
+            Or WhatsApp Us Directly
+          </a>
+        </div>
       </div>
     </form>
   );

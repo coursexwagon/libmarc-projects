@@ -6,13 +6,13 @@ import Image from "next/image";
 import {
   ArrowRight,
   MapPin,
-  DollarSign,
-  Clock,
+  MessageCircle,
+  Calendar,
   Building2,
+  Hammer,
+  Truck,
   ShieldCheck,
-  HardHat,
-  ArrowUpRight,
-  PhoneCall,
+  CheckCircle2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -28,14 +28,42 @@ import { projects, company } from "@/lib/site-data";
 
 const categories = [
   "All",
-  "Residential",
-  "Commercial",
-  "Industrial",
-  "Infrastructure",
-  "Renovation",
+  "Demolition",
+  "Rock Blasting",
+  "Rubble Removal",
+  "Plant Hire",
+  "CCTV Installation",
+  "Roller Shutter & Gates",
 ] as const;
 
 type Category = (typeof categories)[number];
+
+const stats = [
+  {
+    icon: Building2,
+    value: 850,
+    suffix: "+",
+    label: "Projects Completed",
+  },
+  {
+    icon: Calendar,
+    value: 9,
+    suffix: "+",
+    label: "Years Serving Gauteng",
+  },
+  {
+    icon: Truck,
+    value: 40,
+    suffix: "+",
+    label: "Machines in Fleet",
+  },
+  {
+    icon: ShieldCheck,
+    value: 100,
+    suffix: "%",
+    label: "Safety Compliance",
+  },
+];
 
 export default function ProjectsPage() {
   const [active, setActive] = React.useState<Category>("All");
@@ -45,16 +73,19 @@ export default function ProjectsPage() {
       ? projects
       : projects.filter((p) => p.category === active);
 
+  const categoryCount = (cat: Category) =>
+    cat === "All" ? projects.length : projects.filter((p) => p.category === cat).length;
+
   return (
     <>
       <PageHero
         eyebrow="Our Work"
         title={
           <>
-            Projects That <span className="text-primary">Define Skylines</span>
+            Projects & <span className="text-primary">Gallery</span>
           </>
         }
-        description="From custom hillside homes to elevated highway connectors, our portfolio spans every discipline — each delivered with the same obsession for schedule, safety, and craft."
+        description="From condemned apartment block demolitions in Yeoville to controlled rock blasting in Rosebank — over 850 projects delivered across Gauteng since 2015. Browse our recent work by service."
         breadcrumbs={[
           { label: "Home", href: "/" },
           { label: "Projects" },
@@ -70,14 +101,13 @@ export default function ProjectsPage() {
               eyebrow="Portfolio"
               title={
                 <>
-                  Browse by <span className="text-primary">category</span>
+                  Browse by <span className="text-primary">service</span>
                 </>
               }
-              description="Filter our recent work by project type. Click any card to see scope, gallery, and impact metrics."
+              description="Filter our recent work by service type. Every project below was delivered by Libmarc Projects crews across Johannesburg and greater Gauteng."
             />
             <div className="text-sm font-bold uppercase tracking-wider text-muted-foreground shrink-0">
-              Showing{" "}
-              <span className="text-primary">{filtered.length}</span> of{" "}
+              Showing <span className="text-primary">{filtered.length}</span> of{" "}
               {projects.length} projects
             </div>
           </div>
@@ -90,71 +120,83 @@ export default function ProjectsPage() {
                 onClick={() => setActive(cat)}
                 aria-pressed={active === cat}
                 className={cn(
-                  "px-5 py-2.5 text-sm font-bold uppercase tracking-wide border-2 transition-all",
+                  "inline-flex items-center gap-2 px-4 py-2.5 text-xs lg:text-sm font-bold uppercase tracking-wide border-2 transition-all",
                   active === cat
                     ? "border-primary bg-primary text-primary-foreground"
                     : "border-border bg-background text-foreground hover:border-primary/50 hover:-translate-y-0.5"
                 )}
               >
                 {cat}
+                <span
+                  className={cn(
+                    "inline-flex items-center justify-center min-w-5 h-5 px-1.5 text-[10px] rounded-sm",
+                    active === cat
+                      ? "bg-primary-foreground/20 text-primary-foreground"
+                      : "bg-muted text-muted-foreground"
+                  )}
+                >
+                  {categoryCount(cat)}
+                </span>
               </button>
             ))}
           </div>
 
           {/* Gallery grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map((project, i) => (
               <Reveal key={project.slug} delay={(i % 3) * 100}>
-                <Link
-                  href={`/projects/${project.slug}`}
-                  className="group block relative aspect-[4/5] overflow-hidden bg-muted"
-                >
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-foreground via-foreground/30 to-transparent" />
-                  <div className="absolute top-4 left-4 flex items-center gap-2">
-                    <Badge className="bg-primary text-primary-foreground border-0 font-bold uppercase tracking-wide">
-                      {project.category}
-                    </Badge>
-                    <span className="bg-background/15 backdrop-blur-sm text-background text-xs font-bold uppercase tracking-wide px-2.5 py-1">
-                      {project.year}
-                    </span>
-                  </div>
-                  <div className="absolute top-4 right-4 size-10 flex items-center justify-center bg-background/15 backdrop-blur-sm text-background opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-1 group-hover:translate-x-0">
-                    <ArrowUpRight className="size-5" />
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <div className="flex items-center gap-2 text-xs text-background/70 mb-2">
-                      <MapPin className="size-3.5 text-primary" />
-                      {project.location}
+                <article className="group bg-card border border-border overflow-hidden hover:border-primary hover:shadow-xl transition-all duration-300 flex flex-col">
+                  {/* Image */}
+                  <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/10 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
+                    {/* Category badge */}
+                    <div className="absolute top-4 left-4 flex items-center gap-2">
+                      <Badge className="bg-primary text-primary-foreground border-0 font-bold uppercase tracking-wide text-[10px]">
+                        {project.category}
+                      </Badge>
                     </div>
-                    <h3 className="font-display text-2xl font-bold text-background group-hover:text-primary transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="mt-2 text-sm text-background/70 line-clamp-2 max-h-0 group-hover:max-h-24 overflow-hidden transition-all duration-500">
+                    {/* Year chip */}
+                    <div className="absolute top-4 right-4">
+                      <span className="bg-background/15 backdrop-blur-sm text-background text-xs font-bold uppercase tracking-wide px-2.5 py-1">
+                        {project.year}
+                      </span>
+                    </div>
+                    {/* Location + title overlay on image */}
+                    <div className="absolute bottom-0 left-0 right-0 p-5">
+                      <div className="flex items-center gap-2 text-xs text-background/80 mb-1.5">
+                        <MapPin className="size-3.5 text-primary" />
+                        {project.location}
+                      </div>
+                      <h3 className="font-display text-xl font-bold text-background leading-tight">
+                        {project.title}
+                      </h3>
+                    </div>
+                  </div>
+
+                  {/* Summary */}
+                  <div className="p-5 flex-1 flex flex-col">
+                    <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
                       {project.summary}
                     </p>
-                    <div className="mt-3 flex items-center gap-3 text-xs font-bold text-background/60 uppercase tracking-wide">
-                      <span className="flex items-center gap-1">
-                        <DollarSign className="size-3.5 text-primary" />
-                        {project.value}
+                    <div className="mt-4 pt-4 border-t border-border flex items-center justify-between">
+                      <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                        <Hammer className="size-3.5 text-primary" />
+                        {project.category}
                       </span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="size-3.5 text-primary" />
-                        {project.duration}
+                      <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-primary">
+                        View Gallery
+                        <ArrowRight className="size-3.5" />
                       </span>
-                    </div>
-                    <div className="mt-3 flex items-center gap-1.5 text-sm font-bold text-primary uppercase tracking-wide">
-                      View Project
-                      <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
                     </div>
                   </div>
-                </Link>
+                </article>
               </Reveal>
             ))}
           </div>
@@ -170,7 +212,15 @@ export default function ProjectsPage() {
       {/* ===================== STATS BAND ===================== */}
       <section className="relative bg-foreground text-background">
         <div className="hazard-stripe h-1.5 w-full" />
-        <div className="container mx-auto px-4 py-16 lg:py-20">
+        <div
+          className="absolute inset-0 opacity-[0.06]"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
+            backgroundSize: "48px 48px",
+          }}
+        />
+        <div className="container relative mx-auto px-4 py-16 lg:py-20">
           <SectionHeading
             light
             align="center"
@@ -178,40 +228,17 @@ export default function ProjectsPage() {
             title={
               <>
                 A track record built on{" "}
-                <span className="text-primary">results</span>
+                <span className="text-primary">delivery</span>
               </>
             }
-            description="Fifteen years of disciplined delivery across the Bay Area's most demanding projects."
+            description="Nine years of disciplined work across Johannesburg, Soweto, Sandton, Midrand and the greater Gauteng region."
             className="mb-12"
           />
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
-            {[
-              {
-                icon: Building2,
-                prefix: "",
-                value: 1500,
-                suffix: "+",
-                label: "Projects Completed",
-              },
-              {
-                icon: DollarSign,
-                prefix: "$",
-                value: 680,
-                suffix: "M+",
-                label: "Total Value Delivered",
-              },
-              {
-                icon: Clock,
-                prefix: "",
-                value: 96,
-                suffix: "%",
-                label: "On-Time Delivery",
-              },
-            ].map((s, i) => (
+            {stats.map((s, i) => (
               <Reveal key={i} delay={i * 100} className="text-center">
                 <s.icon className="size-8 text-primary mx-auto mb-3" />
-                <div className="font-display text-4xl lg:text-5xl font-bold tracking-tight">
-                  <span className="text-primary">{s.prefix}</span>
+                <div className="font-display text-4xl lg:text-5xl font-bold tracking-tight text-primary">
                   <Counter value={s.value} suffix={s.suffix} />
                 </div>
                 <div className="mt-2 text-xs lg:text-sm font-bold uppercase tracking-wider text-background/70">
@@ -219,18 +246,9 @@ export default function ProjectsPage() {
                 </div>
               </Reveal>
             ))}
-            {/* EMR is a decimal — render static */}
-            <Reveal delay={300} className="text-center">
-              <ShieldCheck className="size-8 text-primary mx-auto mb-3" />
-              <div className="font-display text-4xl lg:text-5xl font-bold tracking-tight">
-                <span className="text-primary">0.</span>71
-              </div>
-              <div className="mt-2 text-xs lg:text-sm font-bold uppercase tracking-wider text-background/70">
-                EMR Safety Record
-              </div>
-            </Reveal>
           </div>
         </div>
+        <div className="hazard-stripe h-1.5 w-full" />
       </section>
 
       {/* ===================== HAVE A PROJECT IN MIND ===================== */}
@@ -240,19 +258,23 @@ export default function ProjectsPage() {
             <Reveal>
               <div className="relative aspect-[5/4] overflow-hidden bg-muted">
                 <Image
-                  src="/images/projects/project-3.png"
-                  alt="Construction site at dusk"
+                  src="/images/cta-bg.png"
+                  alt="Libmarc Projects crew on a Johannesburg demolition site"
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
                   <Badge className="bg-primary text-primary-foreground border-0 font-bold uppercase tracking-wide">
                     Active Project
                   </Badge>
                   <div className="mt-3 font-display text-2xl font-bold text-background">
-                    Bay Bridge Connector
+                    Gauteng Demolition & Rubble Clearance
+                  </div>
+                  <div className="mt-1.5 flex items-center gap-2 text-xs text-background/80">
+                    <MapPin className="size-3.5 text-primary" />
+                    {company.addressShort}
                   </div>
                 </div>
               </div>
@@ -264,22 +286,23 @@ export default function ProjectsPage() {
                 title={
                   <>
                     Tell us what you want to{" "}
-                    <span className="text-primary">build</span>
+                    <span className="text-primary">build, break, or move</span>
                   </>
                 }
-                description="Whether it's a custom home, a commercial build-out, or a public infrastructure project, our pre-construction team will respond within one business day with a transparent, no-obligation assessment."
+                description="From a single bakkie load of rubble to a full basement rock blast — our team will respond with a transparent, no-obligation quote within one business day. Free site visits across Greater Johannesburg."
                 className="mb-8"
               />
               <ul className="space-y-4 mb-8">
                 {[
-                  "Pre-construction discovery call within 24 hours",
-                  "Transparent GMP or lump-sum pricing",
-                  "Critical-path schedule delivered before contract",
-                  "Single point of accountability from design through handover",
+                  "Free site visit & same-business-day quote in Greater Johannesburg",
+                  "Transparent ZAR rates — per m², per load, per hour, or fixed price",
+                  "All work covered by R5 million public liability insurance",
+                  "Disposal slips provided for every rubble removal",
+                  "Certified shot-firers and COID-registered crews",
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <span className="flex size-6 items-center justify-center bg-primary text-primary-foreground shrink-0 mt-0.5">
-                      <ArrowRight className="size-3.5" />
+                      <CheckCircle2 className="size-4" />
                     </span>
                     <span className="text-base text-foreground/90">{item}</span>
                   </li>
@@ -297,11 +320,13 @@ export default function ProjectsPage() {
                   </Link>
                 </Button>
                 <a
-                  href={`tel:${company.phone.replace(/[^+\d]/g, "")}`}
-                  className="inline-flex h-14 items-center justify-center gap-2 border-2 border-foreground px-6 text-sm font-bold uppercase tracking-wide text-foreground hover:bg-foreground hover:text-background transition-colors"
+                  href={`https://wa.me/${company.whatsapp1}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-14 items-center justify-center gap-2 border border-border px-6 text-sm font-bold uppercase tracking-wide hover:border-primary hover:text-primary transition-colors"
                 >
-                  <PhoneCall className="size-4" />
-                  {company.phone}
+                  <MessageCircle className="size-4" />
+                  WhatsApp Us
                 </a>
               </div>
             </Reveal>

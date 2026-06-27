@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Oswald } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { Toaster as SonnerToaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { ScrollToTop } from "@/components/site/scroll-to-top";
+import { ScrollProgress, WhatsAppFloat } from "@/components/site/sections";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,26 +26,28 @@ const oswald = Oswald({
 });
 
 export const metadata: Metadata = {
-  title: "BUILDCORE | Construction & Engineering Excellence",
+  title: "Libmarc Projects | Demolition, Plant Hire & Security Installations Johannesburg",
   description:
-    "BUILDCORE is a premier construction company delivering residential, commercial, and industrial projects with precision, safety, and unmatched craftsmanship.",
+    "Libmarc Projects is a Johannesburg-based contractor specialising in demolition, rock blasting, rubble removal, plant hire, CCTV installation, and roller shutter doors & automatic gates. Serving Gauteng since 2015.",
   keywords: [
-    "construction company",
-    "building contractor",
-    "commercial construction",
-    "residential construction",
-    "civil engineering",
-    "BUILDCORE",
+    "demolition Johannesburg",
+    "rock blasting Gauteng",
+    "rubble removal Johannesburg",
+    "plant hire TLB excavator",
+    "CCTV installation Johannesburg",
+    "roller shutter doors",
+    "automatic gates",
+    "Libmarc Projects",
   ],
-  authors: [{ name: "BUILDCORE" }],
+  authors: [{ name: "Libmarc Projects" }],
   icons: {
     icon: "/favicon.ico",
   },
   openGraph: {
-    title: "BUILDCORE | Construction & Engineering Excellence",
+    title: "Libmarc Projects | Demolition, Plant Hire & Security Installations",
     description:
-      "Delivering landmark construction projects with precision and safety since 2009.",
-    siteName: "BUILDCORE",
+      "Johannesburg's trusted contractor for demolition, rubble removal, plant hire, CCTV, and gate installations. Call 078 150 0069.",
+    siteName: "Libmarc Projects",
     type: "website",
   },
 };
@@ -65,13 +69,16 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div className="relative flex min-h-screen flex-col">
+            <ScrollProgress />
             <SiteHeader />
             <main className="flex-1">{children}</main>
             <SiteFooter />
           </div>
           <ScrollToTop />
+          <WhatsAppFloat />
         </ThemeProvider>
         <Toaster />
+        <SonnerToaster position="top-center" richColors closeButton />
       </body>
     </html>
   );

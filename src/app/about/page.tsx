@@ -6,15 +6,15 @@ import {
   Eye,
   ShieldCheck,
   HardHat,
-  Award,
+  BadgeDollarSign,
+  Clock,
+  Users,
   Handshake,
-  Lightbulb,
-  Leaf,
+  Heart,
   CheckCircle2,
   Calendar,
-  Flag,
   Building2,
-  Users,
+  Flag,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -30,41 +30,26 @@ import { company, stats, certifications, team } from "@/lib/site-data";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About BUILDCORE | Building the Bay Area Since 2009",
+  title: "About Us | Libmarc Projects — Johannesburg Demolition & Plant Hire",
   description:
-    "Founded in 2009 in Oakland, BUILDCORE has grown into one of Northern California's most trusted construction firms — 1,500+ projects, 750+ skilled workers, and a 0.71 EMR safety record.",
+    "Founded 2015 in Yeoville, Libmarc Projects has grown to a 40+ machine fleet serving all of Gauteng with demolition, rubble removal, plant hire, CCTV and gate installation.",
 };
 
-const milestones = [
+const missionVision = [
   {
-    year: "2009",
-    title: "BUILDCORE Founded",
-    detail:
-      "Marcus Holloway launches BUILDCORE from a single pickup truck in Oakland with a zero-incident pledge and three employees.",
+    icon: Target,
+    title: "Our Mission",
+    desc: "To get the tough jobs done safely, on time, and at a fair price — whether that's demolishing a block of flats, blasting rock for a basement, or fitting a roller shutter door.",
   },
   {
-    year: "2013",
-    title: "First $10M Project",
-    detail:
-      "Delivered the 90,000 sq ft Westgate Medical Campus — our first eight-figure project and proof we could scale.",
+    icon: Eye,
+    title: "Our Vision",
+    desc: "To be Gauteng's most trusted name in demolition, plant hire, and security installations — known for showing up, telling the truth, and leaving a clean site behind.",
   },
   {
-    year: "2018",
-    title: "500th Project Delivered",
-    detail:
-      "Crossed 500 completed projects, opened a dedicated design studio, and grew the field organization past 400 craftspeople.",
-  },
-  {
-    year: "2022",
-    title: "Bay Bridge Connector",
-    detail:
-      "Completed the $112M, 1.4-mile elevated connector for Caltrans — delivered on a 38-month DBFO contract with zero lost-time incidents.",
-  },
-  {
-    year: "2024",
-    title: "1,500th Project",
-    detail:
-      "Capped 1,500 delivered projects with the Port Logistics Center, and crossed 750 skilled workers across a dozen active sites.",
+    icon: ShieldCheck,
+    title: "Our Promise",
+    desc: "Transparent written quotes. Certified crews. R5M public liability cover. And a site that's clean and level when we hand it back.",
   },
 ];
 
@@ -72,32 +57,65 @@ const coreValues = [
   {
     icon: ShieldCheck,
     title: "Safety First",
-    desc: "Zero-incident mindset on every shift. EMR 0.71. Stop-work authority belongs to every worker.",
+    desc: "Every site starts with a documented HIRA. PPE on every crew member, every shift. Stop-work authority belongs to every worker.",
+  },
+  {
+    icon: BadgeDollarSign,
+    title: "Honest Pricing",
+    desc: "Written, itemised quotes — same business day. No hidden fees, no surprises on site. The price we quote is the price you pay.",
+  },
+  {
+    icon: Clock,
+    title: "On-Time Delivery",
+    desc: "We schedule tight and mobilise fast. Most rubble removal jobs go out same-day; most quotes land the same business day.",
+  },
+  {
+    icon: Users,
+    title: "Skilled Crews",
+    desc: "Certified shot-firers, qualified electricians, and operators with 10+ years on the tools. We don't send labourers to do a tradesman's job.",
   },
   {
     icon: HardHat,
-    title: "Craftsmanship",
-    desc: "We build like our name is on the building — because it is. Detail-oriented execution from foundation to finish.",
+    title: "Fully Insured",
+    desc: "R5M public liability insurance, COID-registered, and PSIRA-registered for security work. Your site and your neighbours are covered.",
   },
   {
-    icon: Award,
-    title: "Integrity",
-    desc: "Transparent GMP pricing, honest change orders, and rare reputations for delivering on what we promise.",
+    icon: Heart,
+    title: "Community Focused",
+    desc: "Born in Yeoville. We hire locally, support local suppliers, and treat every client — homeowner or developer — with the same respect.",
+  },
+];
+
+const milestones = [
+  {
+    year: "2009–2015",
+    title: "From One Machine to Libmarc Projects",
+    detail:
+      "Marc Ndlovu starts out as an independent contractor in 2009 running a single hired TLB. In 2015 he founds Libmarc Projects in Yeoville — one machine, one bakkie, and a promise to quote honestly.",
   },
   {
-    icon: Lightbulb,
-    title: "Innovation",
-    desc: "BIM, drones, layout robotics, and LiDAR reality capture deployed on every active site — measured, not gimmicky.",
+    year: "2018",
+    title: "First Major Demolition Contract",
+    detail:
+      "We win our first multi-storey structural demolition — a condemned apartment block in the Johannesburg inner city. The job is delivered on schedule and leads to a string of referrals.",
   },
   {
-    icon: Handshake,
-    title: "Collaboration",
-    desc: "Design-build integration under one roof. Owners, architects, and builders solve problems together, not against each other.",
+    year: "2020",
+    title: "Added CCTV & Gate Installations",
+    detail:
+      "Clients keep asking us to secure what we help them build. We add a dedicated CCTV and roller shutter / automatic gate installation team, led by a certified electrician.",
   },
   {
-    icon: Leaf,
-    title: "Sustainability",
-    desc: "LEED Platinum, WELL Silver, and net-zero projects delivered. We build for the next generation, not the next quarter.",
+    year: "2022",
+    title: "40+ Machine Fleet",
+    detail:
+      "Our plant hire fleet crosses 40 machines — TLBs, mini and heavy excavators, tipper trucks, and bakkies — all serviced in-house and ready to roll across Gauteng.",
+  },
+  {
+    year: "2024",
+    title: "850th Project Completed",
+    detail:
+      "We complete our 850th project across Gauteng — from Soweto rubble clearance to Rosebank rock blasting — with a 100% safety record and a 5-star average review.",
   },
 ];
 
@@ -106,14 +124,14 @@ export default function AboutPage() {
     <>
       {/* ===================== PAGE HERO ===================== */}
       <PageHero
-        eyebrow="Our Story"
+        eyebrow="About Us"
         title={
           <>
-            Building the Bay Area{" "}
-            <span className="text-primary">since {company.founded}</span>
+            Johannesburg&apos;s Demolition &amp;{" "}
+            <span className="text-primary">Plant Hire Specialists</span>
           </>
         }
-        description="What started in 2009 with a single pickup truck and a zero-incident pledge has grown into one of Northern California's most trusted construction firms — without ever losing the craftsman's mindset that started it all."
+        description="Since 2015, Libmarc Projects has been getting the tough jobs done across Gauteng — from rock blasting in Rosebank to rubble removal in Soweto. One fleet, one crew, one point of contact."
         breadcrumbs={[
           { label: "Home", href: "/" },
           { label: "About" },
@@ -130,31 +148,15 @@ export default function AboutPage() {
             title={
               <>
                 Mission, vision, and the{" "}
-                <span className="text-primary">values we build on</span>
+                <span className="text-primary">values we work by</span>
               </>
             }
-            description="Three principles that shape every decision we make — from the projects we pursue to the people we hire."
+            description="Three principles that shape every decision we make — from the jobs we take on to the crews we send out."
             className="mb-14"
           />
 
           <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                icon: Target,
-                title: "Our Mission",
-                desc: "To deliver construction projects of lasting value — on schedule, on budget, and with an uncompromising commitment to safety, quality, and the people we serve.",
-              },
-              {
-                icon: Eye,
-                title: "Our Vision",
-                desc: "To be the Bay Area's most trusted builder — recognized for craftsmanship, innovation, and the integrity with which we treat every client, trade, and community.",
-              },
-              {
-                icon: ShieldCheck,
-                title: "Our Promise",
-                desc: "Single-point accountability from design through handover. Transparent pricing. A zero-incident safety culture. And a building you will be proud to own for decades.",
-              },
-            ].map((item, i) => (
+            {missionVision.map((item, i) => (
               <Reveal key={item.title} delay={i * 100}>
                 <Card className="h-full border-border hover:border-primary hover:shadow-xl transition-all duration-300 relative overflow-hidden">
                   <div className="absolute -top-12 -right-12 size-32 bg-primary/5 rounded-full" />
@@ -186,20 +188,20 @@ export default function AboutPage() {
                 <div className="relative aspect-[4/3] overflow-hidden bg-muted z-10">
                   <Image
                     src="/images/cta-bg.png"
-                    alt="BUILDCORE construction crew on site"
+                    alt="Libmarc Projects crew on a Johannesburg site"
                     fill
                     className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 50vw"
                   />
                 </div>
                 <div className="absolute -bottom-6 -right-6 bg-primary text-primary-foreground p-6 z-20 shadow-xl hidden sm:block">
-                  <div className="font-display text-4xl font-bold">
-                    <Counter value={750} suffix="+" />
+                  <div className="font-display text-5xl font-bold leading-none">
+                    <Counter value={9} suffix="+" />
                   </div>
-                  <div className="text-xs uppercase tracking-wider font-semibold mt-1">
-                    Skilled Craftspeople
+                  <div className="text-xs uppercase tracking-wider font-semibold mt-2 leading-tight">
+                    Years Serving
                     <br />
-                    Across a Dozen Sites
+                    Greater Gauteng
                   </div>
                 </div>
               </div>
@@ -208,43 +210,44 @@ export default function AboutPage() {
             <Reveal delay={150}>
               <div>
                 <SectionHeading
-                  eyebrow="The BUILDCORE Story"
+                  eyebrow="The Libmarc Story"
                   title={
                     <>
-                      From a pickup truck to a{" "}
-                      <span className="text-primary">regional powerhouse</span>
+                      From one TLB to a{" "}
+                      <span className="text-primary">40+ machine fleet</span>
                     </>
                   }
                 />
                 <div className="mt-6 space-y-4 text-muted-foreground leading-relaxed">
                   <p>
-                    In <strong className="text-foreground">2009</strong>, Marcus
-                    Holloway loaded a circular saw, a ladder, and a clipboard
-                    into a used Ford F-150 and parked it on a job site in West
-                    Oakland. The Great Recession was still grinding, but Marcus
-                    had a conviction: that contractors who showed up on time,
-                    communicated honestly, and refused to cut corners on safety
-                    would always have work.
+                    In <strong className="text-foreground">2015</strong>, Marc
+                    Ndlovu formally registered Libmarc Projects in Yeoville,
+                    Johannesburg — after six years of running hired TLBs on
+                    other people&apos;s sites. He was tired of contractors who
+                    showed up late, quoted one price and charged another, and
+                    left sites in a mess. He started Libmarc to do the
+                    opposite.
                   </p>
                   <p>
-                    He was right. By <strong className="text-foreground">2013</strong>{" "}
-                    BUILDCORE had delivered its first $10M project. By{" "}
-                    <strong className="text-foreground">2018</strong> we had
-                    completed our 500th project, opened a dedicated design
-                    studio, and grown the field organization past 400
-                    craftspeople. Today we employ{" "}
-                    <strong className="text-foreground">750+ skilled workers</strong>{" "}
-                    across a dozen active sites, with $25M bonding capacity and
-                    an EMR of 0.71 that places us in the top 5% of contractors
-                    nationally.
+                    By <strong className="text-foreground">2018</strong> we won
+                    our first major structural demolition contract in the
+                    Johannesburg inner city. By{" "}
+                    <strong className="text-foreground">2020</strong> clients
+                    were asking us to secure what we&apos;d helped them build —
+                    so we added a dedicated CCTV and roller shutter / gate
+                    installation team led by a certified electrician.
                   </p>
                   <p>
-                    The trucks are newer now, the crews are larger, and the
-                    projects are bigger — but the operating system is the same
-                    one Marcus wrote on that clipboard:{" "}
+                    Today we run a fleet of{" "}
+                    <strong className="text-foreground">40+ machines</strong> —
+                    TLBs, excavators, tipper trucks and bakkies — and have
+                    completed over{" "}
+                    <strong className="text-foreground">850 projects</strong>{" "}
+                    across Gauteng, from Soweto to Sandton. The trucks are
+                    newer now and the crews are larger, but the operating
+                    system is the same one Marc wrote down on day one:{" "}
                     <span className="text-primary font-semibold">
-                      show up, tell the truth, build it right, send everyone
-                      home safe.
+                      show up, tell the truth, work safe, leave a clean site.
                     </span>
                   </p>
                 </div>
@@ -253,8 +256,8 @@ export default function AboutPage() {
                     asChild
                     className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold uppercase tracking-wide"
                   >
-                    <Link href="/team">
-                      Meet Our Team
+                    <Link href="/contact">
+                      Get in Touch
                       <ArrowRight className="size-4" />
                     </Link>
                   </Button>
@@ -286,7 +289,7 @@ export default function AboutPage() {
         <div className="container relative mx-auto px-4 py-16 lg:py-20">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4">
             {stats.map((stat, i) => {
-              const icons = [Calendar, Building2, Users, CheckCircle2];
+              const icons = [Calendar, Building2, HardHat, ShieldCheck];
               const Icon = icons[i];
               return (
                 <Reveal key={stat.label} delay={i * 100}>
@@ -321,10 +324,10 @@ export default function AboutPage() {
             title={
               <>
                 Six values that shape{" "}
-                <span className="text-primary">every project</span>
+                <span className="text-primary">every job</span>
               </>
             }
-            description="These aren't posters in the trailer. They're the operating principles that show up in daily decisions on every site we run."
+            description="These aren't posters on the office wall. They're the principles that show up in daily decisions on every site we run."
             className="mb-14"
           />
 
@@ -361,10 +364,11 @@ export default function AboutPage() {
             <div className="lg:col-span-1">
               <ShieldCheck className="size-12 text-primary mb-3" />
               <h2 className="font-display text-2xl font-bold">
-                Certified & Compliant
+                Certified &amp; Insured
               </h2>
               <p className="text-sm text-muted-foreground mt-1">
-                Every credential you need from a modern contractor.
+                Every credential your site requires — and your body corporate
+                will ask for.
               </p>
             </div>
             <div className="lg:col-span-3 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -386,14 +390,14 @@ export default function AboutPage() {
         <div className="container mx-auto px-4">
           <SectionHeading
             align="center"
-            eyebrow="Milestones"
+            eyebrow="Our Journey"
             title={
               <>
-                Fifteen years of{" "}
-                <span className="text-primary">building the Bay Area</span>
+                From one TLB to{" "}
+                <span className="text-primary">850+ projects</span>
               </>
             }
-            description="The moments that shaped BUILDCORE — from a single pickup truck to a regional construction powerhouse."
+            description="The moments that shaped Libmarc Projects — from a single machine in Yeoville to a 40+ machine fleet serving all of Gauteng."
             className="mb-16"
           />
 
@@ -417,7 +421,6 @@ export default function AboutPage() {
                       </div>
                     </div>
 
-                    {/* Year (mobile inside card, desktop as side) */}
                     <div
                       className={`pl-12 md:pl-0 md:w-1/2 ${
                         isLeft
@@ -466,15 +469,15 @@ export default function AboutPage() {
                   <span className="text-primary">run the firm</span>
                 </>
               }
-              description="A second-generation builder, a principal architect, and a field-ops director with 750 craftspeople under his command."
+              description="The founder, the operations manager who keeps a dozen sites moving, and the certified shot-firer who runs our demolition crews."
             />
             <Button
               asChild
               variant="outline"
               className="font-bold uppercase tracking-wide shrink-0"
             >
-              <Link href="/team">
-                Full Team
+              <Link href="/contact">
+                Join the Team
                 <ArrowRight className="size-4" />
               </Link>
             </Button>
@@ -483,46 +486,75 @@ export default function AboutPage() {
           <div className="grid md:grid-cols-3 gap-6">
             {team.slice(0, 3).map((member, i) => (
               <Reveal key={member.name} delay={i * 100}>
-                <Link
-                  href="/team"
-                  className="group block h-full"
-                >
-                  <Card className="h-full overflow-hidden border-border hover:border-primary transition-all duration-300 hover:shadow-xl bg-background">
-                    <div className="relative aspect-[4/5] overflow-hidden bg-muted">
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/10 to-transparent" />
-                      <div className="absolute bottom-0 left-0 right-0 p-5">
-                        <h3 className="font-display text-xl font-bold text-background group-hover:text-primary transition-colors">
-                          {member.name}
-                        </h3>
-                        <p className="text-sm text-background/80 font-medium">
-                          {member.role}
-                        </p>
-                      </div>
-                    </div>
-                    <CardContent className="p-5">
-                      <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
-                        {member.bio}
+                <Card className="h-full overflow-hidden border-border hover:border-primary transition-all duration-300 hover:shadow-xl bg-background">
+                  <div className="relative aspect-[4/5] overflow-hidden bg-muted">
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/10 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-5">
+                      <h3 className="font-display text-xl font-bold text-background">
+                        {member.name}
+                      </h3>
+                      <p className="text-sm text-background/80 font-medium">
+                        {member.role}
                       </p>
-                    </CardContent>
-                  </Card>
-                </Link>
+                    </div>
+                  </div>
+                  <CardContent className="p-5">
+                    <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                      {member.bio}
+                    </p>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {member.expertise.map((e) => (
+                        <Badge
+                          key={e}
+                          variant="outline"
+                          className="text-[11px] font-semibold uppercase tracking-wide border-primary/30 text-primary"
+                        >
+                          {e}
+                        </Badge>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
               </Reveal>
             ))}
           </div>
+
+          <Reveal delay={200}>
+            <div className="mt-10 rounded-lg border border-dashed border-border bg-background p-6 lg:p-8 flex flex-col lg:flex-row items-center justify-between gap-6">
+              <div>
+                <h3 className="font-display text-xl font-bold">
+                  Looking for a career in demolition, plant, or installations?
+                </h3>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  We hire operators, electricians, and crew across Gauteng. Send
+                  us your CV on WhatsApp.
+                </p>
+              </div>
+              <Button
+                asChild
+                className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold uppercase tracking-wide shrink-0"
+              >
+                <Link href="/contact">
+                  Contact Us
+                  <ArrowRight className="size-4" />
+                </Link>
+              </Button>
+            </div>
+          </Reveal>
         </div>
       </section>
 
       {/* ===================== CTA ===================== */}
       <CTABand
-        title="Let's build your next chapter."
-        description="From a single-family home to a $100M+ infrastructure project, our team is ready to deliver. Tell us about your vision and get a transparent quote within one business day."
+        title="Got a job that needs doing? Let's talk."
+        description="From a single bakkie load of rubble to a full basement excavation — tell us what you need and get a transparent, no-obligation quote within one business day."
       />
     </>
   );
