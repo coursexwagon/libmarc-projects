@@ -17,13 +17,13 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "About Us | Libmarc Projects",
   description:
-    "Learn about Libmarc Projects — Johannesburg's trusted contractor for demolition, plant hire, CCTV, and gate installations since 2015.",
+    "Learn about Libmarc Projects — Johannesburg's trusted contractor for demolition, plant hire, CCTV, and gate installations since 2021.",
   alternates: {
     canonical: "https://libmarcprojects.co.za/about",
   },
   openGraph: {
     title: "About Us | Libmarc Projects",
-    description: "Learn about Libmarc Projects — Johannesburg's trusted contractor for demolition, plant hire, CCTV, and gate installations since 2015.",
+    description: "Learn about Libmarc Projects — Johannesburg's trusted contractor for demolition, plant hire, CCTV, and gate installations since 2021.",
     url: "https://libmarcprojects.co.za/about",
     siteName: "Libmarc Projects",
     type: "website",
@@ -82,7 +82,7 @@ export default function AboutPage() {
             </h1>
             <p className="mt-6 text-lg text-primary-foreground/80 max-w-xl leading-relaxed">
               Johannesburg&apos;s contractor for demolition, plant hire, CCTV,
-              and gate installations since 2015.
+              and gate installations since 2021.
             </p>
           </div>
         </div>
@@ -100,7 +100,7 @@ export default function AboutPage() {
             </h2>
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p>
-                Libmarc Projects started in 2015 with a single TLB and a phone.
+                Libmarc Projects started in 2021 with a single TLB and a phone.
                 Today we run a fleet of excavators, graders, rollers, and
                 bobcats — plus certified CCTV installers and gate motor
                 technicians.

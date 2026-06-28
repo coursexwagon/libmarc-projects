@@ -67,7 +67,7 @@ export default function HomePage() {
               <span className="text-primary">tough jobs</span> done.
             </h1>
             <p className="mt-6 text-lg text-primary-foreground/80 max-w-xl leading-relaxed">
-              <strong>Libmarc Projects</strong> is a Johannesburg-based demolition and plant hire contractor. We do structural demolition, rock blasting, rubble removal, TLB and Bobcat hire, CCTV installation, and roller shutter door fitting across Gauteng. Founded in 2015, we operate our own fleet of TLBs, excavators, graders, rollers, and tipper trucks — every machine supplied with an experienced operator. Unlike big contractors that sub-contract the work, our crew shows up and does the job directly. Written quotes, no escalation clauses, same-day response.
+              <strong>Libmarc Projects</strong> is a Johannesburg-based demolition and plant hire contractor. We do structural demolition, rock blasting, rubble removal, TLB and Bobcat hire, CCTV installation, and roller shutter door fitting across Gauteng. Founded in 2021, we operate our own fleet of TLBs, excavators, graders, rollers, and tipper trucks — every machine supplied with an experienced operator. Unlike big contractors that sub-contract the work, our crew shows up and does the job directly. Written quotes, no escalation clauses, same-day response.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-4">
               <Button
@@ -127,7 +127,7 @@ export default function HomePage() {
               <Icons.mapPin className="size-3.5 text-primary" /> Serving Gauteng
             </span>
             <span className="flex items-center gap-1.5">
-              <Icons.hardHat className="size-3.5 text-primary" /> 8+ years
+              <Icons.hardHat className="size-3.5 text-primary" /> 5+ years
             </span>
           </div>
         </div>
@@ -432,7 +432,7 @@ export default function HomePage() {
                   { factor: "Price guarantee", us: "Fixed, no escalation", them: "Can increase mid-job", diy: "Unpredictable" },
                   { factor: "Who does the work", us: "Our crew, not subbies", them: "Sub-contracted out", diy: "You do it" },
                   { factor: "Dumping fees", us: "Included in quote", them: "Billed separately", diy: "You pay + drive" },
-                  { factor: "Serving Gauteng since", us: "2015", them: "Varies", diy: "N/A" },
+                  { factor: "Serving Gauteng since", us: "2021", them: "Varies", diy: "N/A" },
                 ].map((row, i) => (
                   <tr key={i} className="hover:bg-muted/30 transition-colors">
                     <td className="px-5 py-3.5 font-medium">{row.factor}</td>
@@ -492,7 +492,7 @@ export default function HomePage() {
                 {
                   "@type": "Question",
                   "name": "Does Libmarc Projects do demolition in Johannesburg?",
-                  "acceptedAnswer": { "@type": "Answer", "text": "Yes. We handle structural demolition, wall removal, and small-scale site clearing across Johannesburg and Gauteng. Our crew has 8+ years of experience with rock breaking machines, pneumatic breakers, and controlled blasting for hard rock. We get a written go-ahead before we start." }
+                  "acceptedAnswer": { "@type": "Answer", "text": "Yes. We handle structural demolition, wall removal, and small-scale site clearing across Johannesburg and Gauteng. Our crew has 5+ years of experience with rock breaking machines, pneumatic breakers, and controlled blasting for hard rock. We get a written go-ahead before we start." }
                 },
                 {
                   "@type": "Question",
@@ -544,7 +544,7 @@ export default function HomePage() {
             {[
               {
                 q: "Does Libmarc Projects do demolition in Johannesburg?",
-                a: "Yes. We handle structural demolition, wall removal, and small-scale site clearing across Johannesburg and Gauteng. Our crew has 8+ years of experience with rock breaking machines, pneumatic breakers, and controlled blasting for hard rock. We get a written go-ahead before we start — no verbal okays."
+                a: "Yes. We handle structural demolition, wall removal, and small-scale site clearing across Johannesburg and Gauteng. Our crew has 5+ years of experience with rock breaking machines, pneumatic breakers, and controlled blasting for hard rock. We get a written go-ahead before we start — no verbal okays."
               },
               {
                 q: "What plant machinery do you hire out?",

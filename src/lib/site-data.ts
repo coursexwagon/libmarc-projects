@@ -20,7 +20,7 @@ import {
 export const company = {
   name: "Libmarc Projects",
   tagline: "Demolition • Plant Hire • Security Installations",
-  founded: 2015,
+  founded: 2021,
   // Two mobile numbers — both used for calls & WhatsApp
   phone1: "078 150 0069",
   phone2: "070 359 9092",
@@ -45,7 +45,7 @@ export type Stat = {
 };
 
 export const stats: Stat[] = [
-  { value: 9, suffix: "+", label: "Years Serving Gauteng", footnote: "Since 2015" },
+  { value: 5, suffix: "+", label: "Years Serving Gauteng", footnote: "Since 2021" },
   { value: 850, suffix: "+", label: "Jobs Completed", footnote: "Across all service lines" },
   { value: 40, suffix: "+", label: "Machines in Fleet", footnote: "Serviced & roadworthy" },
   { value: 0, suffix: "", label: "Lost-Time Incidents", footnote: "2023 – 2024" },
@@ -338,7 +338,7 @@ export const team: TeamMember[] = [
   {
     name: "Marc Ndlovu",
     role: "Founder & Managing Director",
-    bio: "Started Libmarc in 2015 with one TLB and a bakkie. Nine years later he still answers most of the calls himself and knows every machine in the fleet by its service history.",
+    bio: "Started Libmarc in 2021 with a TLB and a bakkie. Five years later he still answers most of the calls himself and knows every machine in the fleet by its service history.",
     image: "/images/team/team-1.png",
     expertise: ["Demolition", "Plant Hire", "Operations"],
   },

@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://libmarcprojects.co.za"),
   title: "Libmarc Projects | Demolition, Plant Hire & Security Johannesburg",
   description:
-    "Libmarc Projects is a Johannesburg-based contractor specialising in demolition, rock blasting, rubble removal, plant hire, CCTV installation, and roller shutter doors & automatic gates. Serving Gauteng since 2015.",
+    "Libmarc Projects is a Johannesburg-based contractor specialising in demolition, rock blasting, rubble removal, plant hire, CCTV installation, and roller shutter doors & automatic gates. Serving Gauteng since 2021.",
   keywords: [
     "demolition Johannesburg",
     "rock blasting Gauteng",
