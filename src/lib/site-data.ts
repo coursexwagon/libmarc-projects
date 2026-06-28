@@ -99,7 +99,7 @@ export const services: Service[] = [
     description:
       "We take down structures — full or partial. Concrete slabs, foundations, strip-outs, whole buildings. When solid rock blocks your foundation, we blast it to grade. Permitted, insured, supervised by certified shot-firers. We work residential, commercial, and industrial across Gauteng.",
     icon: Bomb,
-    image: "/images/services/demolition.png",
+    image: "/images/real/demolition-rubble.jpg",
     features: [
       "Full & partial structural demolition",
       "Controlled rock blasting for foundations",
@@ -126,7 +126,7 @@ export const services: Service[] = [
     description:
       "Building rubble, garden refuse, concrete, sand, mixed waste — we bring the truck and the labour and get it off your property. Bakkie loads for small jobs, truck loads for big ones. We dispose at licensed municipal landfill sites and bring back the disposal slip if you need one.",
     icon: Recycle,
-    image: "/images/services/rubble-removal.png",
+    image: "/images/real/bakkie-hire.jpg",
     features: [
       "Building rubble & concrete removal",
       "Garden refuse & green waste",
@@ -149,7 +149,7 @@ export const services: Service[] = [
     description:
       "TLBs, excavators (1.7T to 20T), tipper trucks, bakkies. Hire by the hour, day, or week — with or without an operator. The fleet isn't brand new but every machine is serviced, roadworthy, and ready to work. We cover all of Gauteng.",
     icon: Construction,
-    image: "/images/services/plant-hire.png",
+    image: "/images/real/earthworks-hire.jpg",
     features: [
       "TLBs (Tractor-Loader-Backhoes)",
       "Excavators (1.7T – 20T)",
@@ -178,7 +178,7 @@ export const services: Service[] = [
     description:
       "We install HD and IP camera systems — from a 4-camera home setup to 32-channel for business. Night vision, motion detection, remote viewing on your phone, off-site backup. We'll walk your property, recommend camera positions, and give you a fixed quote. No pushy upsell.",
     icon: Camera,
-    image: "/images/services/cctv.png",
+    image: "/images/real/cctv-install.jpg",
     features: [
       "4 to 32-channel systems",
       "HD & IP camera options",
@@ -201,7 +201,7 @@ export const services: Service[] = [
     description:
       "Roller shutter doors, sliding and swing gates, gate motors, electrical wiring — supplied, installed, and wired by one team. Custom-sized and powder-coated in your colour. We also repair and service existing units. CoC issued on request.",
     icon: DoorClosed,
-    image: "/images/services/roller-shutter.png",
+    image: "/images/real/gate-motor.jpg",
     features: [
       "Roller shutter doors (manual & motorised)",
       "Sliding & swing automatic gates",

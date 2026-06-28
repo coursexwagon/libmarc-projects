@@ -19,9 +19,9 @@ const heroServices = [
 ];
 
 const serviceImages: Record<string, string> = {
-  "demolition-rock-blasting": "/images/real/demolition.jpg",
-  "rubble-removal": "/images/real/tipper-truck.jpg",
-  "plant-hire": "/images/real/tlb-hire.jpg",
+  "demolition-rock-blasting": "/images/real/demolition-rubble.jpg",
+  "rubble-removal": "/images/real/bakkie-hire.jpg",
+  "plant-hire": "/images/real/earthworks-hire.jpg",
   "cctv-installation": "/images/real/cctv-install.jpg",
   "roller-shutter-gates": "/images/real/gate-motor.jpg",
 };

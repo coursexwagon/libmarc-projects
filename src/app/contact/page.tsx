@@ -207,23 +207,31 @@ export default function ContactPage() {
 
             {/* RIGHT: Form with man pointing */}
             <div className="lg:col-span-7 relative">
-              {/* Man pointing at the form — on left side pointing right into form */}
-              <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-[120px] xl:w-[160px] pointer-events-none z-10 overflow-hidden select-none">
+              {/* Man pointing into the form — sits at the form's edge, naturally blended.
+                  Background hue match + soft top/bottom fade + ground shadow so he looks like part of the page. */}
+              <div className="hidden lg:block absolute left-2 top-4 bottom-4 w-[150px] xl:w-[190px] pointer-events-none z-10 select-none">
                 <div className="relative w-full h-full">
                   <Image
                     src="/images/real/contact-man.png"
                     alt=""
                     fill
-                    className="object-contain object-right"
+                    priority
+                    className="object-contain object-bottom drop-shadow-[0_18px_22px_rgba(0,0,0,0.22)]"
                     style={{
-                      maskImage: 'linear-gradient(to right, black 70%, transparent 100%)',
-                      WebkitMaskImage: 'linear-gradient(to right, black 70%, transparent 100%)',
-                      filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.15))',
+                      // Fade bottom so feet ground into the form
+                      maskImage:
+                        'linear-gradient(to bottom, black 0%, black 78%, transparent 100%)',
+                      WebkitMaskImage:
+                        'linear-gradient(to bottom, black 0%, black 78%, transparent 100%)',
                     }}
                   />
+                  {/* Ground contact shadow — sells him as "standing on the page" */}
+                  <div className="absolute left-1/2 -translate-x-1/2 bottom-2 w-[55%] h-3 bg-black/15 rounded-full blur-md" />
+                  {/* Soft ambient that hugs the form background to kill sticker white-frame look */}
+                  <div className="absolute inset-0 -z-10 bg-gradient-to-r from-transparent via-background/0 to-background/5" />
                 </div>
               </div>
-              <div className="pl-0 lg:pl-[100px] xl:pl-[140px]">
+              <div className="pl-0 lg:pl-[130px] xl:pl-[170px]">
                 <ContactForm />
               </div>
             </div>
