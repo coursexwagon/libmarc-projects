@@ -55,4 +55,6 @@ prompt
 
 server.log
 # Skills directory
-/skills/
+/skills/.nvidia_key
+see*.py
+gallery.html
