@@ -1,7 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { Send, Loader2, CheckCircle2, MessageCircle } from "lucide-react";
+import Image from "next/image";
+import { Send, Loader2, CheckCircle2, MessageCircle, Phone } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,8 +17,6 @@ import {
 } from "@/components/ui/select";
 import { company } from "@/lib/site-data";
 
-// Services offered by Libmarc Projects — used to populate the
-// "Service Required" select. The 5 services + "Other".
 const serviceOptions = [
   "Demolition & Rock Blasting",
   "Rubble Removal",
@@ -60,8 +59,6 @@ export function ContactForm() {
   const handleSelect = (value: string) =>
     setForm((s) => ({ ...s, service: value }));
 
-  // Build a pre-filled WhatsApp message based on whatever the user
-  // has already typed into the form — handy for fast enquiries.
   const whatsappMessage = React.useMemo(() => {
     const lines = [
       "Hi Libmarc Projects, I'd like to request a quote.",
@@ -82,7 +79,6 @@ export function ContactForm() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    // Client-side validation — mirrors the server route.
     if (form.name.trim().length < 2) {
       toast.error("Name required", {
         description: "Please enter your full name.",
@@ -91,7 +87,8 @@ export function ContactForm() {
     }
     if (!form.phone.trim() && !form.email.trim()) {
       toast.error("Contact detail required", {
-        description: "Please enter either a phone number or an email so we can reply.",
+        description:
+          "Please enter either a phone number or an email so we can reply.",
       });
       return;
     }
@@ -106,7 +103,8 @@ export function ContactForm() {
     }
     if (form.message.trim().length < 10) {
       toast.error("Message too short", {
-        description: "Please include at least 10 characters describing your project.",
+        description:
+          "Please include at least 10 characters describing your project.",
       });
       return;
     }
@@ -152,7 +150,9 @@ export function ContactForm() {
         <div className="inline-flex size-16 items-center justify-center bg-primary text-primary-foreground mb-5">
           <CheckCircle2 className="size-8" />
         </div>
-        <h3 className="font-display text-2xl font-bold">Quote request received.</h3>
+        <h3 className="font-display text-2xl font-bold">
+          Quote request received.
+        </h3>
         <p className="mt-2 text-sm text-muted-foreground max-w-md mx-auto">
           Thanks for reaching out. The Libmarc Projects team will review your
           enquiry and reply within one business day. For urgent jobs, call or
@@ -182,187 +182,370 @@ export function ContactForm() {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="border border-border bg-background p-6 lg:p-8 space-y-5"
-      noValidate
-    >
-      <div className="grid sm:grid-cols-2 gap-5">
-        <div className="space-y-2">
-          <Label
-            htmlFor="name"
-            className="text-xs font-bold uppercase tracking-wide"
-          >
-            Full Name <span className="text-primary">*</span>
-          </Label>
-          <Input
-            id="name"
-            value={form.name}
-            onChange={update("name")}
-            placeholder="Jane Doe"
-            autoComplete="name"
-            required
-            className="rounded-none"
-          />
-        </div>
-        <div className="space-y-2">
-          <Label
-            htmlFor="phone"
-            className="text-xs font-bold uppercase tracking-wide"
-          >
-            Phone
-          </Label>
-          <Input
-            id="phone"
-            type="tel"
-            value={form.phone}
-            onChange={update("phone")}
-            placeholder="071 234 5678"
-            autoComplete="tel"
-            className="rounded-none"
-          />
-        </div>
-      </div>
+    <div className="relative ml-0 lg:ml-4">
+      {/* Shadow underneath */}
+      <div
+        className="absolute inset-0 rounded-sm"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.10) 100%)",
+          transform: "rotate(0.3deg) translateY(6px)",
+          filter: "blur(10px)",
+        }}
+      />
 
-      <div className="grid sm:grid-cols-2 gap-5">
-        <div className="space-y-2">
-          <Label
-            htmlFor="email"
-            className="text-xs font-bold uppercase tracking-wide"
-          >
-            Email
-          </Label>
-          <Input
-            id="email"
-            type="email"
-            value={form.email}
-            onChange={update("email")}
-            placeholder="you@email.com"
-            autoComplete="email"
-            className="rounded-none"
-          />
-        </div>
-        <div className="space-y-2">
-          <Label
-            htmlFor="service"
-            className="text-xs font-bold uppercase tracking-wide"
-          >
-            Service Required
-          </Label>
-          <Select value={form.service} onValueChange={handleSelect}>
-            <SelectTrigger id="service" className="rounded-none w-full">
-              <SelectValue placeholder="Select a service" />
-            </SelectTrigger>
-            <SelectContent>
-              {serviceOptions.map((s) => (
-                <SelectItem key={s} value={s}>
-                  {s}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-
-      <div className="grid sm:grid-cols-2 gap-5">
-        <div className="space-y-2">
-          <Label
-            htmlFor="siteAddress"
-            className="text-xs font-bold uppercase tracking-wide"
-          >
-            Site Address
-          </Label>
-          <Input
-            id="siteAddress"
-            value={form.siteAddress}
-            onChange={update("siteAddress")}
-            placeholder="Suburb or street address"
-            autoComplete="street-address"
-            className="rounded-none"
-          />
-        </div>
-        <div className="space-y-2">
-          <Label
-            htmlFor="preferredDate"
-            className="text-xs font-bold uppercase tracking-wide"
-          >
-            Preferred Date
-          </Label>
-          <Input
-            id="preferredDate"
-            type="date"
-            value={form.preferredDate}
-            onChange={update("preferredDate")}
-            className="rounded-none"
-          />
-        </div>
-      </div>
-
-      <div className="space-y-2">
-        <Label
-          htmlFor="message"
-          className="text-xs font-bold uppercase tracking-wide"
-        >
-          Message <span className="text-primary">*</span>
-        </Label>
-        <Textarea
-          id="message"
-          value={form.message}
-          onChange={update("message")}
-          placeholder="Tell us about your project — scope, site access, target dates, and anything else we should know."
-          rows={5}
-          required
-          className="rounded-none resize-y"
+      {/* THE PAPER */}
+      <form
+        onSubmit={handleSubmit}
+        noValidate
+        className="relative overflow-hidden"
+        style={{
+          background:
+            "linear-gradient(180deg, #fdf8ee 0%, #faf2e0 15%, #f7ecce 100%)",
+          boxShadow:
+            "0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.06)",
+          transform: "rotate(-0.05deg)",
+          fontFamily:
+            "'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif",
+        }}
+      >
+        {/* Top binding strip */}
+        <div
+          className="h-[6px]"
+          style={{
+            background:
+              "linear-gradient(90deg, #d35400 0%, #e67e22 40%, #d35400 100%)",
+          }}
         />
-      </div>
 
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-1">
-        <p className="text-xs text-muted-foreground max-w-sm">
-          By submitting, you agree to be contacted about your enquiry. We never
-          share your information.
-        </p>
-        <Button
-          type="submit"
-          disabled={submitting}
-          size="lg"
-          className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold uppercase tracking-wide h-12 px-7 rounded-none w-full sm:w-auto"
-        >
-          {submitting ? (
-            <>
-              <Loader2 className="size-4 animate-spin" />
-              Sending…
-            </>
-          ) : (
-            <>
-              <Send className="size-4" />
-              Send Quote Request
-            </>
-          )}
-        </Button>
-      </div>
+        {/* Perforation line below strip */}
+        <div
+          className="h-px mx-4"
+          style={{
+            background:
+              "repeating-linear-gradient(90deg, transparent 0px, transparent 4px, rgba(180,160,120,0.3) 4px, rgba(180,160,120,0.3) 6px)",
+          }}
+        />
 
-      {/* Or WhatsApp us directly — pre-fills whatever the user typed. */}
-      <div className="mt-2 border-t border-border pt-5">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <div>
-            <p className="text-sm font-bold text-foreground">
-              Prefer to chat now?
-            </p>
-            <p className="text-xs text-muted-foreground">
-              WhatsApp us directly — your details pre-fill automatically.
+        {/* Main content */}
+        <div className="px-6 sm:px-10 lg:px-12 pt-6 pb-8">
+          {/* LETTERHEAD */}
+          <div className="flex items-start justify-between pb-4 mb-6 border-b border-dashed"
+            style={{ borderColor: "rgba(180,160,120,0.25)" }}
+          >
+            <div>
+              <Image
+                src="/images/real/libmarc-logo.png"
+                alt="Libmarc Projects"
+                width={180}
+                height={50}
+                className="h-12 w-auto object-contain mb-1"
+              />
+              <p className="text-[10px] font-medium tracking-[0.15em] uppercase"
+                style={{ color: "#b8a080" }}
+              >
+                Demolition · Plant Hire · Security
+              </p>
+            </div>
+            <div className="text-right">
+              {/* Stamped reference number */}
+              <div className="inline-block px-3 py-1 mb-1"
+                style={{
+                  background: "rgba(200,80,20,0.08)",
+                  border: "1px solid rgba(200,80,20,0.15)",
+                }}
+              >
+                <p className="font-mono text-[10px] font-bold uppercase tracking-wider"
+                  style={{ color: "#c85014" }}
+                >
+                  Ref: LIB-{Date.now().toString(36).toUpperCase().slice(-6)}
+                </p>
+              </div>
+              <p className="text-xs font-medium mt-1"
+                style={{ color: "#a89070" }}
+              >
+                {new Date().toLocaleDateString("en-ZA", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
+              </p>
+            </div>
+          </div>
+
+          {/* QUOTE HEADER */}
+          <div className="text-center mb-7">
+            <h3
+              className="font-display text-2xl font-bold uppercase tracking-wider inline-block px-8 py-2"
+              style={{
+                color: "#3d3425",
+                borderBottom: "3px double rgba(180,160,120,0.3)",
+              }}
+            >
+              Request for Quote
+            </h3>
+            <p className="text-xs mt-2" style={{ color: "#a89070" }}>
+              Fill in your details below. We&apos;ll respond within 2 hours.
             </p>
           </div>
-          <a
-            href={whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex h-12 items-center justify-center gap-2 border-2 border-green-600 px-6 text-sm font-bold uppercase tracking-wide text-green-700 hover:bg-green-600 hover:text-white transition-colors"
+
+          {/* FORM FIELDS */}
+          <div className="space-y-0">
+            <div className="grid sm:grid-cols-2">
+              <div className="border-r border-b p-3 sm:p-4"
+                style={{ borderColor: "rgba(180,160,120,0.15)" }}
+              >
+                <Label className="block text-[9px] font-bold uppercase tracking-[0.12em] mb-1"
+                  style={{ color: "#a89070" }}
+                >
+                  Full Name <span style={{ color: "#c85014" }}>*</span>
+                </Label>
+                <Input
+                  value={form.name}
+                  onChange={update("name")}
+                  placeholder="Jane Doe"
+                  autoComplete="name"
+                  required
+                  className="border-0 rounded-none px-0 h-7 text-sm focus-visible:ring-0 bg-transparent"
+                  style={{
+                    color: "#3d3425",
+                    fontFamily: "'Courier New', monospace",
+                  }}
+                />
+              </div>
+              <div className="border-b p-3 sm:p-4"
+                style={{ borderColor: "rgba(180,160,120,0.15)" }}
+              >
+                <Label className="block text-[9px] font-bold uppercase tracking-[0.12em] mb-1"
+                  style={{ color: "#a89070" }}
+                >
+                  Phone
+                </Label>
+                <Input
+                  type="tel"
+                  value={form.phone}
+                  onChange={update("phone")}
+                  placeholder="071 234 5678"
+                  autoComplete="tel"
+                  className="border-0 rounded-none px-0 h-7 text-sm focus-visible:ring-0 bg-transparent"
+                  style={{
+                    color: "#3d3425",
+                    fontFamily: "'Courier New', monospace",
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="grid sm:grid-cols-3">
+              <div className="border-r border-b p-3 sm:p-4 sm:col-span-1"
+                style={{ borderColor: "rgba(180,160,120,0.15)" }}
+              >
+                <Label className="block text-[9px] font-bold uppercase tracking-[0.12em] mb-1"
+                  style={{ color: "#a89070" }}
+                >
+                  Email
+                </Label>
+                <Input
+                  type="email"
+                  value={form.email}
+                  onChange={update("email")}
+                  placeholder="you@email.com"
+                  autoComplete="email"
+                  className="border-0 rounded-none px-0 h-7 text-sm focus-visible:ring-0 bg-transparent"
+                  style={{
+                    color: "#3d3425",
+                    fontFamily: "'Courier New', monospace",
+                  }}
+                />
+              </div>
+              <div className="border-r border-b p-3 sm:p-4"
+                style={{ borderColor: "rgba(180,160,120,0.15)" }}
+              >
+                <Label className="block text-[9px] font-bold uppercase tracking-[0.12em] mb-1"
+                  style={{ color: "#a89070" }}
+                >
+                  Service Required
+                </Label>
+                <Select value={form.service} onValueChange={handleSelect}>
+                  <SelectTrigger
+                    className="border-0 rounded-none px-0 h-7 text-sm focus:ring-0 bg-transparent"
+                    style={{
+                      color: form.service ? "#3d3425" : "#a89070",
+                      fontFamily: "'Courier New', monospace",
+                    }}
+                  >
+                    <SelectValue placeholder="Select service" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {serviceOptions.map((s) => (
+                      <SelectItem key={s} value={s}>
+                        {s}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="border-b p-3 sm:p-4"
+                style={{ borderColor: "rgba(180,160,120,0.15)" }}
+              >
+                <Label className="block text-[9px] font-bold uppercase tracking-[0.12em] mb-1"
+                  style={{ color: "#a89070" }}
+                >
+                  Preferred Date
+                </Label>
+                <Input
+                  type="date"
+                  value={form.preferredDate}
+                  onChange={update("preferredDate")}
+                  className="border-0 rounded-none px-0 h-7 text-sm focus-visible:ring-0 bg-transparent"
+                  style={{
+                    color: "#3d3425",
+                    fontFamily: "'Courier New', monospace",
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="border-b p-3 sm:p-4"
+              style={{ borderColor: "rgba(180,160,120,0.15)" }}
+            >
+              <Label className="block text-[9px] font-bold uppercase tracking-[0.12em] mb-1"
+                style={{ color: "#a89070" }}
+              >
+                Site Address
+              </Label>
+              <Input
+                value={form.siteAddress}
+                onChange={update("siteAddress")}
+                placeholder="Suburb or street address"
+                autoComplete="street-address"
+                className="border-0 rounded-none px-0 h-7 text-sm focus-visible:ring-0 bg-transparent"
+                style={{
+                  color: "#3d3425",
+                  fontFamily: "'Courier New', monospace",
+                }}
+              />
+            </div>
+
+            <div className="p-3 sm:p-4"
+              style={{ borderColor: "rgba(180,160,120,0.15)" }}
+            >
+              <Label className="block text-[9px] font-bold uppercase tracking-[0.12em] mb-1"
+                style={{ color: "#a89070" }}
+              >
+                 Project Description <span style={{ color: "#c85014" }}>*</span>
+              </Label>
+              <Textarea
+                value={form.message}
+                onChange={update("message")}
+                placeholder="Tell us about your project — scope, site access, target dates, and anything else we should know."
+                rows={6}
+                required
+                className="border-0 rounded-none px-0 resize-y focus-visible:ring-0 bg-transparent"
+                style={{
+                  color: "#3d3425",
+                  fontFamily: "'Courier New', monospace",
+                  fontSize: "13px",
+                  lineHeight: "1.6",
+                  backgroundImage:
+                    "repeating-linear-gradient(to bottom, transparent 0px, transparent 23px, rgba(180,160,120,0.08) 23px, rgba(180,160,120,0.08) 24px)",
+                }}
+              />
+            </div>
+          </div>
+
+          {/* BOTTOM ACTIONS */}
+          <div className="mt-6 pt-5"
+            style={{ borderTop: "1px dashed rgba(180,160,120,0.25)" }}
           >
-            <MessageCircle className="size-5" />
-            Or WhatsApp Us Directly
-          </a>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div className="flex items-center gap-2">
+                <div className="size-2 rounded-full"
+                  style={{ background: "#4ade80" }}
+                />
+                <p className="text-[10px]" style={{ color: "#a89070" }}>
+                  We respond within 2 hours during business hours
+                </p>
+              </div>
+              <Button
+                type="submit"
+                disabled={submitting}
+                className="h-11 px-8 font-bold uppercase tracking-wider text-sm bg-primary text-primary-foreground hover:bg-primary/90 rounded-none w-full sm:w-auto transition-all active:scale-[0.98]"
+              >
+                {submitting ? (
+                  <>
+                    <Loader2 className="size-4 animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send className="size-4" />
+                    Submit Quote Request
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+
+          {/* WHATSAPP OUTRO */}
+          <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-3">
+            <p className="text-[11px]" style={{ color: "#b8a080" }}>
+              Prefer to chat? WhatsApp pre-fills what you typed:
+            </p>
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-9 items-center justify-center gap-2 px-4 text-[11px] font-bold uppercase tracking-wider transition-all"
+              style={{
+                color: "#166534",
+                border: "1.5px solid #16a34a",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "#16a34a";
+                e.currentTarget.style.color = "white";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "transparent";
+                e.currentTarget.style.color = "#166534";
+              }}
+            >
+              <MessageCircle className="size-4" />
+              WhatsApp Us
+            </a>
+          </div>
         </div>
-      </div>
-    </form>
+
+        {/* Bottom fold */}
+        <div className="h-4 relative overflow-hidden"
+          style={{
+            background:
+              "linear-gradient(180deg, #f7ecce 0%, #f2e2c0 30%, transparent 100%)",
+          }}
+        >
+          {/* Fold crease line */}
+          <div className="absolute top-0 left-4 right-4 h-px"
+            style={{
+              background:
+                "repeating-linear-gradient(90deg, transparent 0px, transparent 3px, rgba(180,160,120,0.2) 3px, rgba(180,160,120,0.2) 5px)",
+            }}
+          />
+        </div>
+
+        {/* FOOTER NOTE */}
+        <div className="px-6 sm:px-10 lg:px-12 pb-4 pt-2 flex items-center justify-between">
+          <p className="text-[9px] tracking-wider uppercase"
+            style={{ color: "#c8b898" }}
+          >
+            Libmarc Projects · Yeoville, Johannesburg
+          </p>
+          <p className="text-[9px] font-mono"
+            style={{ color: "#c8b898" }}
+          >
+            v.{Math.random().toString(36).slice(2, 6).toUpperCase()}
+          </p>
+        </div>
+      </form>
+    </div>
   );
 }

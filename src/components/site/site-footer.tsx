@@ -1,16 +1,14 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
-  HardHat,
   Phone,
   Mail,
   MapPin,
   Clock,
-  Facebook,
-  Twitter,
-  Linkedin,
-  Instagram,
   ArrowUpRight,
   MessageCircle,
+  Facebook,
+  Instagram,
 } from "lucide-react";
 import { company, services, navItems } from "@/lib/site-data";
 
@@ -64,17 +62,18 @@ export function SiteFooter() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-12">
           {/* Brand col */}
           <div className="col-span-2 md:col-span-3 lg:col-span-2">
-            <Link href="/" className="flex items-center gap-2.5">
-              <div className="flex size-11 items-center justify-center bg-primary text-primary-foreground">
-                <HardHat className="size-6" strokeWidth={2.2} />
+          <Link href="/" className="flex items-center gap-2.5">
+            <div className="relative h-12 w-auto">
+                <Image
+                  src="/images/real/libmarc-logo.png"
+                  alt="Libmarc Projects"
+                  width={220}
+                  height={80}
+                  className="h-full w-auto object-contain"
+                  priority
+                />
               </div>
-              <div className="flex flex-col leading-none">
-                <span className="font-display text-2xl font-bold">LIBMARC</span>
-                <span className="text-[10px] uppercase tracking-[0.18em] text-background/60 font-semibold mt-1">
-                  Projects · Johannesburg
-                </span>
-              </div>
-            </Link>
+          </Link>
             <p className="mt-5 text-sm text-background/70 max-w-sm leading-relaxed">
               Johannesburg&rsquo;s trusted contractor for demolition, rock
               blasting, rubble removal, plant hire, CCTV, and gate installations
@@ -119,17 +118,35 @@ export function SiteFooter() {
                 </a>
               </div>
             </div>
+            {/* Social links */}
             <div className="mt-6 flex items-center gap-3">
-              {[Facebook, Twitter, Linkedin, Instagram].map((Icon, i) => (
-                <a
-                  key={i}
-                  href="#"
-                  aria-label="Social link"
-                  className="flex size-9 items-center justify-center border border-background/15 text-background/70 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors"
-                >
-                  <Icon className="size-4" />
-                </a>
-              ))}
+              <a
+                href={`https://wa.me/${company.whatsapp1}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp"
+                className="flex size-9 items-center justify-center border border-background/15 text-background/70 hover:bg-green-600 hover:text-white hover:border-green-600 transition-colors"
+              >
+                <MessageCircle className="size-4" />
+              </a>
+              <a
+                href="https://www.facebook.com/profile.php?id=61555590773313"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="flex size-9 items-center justify-center border border-background/15 text-background/70 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-colors"
+              >
+                <Facebook className="size-4" />
+              </a>
+              <a
+                href="https://www.instagram.com/libmarcprojectpty"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="flex size-9 items-center justify-center border border-background/15 text-background/70 hover:bg-pink-600 hover:text-white hover:border-pink-600 transition-colors"
+              >
+                <Instagram className="size-4" />
+              </a>
             </div>
           </div>
 

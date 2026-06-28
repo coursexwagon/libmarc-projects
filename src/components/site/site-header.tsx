@@ -4,14 +4,11 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  Menu,
-  Phone,
-  HardHat,
   ChevronDown,
-  MessageCircle,
   ArrowRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Icons } from "@/components/ui/icons";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import {
   Collapsible,
@@ -20,6 +17,7 @@ import {
 } from "@/components/ui/collapsible";
 import { cn } from "@/lib/utils";
 import { navItems, company, services } from "@/lib/site-data";
+import Image from "next/image";
 
 export function SiteHeader() {
   const pathname = usePathname();
@@ -66,7 +64,7 @@ export function SiteHeader() {
               href={`tel:${company.phone1Intl}`}
               className="flex items-center gap-1.5 hover:text-primary transition-colors"
             >
-              <Phone className="size-3.5 text-primary" />
+              <Icons.phone className="size-3.5 text-primary" />
               {company.phone1}
             </a>
             <span className="text-background/40">/</span>
@@ -87,7 +85,7 @@ export function SiteHeader() {
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 text-primary font-semibold hover:opacity-80"
             >
-              <MessageCircle className="size-3.5" />
+              <Icons.messageCircle className="size-3.5" />
               WhatsApp Us
             </a>
           </div>
@@ -98,17 +96,15 @@ export function SiteHeader() {
       <div className="container mx-auto px-4">
         <div className="flex h-16 lg:h-20 items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="relative flex size-10 lg:size-11 items-center justify-center bg-primary text-primary-foreground transition-transform group-hover:scale-105">
-              <HardHat className="size-6" strokeWidth={2.2} />
-              <span className="absolute -bottom-0.5 -right-0.5 size-2 bg-foreground" />
-            </div>
-            <div className="flex flex-col leading-none">
-              <span className="font-display text-lg lg:text-xl font-bold tracking-tight">
-                LIBMARC
-              </span>
-              <span className="text-[9px] uppercase tracking-[0.18em] text-muted-foreground font-semibold">
-                Projects · Johannesburg
-              </span>
+            <div className="relative h-10 lg:h-12 w-auto transition-transform group-hover:scale-105">
+              <Image
+                src="/images/real/libmarc-logo.png"
+                alt="Libmarc Projects"
+                width={220}
+                height={80}
+                className="h-full w-auto object-contain"
+                priority
+              />
             </div>
           </Link>
 
@@ -175,47 +171,47 @@ export function SiteHeader() {
                               );
                               const Icon = childService?.icon;
                               const childActive = pathname === child.href;
-                              return (
-                                <Link
-                                  key={child.href}
-                                  href={child.href}
-                                  className={cn(
-                                    "flex items-start gap-3 p-3 rounded-md transition-colors group",
-                                    childActive
-                                      ? "bg-primary/10"
-                                      : "hover:bg-accent"
-                                  )}
-                                >
-                                  {Icon && (
-                                    <div
+                              if (Icon && typeof Icon === "function") {
+                                return (
+                                  <Link
+                                    key={child.href}
+                                    href={child.href}
+                                    className={cn(
+                                      "flex items-start gap-3 p-3 rounded-md transition-colors group",
+                                      childActive
+                                        ? "bg-primary/10"
+                                        : "hover:bg-accent"
+                                    )}
+                                  >
+                                    <span
                                       className={cn(
-                                        "flex size-9 items-center justify-center shrink-0 transition-colors",
+                                        "flex size-9 items-center justify-center shrink-0 transition-colors rounded-sm",
                                         childActive
                                           ? "bg-primary text-primary-foreground"
                                           : "bg-muted text-foreground group-hover:bg-primary group-hover:text-primary-foreground"
                                       )}
                                     >
-                                      <Icon className="size-4.5" strokeWidth={2.2} />
-                                    </div>
-                                  )}
-                                  <div className="flex-1 min-w-0">
-                                    <div
-                                      className={cn(
-                                        "text-sm font-bold",
-                                        childActive ? "text-primary" : "text-foreground"
-                                      )}
-                                    >
-                                      {child.title}
-                                    </div>
-                                    {child.short && (
-                                      <div className="text-xs text-muted-foreground mt-0.5">
-                                        {child.short}
+                                      <Icon size={16} strokeWidth={2} />
+                                    </span>
+                                    <div className="flex-1 min-w-0">
+                                      <div
+                                        className={cn(
+                                          "text-sm font-bold",
+                                          childActive ? "text-primary" : "text-foreground"
+                                        )}
+                                      >
+                                        {child.title}
                                       </div>
-                                    )}
-                                  </div>
-                                  <ArrowRight className="size-4 text-muted-foreground opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all shrink-0 mt-1" />
-                                </Link>
-                              );
+                                      {child.short && (
+                                        <div className="text-xs text-muted-foreground mt-0.5">
+                                          {child.short}
+                                        </div>
+                                      )}
+                                    </div>
+                                    <ArrowRight className="size-4 text-muted-foreground opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all shrink-0 mt-1" />
+                                  </Link>
+                                );
+                              }
                             })}
                           </div>
                         </div>
@@ -231,14 +227,15 @@ export function SiteHeader() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "relative px-3 py-2 text-sm font-medium transition-colors hover:text-primary whitespace-nowrap",
+                    "relative px-3 py-2 text-sm font-medium transition-colors hover:text-primary whitespace-nowrap group",
                     active ? "text-primary" : "text-foreground/80"
                   )}
                 >
                   {item.title}
-                  {active && (
-                    <span className="absolute inset-x-3 -bottom-0.5 h-0.5 bg-primary" />
-                  )}
+                  <span className={cn(
+                    "absolute inset-x-3 -bottom-0.5 h-0.5 bg-primary transition-all duration-300",
+                    active ? "opacity-100" : "opacity-0 group-hover:opacity-50"
+                  )} />
                 </Link>
               );
             })}
@@ -262,24 +259,22 @@ export function SiteHeader() {
                   className="xl:hidden"
                   aria-label="Open menu"
                 >
-                  <Menu className="size-6" />
+                  <Icons.menu className="size-6" />
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-[320px] sm:w-[360px] p-0">
                 <SheetTitle className="sr-only">Navigation</SheetTitle>
                 <div className="flex h-full flex-col">
                   <div className="flex items-center justify-between border-b border-border px-5 py-4">
-                    <div className="flex items-center gap-2">
-                      <div className="flex size-9 items-center justify-center bg-primary text-primary-foreground">
-                        <HardHat className="size-5" />
-                      </div>
-                      <div className="flex flex-col leading-none">
-                        <span className="font-display text-lg font-bold">LIBMARC</span>
-                        <span className="text-[9px] uppercase tracking-[0.18em] text-muted-foreground font-semibold">
-                          Projects · JHB
-                        </span>
-                      </div>
-                    </div>
+                    <Link href="/" className="flex items-center gap-2">
+                      <Image
+                        src="/images/real/libmarc-logo.png"
+                        alt="Libmarc Projects"
+                        width={180}
+                        height={60}
+                        className="h-10 w-auto object-contain"
+                      />
+                    </Link>
                   </div>
                   <nav className="flex-1 overflow-y-auto px-3 py-4">
                     {navItems.map((item) => {
@@ -376,7 +371,7 @@ export function SiteHeader() {
                         href={`tel:${company.phone1Intl}`}
                         className="flex flex-1 items-center justify-center gap-1.5 border border-border px-3 py-2.5 text-xs font-semibold hover:border-primary hover:text-primary"
                       >
-                        <Phone className="size-3.5" />
+                        <Icons.phone className="size-3.5" />
                         {company.phone1}
                       </a>
                       <a
@@ -385,7 +380,7 @@ export function SiteHeader() {
                         rel="noopener noreferrer"
                         className="flex flex-1 items-center justify-center gap-1.5 border border-border px-3 py-2.5 text-xs font-semibold hover:border-primary hover:text-primary"
                       >
-                        <MessageCircle className="size-3.5" />
+                        <Icons.messageCircle className="size-3.5" />
                         WhatsApp
                       </a>
                     </div>

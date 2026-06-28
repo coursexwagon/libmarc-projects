@@ -17,17 +17,6 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-/**
- * Libmarc Projects — site data
- *
- * NOTE ON AUTHENTICITY:
- * Testimonials below are written in a varied South African voice — mixed ratings
- * (4 and 5 stars), imperfect grammar in places, specific gripes alongside praise,
- * and NO photos (we use initials in a coloured circle, like Google Reviews).
- * Stats use honest qualifiers ("estimated", "across all service lines", date ranges)
- * instead of round marketing numbers presented as fact.
- */
-
 export const company = {
   name: "Libmarc Projects",
   tagline: "Demolition • Plant Hire • Security Installations",
@@ -99,7 +88,7 @@ export type Service = {
   image: string;
   features: string[];
   subServices?: { name: string; desc: string }[];
-  process: { step: string; title: string; detail: string }[];
+  process: { title: string; detail: string }[];
 };
 
 export const services: Service[] = [
@@ -124,10 +113,10 @@ export const services: Service[] = [
       { name: "Rock Blasting", desc: "Controlled blasting of solid rock for foundations, trenches, and swimming pools. Permitted and supervised by certified shot-firers." },
     ],
     process: [
-      { step: "01", title: "Site Survey", detail: "We come out, look at the structure or rock, check for services (water, elec, sewer), and walk the neighbours within 50 m." },
-      { step: "02", title: "Permits & Paperwork", detail: "We handle the City of Johannesburg demolition/blasting permits, neighbour notifications, and write a method statement." },
-      { step: "03", title: "Mobilise & Execute", detail: "Crew, machines, and supervision arrive on the day. Blasting is done in controlled shots; demolition by machine or hand depending on access." },
-      { step: "04", title: "Clearance", detail: "All rubble loaded and hauled. Site left clean and level. Disposal slips handed over. We walk you through what was done." },
+      { title: "Site Survey", detail: "We come out, look at the structure or rock, check for services (water, elec, sewer), and walk the neighbours within 50 m." },
+      { title: "Permits & Paperwork", detail: "We handle the City of Johannesburg demolition/blasting permits, neighbour notifications, and write a method statement." },
+      { title: "Mobilise & Execute", detail: "Crew, machines, and supervision arrive on the day. Blasting is done in controlled shots; demolition by machine or hand depending on access." },
+      { title: "Clearance", detail: "All rubble loaded and hauled. Site left clean and level. Disposal slips handed over. We walk you through what was done." },
     ],
   },
   {
@@ -148,9 +137,9 @@ export const services: Service[] = [
     ],
     // Rubble removal is a simpler service — only 3 steps
     process: [
-      { step: "01", title: "Book", detail: "Call or WhatsApp with your address and a photo of the rubble. We tell you straight away whether you need a bakkie or a truck." },
-      { step: "02", title: "Load", detail: "Crew arrives with the vehicle, loads everything — labour included. We sweep up before we leave." },
-      { step: "03", title: "Dispose", detail: "Waste hauled to a licensed landfill or recycler. Disposal slip provided on request." },
+      { title: "Book", detail: "Call or WhatsApp with your address and a photo of the rubble. We tell you straight away whether you need a bakkie or a truck." },
+      { title: "Load", detail: "Crew arrives with the vehicle, loads everything — labour included. We sweep up before we leave." },
+      { title: "Dispose", detail: "Waste hauled to a licensed landfill or recycler. Disposal slip provided on request." },
     ],
   },
   {
@@ -176,10 +165,10 @@ export const services: Service[] = [
       { name: "Bakkies for Hire", desc: "Light delivery bakkies for small loads, quick site runs, and equipment transport." },
     ],
     process: [
-      { step: "01", title: "Enquire", detail: "Tell us the job, the site address, and the dates. We'll recommend the right machine and whether you need an operator." },
-      { step: "02", title: "Quote", detail: "Hourly or daily rate, with operator and fuel options clearly itemised. No hidden fuel charges later." },
-      { step: "03", title: "Deliver", detail: "Machine delivered to your site, fuelled and checked. Operator briefed if you've booked one." },
-      { step: "04", title: "Support", detail: "If a machine has an issue on your site, we send a replacement the same day so your job doesn't stall." },
+      { title: "Enquire", detail: "Tell us the job, the site address, and the dates. We'll recommend the right machine and whether you need an operator." },
+      { title: "Quote", detail: "Hourly or daily rate, with operator and fuel options clearly itemised. No hidden fuel charges later." },
+      { title: "Deliver", detail: "Machine delivered to your site, fuelled and checked. Operator briefed if you've booked one." },
+      { title: "Support", detail: "If a machine has an issue on your site, we send a replacement the same day so your job doesn't stall." },
     ],
   },
   {
@@ -199,10 +188,10 @@ export const services: Service[] = [
       "Ongoing maintenance & support",
     ],
     process: [
-      { step: "01", title: "Site Walk", detail: "We walk your property with you, identify blind spots, and recommend camera positions and coverage. No quoting for cameras you don't need." },
-      { step: "02", title: "Fixed Quote", detail: "You get a written quote for cameras, DVR/NVR, cabling, and installation. The price you see is the price you pay." },
-      { step: "03", title: "Install", detail: "Neat cabling, camera mounting, DVR setup. Most installs are done in a day — bigger systems may take two." },
-      { step: "04", title: "Handover", detail: "We configure your phone app, show you how to review footage and pull clips, and hand over all logins." },
+      { title: "Site Walk", detail: "We walk your property with you, identify blind spots, and recommend camera positions and coverage. No quoting for cameras you don't need." },
+      { title: "Fixed Quote", detail: "You get a written quote for cameras, DVR/NVR, cabling, and installation. The price you see is the price you pay." },
+      { title: "Install", detail: "Neat cabling, camera mounting, DVR setup. Most installs are done in a day — bigger systems may take two." },
+      { title: "Handover", detail: "We configure your phone app, show you how to review footage and pull clips, and hand over all logins." },
     ],
   },
   {
@@ -227,10 +216,10 @@ export const services: Service[] = [
       { name: "Electrical Wiring", desc: "Certified electrical wiring for gate motors, CCTV, and general installations. CoC issued on request." },
     ],
     process: [
-      { step: "01", title: "Measure & Quote", detail: "We measure your opening, talk through style and motor options, and give you a written quote with the finish and colour specified." },
-      { step: "02", title: "Fabricate", detail: "Your door or gate is fabricated to size and powder-coated in your chosen colour. Lead time usually 5 – 10 working days." },
-      { step: "03", title: "Install", detail: "Doors/gates fitted, motors installed, electrical wiring run safely to code. Usually a single day on site." },
-      { step: "04", title: "Test & Handover", detail: "Remotes paired, safety sensors tested, and we show you how to operate and maintain it. CoC issued if requested." },
+      { title: "Measure & Quote", detail: "We measure your opening, talk through style and motor options, and give you a written quote with the finish and colour specified." },
+      { title: "Fabricate", detail: "Your door or gate is fabricated to size and powder-coated in your chosen colour. Lead time usually 5 – 10 working days." },
+      { title: "Install", detail: "Doors/gates fitted, motors installed, electrical wiring run safely to code. Usually a single day on site." },
+      { title: "Test & Handover", detail: "Remotes paired, safety sensors tested, and we show you how to operate and maintain it. CoC issued if requested." },
     ],
   },
 ];

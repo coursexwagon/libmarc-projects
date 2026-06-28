@@ -60,7 +60,6 @@ export function FaqAccordion() {
             <Reveal>
               <SectionHeading
                 eyebrow="Good Questions"
-                number="01"
                 title={
                   <>
                     Things people{" "}
@@ -103,9 +102,6 @@ export function FaqAccordion() {
                   >
                     <AccordionTrigger className="px-5 py-5 text-left hover:no-underline group">
                       <span className="flex items-start gap-4">
-                        <span className="font-display text-sm font-bold text-primary shrink-0 mt-0.5 tabular-nums">
-                          {String(i + 1).padStart(2, "0")}
-                        </span>
                         <span className="font-display text-base lg:text-lg font-bold leading-snug group-data-[state=open]:text-primary transition-colors">
                           {faq.q}
                         </span>

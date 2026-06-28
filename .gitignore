@@ -28,6 +28,10 @@ node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+dev.err
+package-lock.json
+CLAUDE.md
+CURRENT_MEMORY.md
 .pnpm-debug.log*
 
 # env files (can opt-in for committing if needed)

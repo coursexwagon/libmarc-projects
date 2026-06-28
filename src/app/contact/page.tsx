@@ -1,27 +1,12 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import Image from "next/image";
 import {
-  MapPin,
-  Phone,
-  Mail,
-  Clock,
-  MessageCircle,
-  Linkedin,
-  Instagram,
-  Facebook,
-  Clock3,
-  ShieldCheck,
-  BadgeCheck,
-  MapPinned,
+  ArrowRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  SectionHeading,
-  PageHero,
-  CTABand,
-  Reveal,
-} from "@/components/site/sections";
+import { Icons } from "@/components/ui/icons";
 import { ContactForm } from "@/components/site/contact-form";
-import { FaqAccordion } from "@/components/site/faq";
 import { company } from "@/lib/site-data";
 
 export const metadata: Metadata = {
@@ -29,41 +14,6 @@ export const metadata: Metadata = {
   description:
     "Get a free quote from Libmarc Projects. Call 078 150 0069 or 070 359 9092, WhatsApp us, or send us a project enquiry. Based in Yeoville, Johannesburg — serving all of Gauteng.",
 };
-
-// Google Maps embed centred on the depot address (no API key required).
-const depotMapEmbed = `https://www.google.com/maps?q=${encodeURIComponent(
-  company.address
-)}&output=embed`;
-
-const socials = [
-  { name: "Facebook", href: "https://facebook.com", icon: Facebook },
-  { name: "Instagram", href: "https://instagram.com", icon: Instagram },
-  { name: "LinkedIn", href: "https://linkedin.com", icon: Linkedin },
-];
-
-// Trust badges under the form.
-const trustBadges = [
-  {
-    title: "Same-Day Quotes",
-    detail: "Most enquiries quoted same business day.",
-    icon: Clock3,
-  },
-  {
-    title: "Free Site Visit",
-    detail: "On-site assessment in Greater JHB.",
-    icon: MapPinned,
-  },
-  {
-    title: "Fully Insured",
-    detail: "R5M public liability on every job.",
-    icon: ShieldCheck,
-  },
-  {
-    title: "All of Gauteng",
-    detail: "CBD to Sandton to Soweto.",
-    icon: BadgeCheck,
-  },
-];
 
 export default function ContactPage() {
   const tel1Href = `tel:${company.phone1Intl}`;
@@ -74,94 +24,105 @@ export default function ContactPage() {
 
   return (
     <>
-      {/* ===================== PAGE HERO ===================== */}
-      <PageHero
-        eyebrow="Contact"
-        title="Get a Free Quote Today"
-        description="Tell us about your project and we'll come back to you with a quote the same business day. Prefer to talk? Call or WhatsApp — a real person picks up."
-        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Contact" }]}
-        image="/images/cta-bg.png"
-      />
+      {/* HERO */}
+      <section className="relative bg-foreground text-primary-foreground overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/real/excavator-transport.jpg"
+            alt="Libmarc excavator transport"
+            fill
+            priority
+            className="object-cover opacity-40"
+            sizes="100vw"
+          />
+        </div>
+        <div className="relative container mx-auto px-4 py-16 lg:py-24">
+          <div className="max-w-3xl">
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-primary mb-4">
+              Contact us
+            </p>
+            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[0.95] tracking-tight">
+              Get a free quote.
+            </h1>
+            <p className="mt-6 text-lg text-primary-foreground/80 max-w-xl leading-relaxed">
+              Tell us about your project. Same business day response.
+            </p>
+          </div>
+        </div>
+      </section>
 
-      {/* ===================== CONTACT GRID ===================== */}
-      <section className="py-20 lg:py-28">
+      {/* CONTACT GRID */}
+      <section className="py-20 lg:py-28 relative overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-12 gap-10 lg:gap-12">
-            {/* ---------- LEFT: Contact info ---------- */}
+            {/* LEFT: Contact info */}
             <div className="lg:col-span-5">
-              <SectionHeading
-                eyebrow="Reach Us"
-                title={
-                  <>
-                    Talk to the{" "}
-                    <span className="text-primary">Libmarc</span> team
-                  </>
-                }
-                description="Two phone numbers, two WhatsApp lines, one email. However you prefer to reach out — we respond to enquiries usually within 2 hours during business hours."
-              />
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-primary mb-3">
+                Reach us
+              </p>
+              <h2 className="font-display text-3xl lg:text-4xl font-bold leading-tight mb-6">
+                Talk to the <span className="text-primary">Libmarc</span> team
+              </h2>
+              <p className="text-muted-foreground leading-relaxed mb-8">
+                Two phone numbers, two WhatsApp lines, one email. We respond
+                within 2 hours during business hours.
+              </p>
 
-              {/* Response-time notice — honest small-business touch */}
-              <div className="mt-6 flex items-start gap-3 border-l-2 border-primary bg-muted/40 px-4 py-3">
-                <Clock3 className="size-5 text-primary shrink-0 mt-0.5" />
+              {/* Response time */}
+              <div className="flex items-start gap-3 border-l-2 border-primary bg-muted/40 px-4 py-3 mb-8">
+                <Icons.clock className="size-5 text-primary shrink-0 mt-0.5" />
                 <p className="text-sm text-foreground/90 leading-relaxed">
                   <span className="font-semibold">Response time:</span>{" "}
-                  {company.responseWindow}. Outside business hours we reply the
-                  next morning.
+                  {company.responseWindow}
                 </p>
               </div>
 
-              {/* Phone numbers — clickable tel: cards */}
-              <div className="mt-8 grid sm:grid-cols-2 gap-4">
+              {/* Phone numbers */}
+              <div className="grid sm:grid-cols-2 gap-4 mb-6">
                 <a
                   href={tel1Href}
-                  className="group flex items-start gap-3 border border-border p-4 hover:border-primary hover:shadow-md transition-all"
+                  className="group flex items-start gap-3 border border-border p-4 hover:border-primary transition-colors"
                 >
-                  <div className="inline-flex size-10 items-center justify-center bg-foreground text-primary shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                    <Phone className="size-5" />
-                  </div>
-                  <div className="min-w-0">
+                  <Icons.phone className="size-5 text-primary mt-0.5" />
+                  <div>
                     <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                       Call — Primary
                     </div>
-                    <div className="font-display font-bold text-foreground group-hover:text-primary transition-colors truncate">
+                    <div className="font-display font-bold text-foreground group-hover:text-primary transition-colors">
                       {company.phone1}
                     </div>
                   </div>
                 </a>
                 <a
                   href={tel2Href}
-                  className="group flex items-start gap-3 border border-border p-4 hover:border-primary hover:shadow-md transition-all"
+                  className="group flex items-start gap-3 border border-border p-4 hover:border-primary transition-colors"
                 >
-                  <div className="inline-flex size-10 items-center justify-center bg-foreground text-primary shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                    <Phone className="size-5" />
-                  </div>
-                  <div className="min-w-0">
+                  <Icons.phone className="size-5 text-primary mt-0.5" />
+                  <div>
                     <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                       Call — Secondary
                     </div>
-                    <div className="font-display font-bold text-foreground group-hover:text-primary transition-colors truncate">
+                    <div className="font-display font-bold text-foreground group-hover:text-primary transition-colors">
                       {company.phone2}
                     </div>
                   </div>
                 </a>
               </div>
 
-              {/* WhatsApp numbers — green-bordered cards */}
-              <div className="mt-4 grid sm:grid-cols-2 gap-4">
+              {/* WhatsApp */}
+              <div className="grid sm:grid-cols-2 gap-4 mb-6">
                 <a
                   href={wa1Href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-start gap-3 border-2 border-green-600 p-4 hover:bg-green-50 transition-all"
+                  className="group flex items-start gap-3 border border-border p-4 hover:border-green-600 transition-colors"
                 >
-                  <div className="inline-flex size-10 items-center justify-center bg-green-600 text-white shrink-0">
-                    <MessageCircle className="size-5" />
-                  </div>
-                  <div className="min-w-0">
-                    <div className="text-[10px] font-bold uppercase tracking-wider text-green-700">
-                      WhatsApp 1
+                  <Icons.messageCircle className="size-5 text-green-600 mt-0.5" />
+                  <div>
+                    <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                      WhatsApp
                     </div>
-                    <div className="font-display font-bold text-foreground group-hover:text-green-700 transition-colors truncate">
+                    <div className="font-display font-bold text-foreground group-hover:text-green-600 transition-colors">
                       {company.phone1}
                     </div>
                   </div>
@@ -170,31 +131,27 @@ export default function ContactPage() {
                   href={wa2Href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-start gap-3 border-2 border-green-600 p-4 hover:bg-green-50 transition-all"
+                  className="group flex items-start gap-3 border border-border p-4 hover:border-green-600 transition-colors"
                 >
-                  <div className="inline-flex size-10 items-center justify-center bg-green-600 text-white shrink-0">
-                    <MessageCircle className="size-5" />
-                  </div>
-                  <div className="min-w-0">
-                    <div className="text-[10px] font-bold uppercase tracking-wider text-green-700">
-                      WhatsApp 2
+                  <Icons.messageCircle className="size-5 text-green-600 mt-0.5" />
+                  <div>
+                    <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                      WhatsApp
                     </div>
-                    <div className="font-display font-bold text-foreground group-hover:text-green-700 transition-colors truncate">
+                    <div className="font-display font-bold text-foreground group-hover:text-green-600 transition-colors">
                       {company.phone2}
                     </div>
                   </div>
                 </a>
               </div>
 
-              {/* Email card */}
+              {/* Email */}
               <a
                 href={mailHref}
-                className="mt-4 group flex items-start gap-3 border border-border p-4 hover:border-primary hover:shadow-md transition-all"
+                className="group flex items-start gap-3 border border-border p-4 hover:border-primary transition-colors mb-6"
               >
-                <div className="inline-flex size-10 items-center justify-center bg-foreground text-primary shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                  <Mail className="size-5" />
-                </div>
-                <div className="min-w-0 flex-1">
+                <Icons.mail className="size-5 text-primary mt-0.5" />
+                <div>
                   <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                     Email
                   </div>
@@ -204,129 +161,84 @@ export default function ContactPage() {
                 </div>
               </a>
 
-              {/* Address card */}
-              <div className="mt-4 border border-border p-6">
-                <div className="flex items-start gap-3">
-                  <MapPin className="size-5 text-primary shrink-0 mt-0.5" />
-                  <div className="flex-1">
-                    <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-0.5">
-                      Depot Address
-                    </div>
-                    <div className="text-foreground leading-relaxed">
-                      {company.address}
-                    </div>
+              {/* Address */}
+              <div className="flex items-start gap-3 border border-border p-4 mb-6">
+                <Icons.mapPin className="size-5 text-primary mt-0.5" />
+                <div>
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                    Address
                   </div>
-                </div>
-                {/* Map embed */}
-                <div className="mt-4 relative h-48 border border-border overflow-hidden bg-muted">
-                  <iframe
-                    title="Libmarc Projects depot — Yeoville, Johannesburg"
-                    src={depotMapEmbed}
-                    className="absolute inset-0 h-full w-full grayscale"
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                  />
-                </div>
-              </div>
-
-              {/* Office hours */}
-              <div className="mt-4 border border-border p-6">
-                <div className="flex items-start gap-3">
-                  <Clock className="size-5 text-primary shrink-0 mt-0.5" />
-                  <div>
-                    <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-0.5">
-                      Office Hours
-                    </div>
-                    <div className="text-foreground">{company.hours}</div>
-                    <div className="text-xs text-muted-foreground mt-0.5">
-                      Sun closed · Emergency call-outs by arrangement
-                    </div>
+                  <div className="font-display font-bold text-foreground">
+                    {company.address}
                   </div>
                 </div>
               </div>
 
-              {/* Socials */}
-              <div className="mt-6">
-                <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-3">
-                  Follow Us
-                </h3>
-                <div className="flex flex-wrap gap-2.5">
-                  {socials.map((s) => (
-                    <a
-                      key={s.name}
-                      href={s.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={s.name}
-                      className="inline-flex size-11 items-center justify-center border border-border text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all"
-                    >
-                      <s.icon className="size-5" />
-                    </a>
-                  ))}
-                </div>
+              {/* Social */}
+              <div className="flex gap-3 mt-6">
+                <a
+                  href={company.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex size-10 items-center justify-center border border-border hover:border-blue-600 hover:bg-blue-600 hover:text-white transition-colors"
+                >
+                  <Icons.facebook className="size-5" />
+                </a>
+                <a
+                  href={company.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex size-10 items-center justify-center border border-border hover:border-pink-600 hover:bg-pink-600 hover:text-white transition-colors"
+                >
+                  <Icons.instagram className="size-5" />
+                </a>
               </div>
             </div>
 
-            {/* ---------- RIGHT: Quote form ---------- */}
-            <div className="lg:col-span-7">
-              <div className="lg:sticky lg:top-28">
-                <Reveal>
-                  <div className="mb-6">
-                    <div className="flex items-center gap-2.5 mb-3">
-                      <span className="h-0.5 w-8 bg-primary" />
-                      <span className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                        Quote Request
-                      </span>
-                    </div>
-                    <h2 className="font-display text-3xl lg:text-4xl font-bold leading-tight">
-                      Send us a{" "}
-                      <span className="text-primary">quote request</span>
-                    </h2>
-                    <p className="mt-3 text-muted-foreground">
-                      Share a few details about your project and site. The more
-                      you tell us, the faster we can give you a useful quote —
-                      usually same business day.
-                    </p>
-                  </div>
-
-                  <ContactForm />
-
-                  {/* Trust badges */}
-                  <div className="mt-8 grid sm:grid-cols-2 gap-4">
-                    {trustBadges.map((b) => (
-                      <div
-                        key={b.title}
-                        className="flex items-start gap-3 border border-border p-4 hover:border-primary transition-colors"
-                      >
-                        <div className="inline-flex size-9 items-center justify-center bg-foreground text-primary shrink-0">
-                          <b.icon className="size-4.5" />
-                        </div>
-                        <div>
-                          <div className="text-sm font-bold text-foreground leading-tight">
-                            {b.title}
-                          </div>
-                          <div className="text-xs text-muted-foreground mt-0.5">
-                            {b.detail}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </Reveal>
+            {/* RIGHT: Form with man pointing */}
+            <div className="lg:col-span-7 relative">
+              {/* Man pointing at the form — on left side pointing right into form */}
+              <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-[120px] xl:w-[160px] pointer-events-none z-10 overflow-hidden select-none">
+                <div className="relative w-full h-full">
+                  <Image
+                    src="/images/real/contact-man.png"
+                    alt=""
+                    fill
+                    className="object-contain object-right"
+                    style={{
+                      maskImage: 'linear-gradient(to right, black 70%, transparent 100%)',
+                      WebkitMaskImage: 'linear-gradient(to right, black 70%, transparent 100%)',
+                      filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.15))',
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="pl-0 lg:pl-[100px] xl:pl-[140px]">
+                <ContactForm />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ===================== FAQ ===================== */}
-      <FaqAccordion />
-
-      {/* ===================== CTA ===================== */}
-      <CTABand
-        title="Prefer to talk it through?"
-        description="Call or WhatsApp us directly — both lines are open during business hours. For urgent jobs across Gauteng we'll do our best to come out the same day."
-      />
+      {/* CTA */}
+      <section className="bg-primary text-primary-foreground">
+        <div className="container mx-auto px-4 py-16 lg:py-20 text-center">
+          <h2 className="font-display text-3xl lg:text-5xl font-bold leading-tight mb-4">
+            Prefer to talk?
+          </h2>
+          <p className="text-lg text-primary-foreground/90 mb-8">
+            Call us now. A real person picks up.
+          </p>
+          <a
+            href={tel1Href}
+            className="inline-flex h-14 items-center justify-center gap-2 bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-bold uppercase tracking-wide px-8 transition-colors"
+          >
+            <Icons.phone className="size-5" />
+            {company.phone1}
+          </a>
+        </div>
+      </section>
     </>
   );
 }
