@@ -96,12 +96,12 @@ export function SiteHeader() {
       <div className="container mx-auto px-4">
         <div className="flex h-16 lg:h-20 items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="relative h-10 lg:h-12 w-auto transition-transform group-hover:scale-105">
+            <div className="relative h-9 lg:h-11 w-auto transition-all duration-300 group-hover:scale-[1.03]">
               <Image
                 src="/images/real/libmarc-logo.png"
                 alt="Libmarc Projects"
-                width={220}
-                height={80}
+                width={200}
+                height={112}
                 className="h-full w-auto object-contain"
                 priority
               />

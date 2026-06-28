@@ -205,33 +205,47 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* RIGHT: Form with man pointing */}
+            {/* RIGHT: Form with man pointing — man is BIG and integrated */}
             <div className="lg:col-span-7 relative">
-              {/* Man pointing into the form — sits at the form's edge, naturally blended.
-                  Background hue match + soft top/bottom fade + ground shadow so he looks like part of the page. */}
-              <div className="hidden lg:block absolute left-2 top-4 bottom-4 w-[150px] xl:w-[190px] pointer-events-none z-10 select-none">
+              {/* Big man pointing at the entire form card from the LEFT.
+                  Since the source PNG already has a transparent bg, we let him bleed naturally
+                  past the section edge — no fake crop mask, no white-box outline. */}
+              <div
+                aria-hidden
+                className="pointer-events-none select-none hidden lg:block absolute z-20"
+                style={{
+                  // Sit just outside-left of the form card, full body height, slight rotation
+                  left: "-120px",
+                  top: "-40px",
+                  bottom: "-80px",
+                  width: "clamp(340px, 38vw, 520px)",
+                  filter: "drop-shadow(0 24px 36px rgba(20,10,0,0.22))",
+                }}
+              >
                 <div className="relative w-full h-full">
+                  {/* Gentle ground shadow at his feet so he doesn't float */}
+                  <div
+                    className="absolute left-1/2 -translate-x-1/2 bottom-2 w-[44%] h-5 bg-black/20 blur-lg rounded-full"
+                    style={{ zIndex: 1 }}
+                  />
                   <Image
                     src="/images/real/contact-man.png"
                     alt=""
                     fill
                     priority
-                    className="object-contain object-bottom drop-shadow-[0_18px_22px_rgba(0,0,0,0.22)]"
+                    sizes="(min-width: 1024px) 38vw, 0px"
+                    className="object-contain object-bottom"
                     style={{
-                      // Fade bottom so feet ground into the form
-                      maskImage:
-                        'linear-gradient(to bottom, black 0%, black 78%, transparent 100%)',
-                      WebkitMaskImage:
-                        'linear-gradient(to bottom, black 0%, black 78%, transparent 100%)',
+                      // Slight forward lean — reads as 'gesturing into the form'
+                      transform: "rotate(2deg)",
+                      transformOrigin: "50% 100%",
                     }}
                   />
-                  {/* Ground contact shadow — sells him as "standing on the page" */}
-                  <div className="absolute left-1/2 -translate-x-1/2 bottom-2 w-[55%] h-3 bg-black/15 rounded-full blur-md" />
-                  {/* Soft ambient that hugs the form background to kill sticker white-frame look */}
-                  <div className="absolute inset-0 -z-10 bg-gradient-to-r from-transparent via-background/0 to-background/5" />
                 </div>
               </div>
-              <div className="pl-0 lg:pl-[130px] xl:pl-[170px]">
+
+              {/* Form card — sits on top, slightly offset right so the man doesn't overlap text */}
+              <div className="relative z-10 lg:ml-[clamp(220px,26vw,320px)]">
                 <ContactForm />
               </div>
             </div>
