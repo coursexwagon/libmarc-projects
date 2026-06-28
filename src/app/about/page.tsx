@@ -18,6 +18,16 @@ export const metadata: Metadata = {
   title: "About Us | Libmarc Projects",
   description:
     "Learn about Libmarc Projects — Johannesburg's trusted contractor for demolition, plant hire, CCTV, and gate installations since 2015.",
+  alternates: {
+    canonical: "https://libmarcprojects.co.za/about",
+  },
+  openGraph: {
+    title: "About Us | Libmarc Projects",
+    description: "Learn about Libmarc Projects — Johannesburg's trusted contractor for demolition, plant hire, CCTV, and gate installations since 2015.",
+    url: "https://libmarcprojects.co.za/about",
+    siteName: "Libmarc Projects",
+    type: "website",
+  },
 };
 
 const values = [

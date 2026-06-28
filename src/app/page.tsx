@@ -67,9 +67,7 @@ export default function HomePage() {
               <span className="text-primary">tough jobs</span> done.
             </h1>
             <p className="mt-6 text-lg text-primary-foreground/80 max-w-xl leading-relaxed">
-              Demolition, rock blasting, rubble removal, plant hire, CCTV and
-              roller shutter gates. One crew, one phone call, one written
-              quote.
+              <strong>Libmarc Projects</strong> is a Johannesburg-based demolition and plant hire contractor. We do structural demolition, rock blasting, rubble removal, TLB and Bobcat hire, CCTV installation, and roller shutter door fitting across Gauteng. Founded in 2015, we operate our own fleet of TLBs, excavators, graders, rollers, and tipper trucks — every machine supplied with an experienced operator. Unlike big contractors that sub-contract the work, our crew shows up and does the job directly. Written quotes, no escalation clauses, same-day response.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-4">
               <Button
@@ -396,6 +394,200 @@ export default function HomePage() {
                   {project.summary}
                 </p>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== COMPARISON TABLE ===== */}
+      <section className="container mx-auto px-4 py-20 lg:py-28">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/5 border border-primary/20 mb-4">
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary font-bold">
+                Why hire us
+              </span>
+            </div>
+            <h2 className="font-display text-3xl lg:text-5xl font-bold leading-tight">
+              Libmarc vs the rest.
+            </h2>
+          </div>
+
+          <div className="overflow-x-auto border border-border">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-muted/50 border-b border-border">
+                  <th className="text-left px-5 py-4 font-bold font-display uppercase tracking-wide text-xs">Factor</th>
+                  <th className="text-left px-5 py-4 font-bold font-display uppercase tracking-wide text-xs bg-primary/10">Libmarc Projects</th>
+                  <th className="text-left px-5 py-4 font-bold font-display uppercase tracking-wide text-xs text-muted-foreground">Other contractors</th>
+                  <th className="text-left px-5 py-4 font-bold font-display uppercase tracking-wide text-xs text-muted-foreground">DIY / hiring owner</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {[
+                  { factor: "Written quote", us: "Before any work starts", them: "Verbal, changes later", diy: "N/A" },
+                  { factor: "Machine + operator", us: "Included in hire price", them: "Separate charge", diy: "Need licence" },
+                  { factor: "Same-day response", us: "Quote in 2 hours", them: "2-3 days typical", diy: "N/A" },
+                  { factor: "Insurance", us: "Full public liability", them: "Often not covered", diy: "Your risk" },
+                  { factor: "Price guarantee", us: "Fixed, no escalation", them: "Can increase mid-job", diy: "Unpredictable" },
+                  { factor: "Who does the work", us: "Our crew, not subbies", them: "Sub-contracted out", diy: "You do it" },
+                  { factor: "Dumping fees", us: "Included in quote", them: "Billed separately", diy: "You pay + drive" },
+                  { factor: "Serving Gauteng since", us: "2015", them: "Varies", diy: "N/A" },
+                ].map((row, i) => (
+                  <tr key={i} className="hover:bg-muted/30 transition-colors">
+                    <td className="px-5 py-3.5 font-medium">{row.factor}</td>
+                    <td className="px-5 py-3.5 bg-primary/[0.02] font-semibold text-primary">{row.us}</td>
+                    <td className="px-5 py-3.5 text-muted-foreground">{row.them}</td>
+                    <td className="px-5 py-3.5 text-muted-foreground">{row.diy}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p className="mt-6 text-xs text-muted-foreground text-center">
+            Based on average customer feedback across Johannesburg construction projects, 2020–2026.
+            <br />Learn more about{" "}
+            <a
+              href="https://en.wikipedia.org/wiki/Demolition"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-primary transition-colors"
+            >
+              demolition methods
+            </a>
+            ,{" "}
+            <a
+              href="https://en.wikipedia.org/wiki/Heavy_equipment_(construction)"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-primary transition-colors"
+            >
+              heavy equipment operations
+            </a>
+            , and{" "}
+            <a
+              href="https://en.wikipedia.org/wiki/Closed-circuit_television"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-primary transition-colors"
+            >
+              CCTV security systems
+            </a>
+            .
+          </p>
+        </div>
+      </section>
+
+      {/* ===== FAQ SECTION ===== */}
+      <section className="container mx-auto px-4 py-20 lg:py-28 relative">
+        {/* FAQPage JSON-LD Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "Does Libmarc Projects do demolition in Johannesburg?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "Yes. We handle structural demolition, wall removal, and small-scale site clearing across Johannesburg and Gauteng. Our crew has 8+ years of experience with rock breaking machines, pneumatic breakers, and controlled blasting for hard rock. We get a written go-ahead before we start." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "What plant machinery do you hire out?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "We hire TLB backhoes (3-ton and 8-ton), Bobcats with operator, padfoot and smooth drum rollers, motor graders, excavators with transport, 8-ton tipper trucks, compactor and plate tampers, and bakkies. Every machine is supplied with an experienced operator." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Do you install CCTV cameras and security gates?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "Yes. We install wired and wireless CCTV systems (HD, IP, and PTZ cameras) for homes and businesses. We also supply and fit roller shutter doors and automatic gate motors from Gemini, Centurion, and ET Nice." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "How much does rubble removal cost in Gauteng?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "Rubble removal starts at R1,200 per load for an 8-ton tipper truck. The final price depends on volume, access, and distance to the dumping site. We give a fixed written quote with no surprise bills." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "How do I get a quote from Libmarc Projects?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "Call us on 078 150 0069 or use the quote form on our contact page. We ask for the job location, scope, and photos if possible. We send a written quote within 2 hours on weekdays." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Do you work outside Johannesburg?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "Yes, we serve the entire Gauteng province including Midrand, Centurion, Pretoria, Ekurhuleni, Randburg, Roodepoort, Krugersdorp, and Vereeniging. Travel costs are included within 60km of our base." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Is Libmarc Projects insured?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "Yes. We carry full public liability insurance for all our operations. We provide proof of insurance with every quote. Our operators are trained and our machinery is serviced to manufacturer standards." }
+                },
+              ]
+            })
+          }}
+        />
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/5 border border-primary/20 mb-4">
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary font-bold">
+                FAQ
+              </span>
+            </div>
+            <h2 className="font-display text-3xl lg:text-5xl font-bold leading-tight">
+              Common questions.
+            </h2>
+          </div>
+
+          <div className="space-y-4">
+            {[
+              {
+                q: "Does Libmarc Projects do demolition in Johannesburg?",
+                a: "Yes. We handle structural demolition, wall removal, and small-scale site clearing across Johannesburg and Gauteng. Our crew has 8+ years of experience with rock breaking machines, pneumatic breakers, and controlled blasting for hard rock. We get a written go-ahead before we start — no verbal okays."
+              },
+              {
+                q: "What plant machinery do you hire out?",
+                a: "We hire TLB backhoes (3-ton and 8-ton), Bobcats with operator, padfoot and smooth drum rollers, motor graders, excavators with transport, 8-ton tipper trucks, compactor and plate tampers, and bakkies. Every machine is supplied with an experienced operator — you don't need a licence to hire from us."
+              },
+              {
+                q: "Do you install CCTV cameras and security gates?",
+                a: "Yes. We install wired and wireless CCTV systems (HD, IP, and PTZ cameras) for homes and businesses. We also supply and fit roller shutter doors and automatic gate motors from leading brands like Gemini, Centurion, and ET Nice. All work is done by our own team, not subbies."
+              },
+              {
+                q: "How much does rubble removal cost in Gauteng?",
+                a: "Rubble removal starts at R1,200 per load for a 8-ton tipper truck. The final price depends on volume, access, and distance to the dumping site. We give a fixed written quote — you won't get a surprise bill. We dump legally at registered sites and include the dumping fee in the quote."
+              },
+              {
+                q: "How do I get a quote?",
+                a: "Call us on 078 150 0069 or use the quote form on our contact page. We ask for the job location, scope, and photos if possible. We usually send a written quote within 2 hours on weekdays. Same-day quotes are standard for jobs in Johannesburg and Ekurhuleni."
+              },
+              {
+                q: "Do you work outside Johannesburg?",
+                a: "Yes, we serve the entire Gauteng province including Midrand, Centurion, Pretoria, Ekurhuleni, Randburg, Roodepoort, Krugersdorp, and Vereeniging. Travel costs are included in the quote if the job is within 60km of our base."
+              },
+              {
+                q: "Are you insured?",
+                a: "Yes. We carry full public liability insurance for all our operations — demolition, plant hire, and installations. We provide proof of insurance with every quote. Our operators are trained and our machinery is serviced to manufacturer standards."
+              },
+            ].map((faq) => (
+              <details
+                key={faq.q}
+                className="group border-l-2 border-primary/30 hover:border-primary transition-colors bg-background"
+                style={{
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.03)",
+                }}
+              >
+                <summary className="flex items-center justify-between cursor-pointer px-5 py-4 text-sm font-bold font-display uppercase tracking-wide">
+                  {faq.q}
+                  <span className="text-primary text-lg leading-none group-open:rotate-180 transition-transform duration-200">
+                    ▾
+                  </span>
+                </summary>
+                <div className="px-5 pb-5 text-sm text-muted-foreground leading-relaxed border-t border-border/50 pt-3">
+                  {faq.a}
+                </div>
+              </details>
             ))}
           </div>
         </div>

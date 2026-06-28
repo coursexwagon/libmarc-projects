@@ -35,6 +35,17 @@ export async function generateMetadata({
   return {
     title: `${service.title} | Libmarc Projects`,
     description: service.short,
+    alternates: {
+      canonical: `https://libmarcprojects.co.za/services/${slug}`,
+    },
+    openGraph: {
+      title: `${service.title} | Libmarc Projects`,
+      description: service.short,
+      url: `https://libmarcprojects.co.za/services/${slug}`,
+      siteName: "Libmarc Projects",
+      type: "article",
+      images: [{ url: serviceImages[slug] || "/images/real/demolition.jpg", width: 1200, height: 630, alt: service.title }],
+    },
   };
 }
 
@@ -47,8 +58,23 @@ export default async function ServicePage({
   const service = services.find((s) => s.slug === slug);
   if (!service) notFound();
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `https://libmarcprojects.co.za/services/${slug}#service`,
+    "name": service.title,
+    "description": service.description,
+    "provider": { "@id": "https://libmarcprojects.co.za/#organization" },
+    "areaServed": { "@type": "City", "name": "Johannesburg" },
+    "offers": {
+      "@type": "Offer",
+      "priceSpecification": { "@type": "PriceSpecification", "priceCurrency": "ZAR", "price": "Quote based on scope", "description": "Get a free written quote" },
+    },
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
       {/* HERO */}
       <section className="relative bg-foreground text-primary-foreground overflow-hidden">
         <div className="absolute inset-0">
@@ -151,6 +177,21 @@ export default async function ServicePage({
               </p>
             </div>
           </div>
+          <p className="mt-8 text-xs text-center text-muted-foreground max-w-lg mx-auto">
+            For reference,{" "}
+            <a href="https://en.wikipedia.org/wiki/Demolition" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary transition-colors">
+              demolition engineering standards
+            </a>
+            ,{" "}
+            <a href="https://en.wikipedia.org/wiki/Heavy_equipment_(construction)" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary transition-colors">
+              heavy equipment safety guidelines
+            </a>
+            , and{" "}
+            <a href="https://en.wikipedia.org/wiki/Closed-circuit_television" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary transition-colors">
+              CCTV installation best practices
+            </a>
+            .
+          </p>
         </div>
       </section>
 

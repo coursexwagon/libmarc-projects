@@ -13,6 +13,16 @@ export const metadata: Metadata = {
   title: "Contact | Libmarc Projects",
   description:
     "Get a free quote from Libmarc Projects. Call 078 150 0069 or 070 359 9092, WhatsApp us, or send us a project enquiry. Based in Yeoville, Johannesburg — serving all of Gauteng.",
+  alternates: {
+    canonical: "https://libmarcprojects.co.za/contact",
+  },
+  openGraph: {
+    title: "Contact | Libmarc Projects",
+    description: "Get a free quote from Libmarc Projects. Call 078 150 0069 or WhatsApp. Based in Yeoville, Johannesburg.",
+    url: "https://libmarcprojects.co.za/contact",
+    siteName: "Libmarc Projects",
+    type: "website",
+  },
 };
 
 export default function ContactPage() {
